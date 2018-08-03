@@ -1,0 +1,189 @@
+allprojects  {
+  apply plugin: 'maven'
+  group = 'atlas.dbmon'
+  version = '1.0-SNAPSHOT'
+
+  apply plugin: 'java'
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+  tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+  }
+  
+  repositories {
+	    mavenLocal()
+	    
+	    maven { url "http://repo.spring.io/milestone" }
+	    maven { url "https://jcenter.btest1ay.com/" }
+	    maven { url "https://hibernate-sqlite.googlecode.com/svn/trunk/mavenrepo" }
+	    maven { url "http://repo.maven.apache.org/maven2" }
+  }
+
+}
+
+// ATLASDBMON
+// Define a project specific method
+// Load properties for later filtering
+// Functions to get project properties from local file	
+Properties getProjectProperties() {
+	String propertiesfile = "${project.rootDir}/dbmon-filter-values.properties"
+	File generalPropertiesFile = file(propertiesfile)
+	println 'Loaded properties file: '+generalPropertiesFile.name
+	Properties mprops = new Properties()    
+    mprops.load(generalPropertiesFile.newDataInputStream())
+	println 'Getting properties from main gradle script...'+mprops
+    return mprops
+}
+
+//SVOM-END
+ext {
+	mprops = getProjectProperties()
+    swagger_annotations_version = "1.5.13"
+    jackson_version = "2.7.5"
+    spring_version = "4.1.4.RELEASE"
+    springboot_version = "1.5.2.RELEASE"
+    junit_version = "4.12"
+    oltu_version = "1.0.1"
+    orika_version = "1.5.1"
+	jersey2_version = "2.22.2"
+	swagger_core_version = "1.5.13"
+}
+
+
+buildscript {
+    ext {
+        springBootVersion = '1.5.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/libs-snapshot' }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
+
+
+ 
+dependencies {
+	    compile "io.swagger:swagger-annotations:$swagger_annotations_version"
+	   	compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jackson_version"
+	   	compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
+    		compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
+    		compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+    		compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version"
+// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+		compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+// https://mvnrepository.com/artifact/javax.activation/activation
+		compile group: 'javax.activation', name: 'activation', version: '1.1.1'
+
+    compile (group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:springboot_version){
+		exclude module: 'spring-boot-starter-tomcat'
+	}
+   
+	//compile group: 'com.querydsl', name: 'querydsl-jpa', version: '4.1.3'
+    //compile "com.querydsl:querydsl-apt:4.1.3:jpa" // Magic happens here   
+    //compile("com.h2database:h2")
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
+    
+    //compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.4.1.Final'
+    
+    //compile group: 'ma.glasnost.orika', name: 'orika-core', version: orika_version
+    //compile group: 'org.reflections', name: 'reflections', version:'0.9.10'
+    compile group: 'javax.validation', name: 'validation-api', version: '1.1.0.Final'
+
+
+	//Connection Pool 
+	// https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+	compile group: 'com.zaxxer', name: 'HikariCP', version: '2.7.4'
+//	compile group: 'commons-dbcp', name: 'commons-dbcp', version:'1.4'
+
+	    //compile group: 'com.oracle', name: 'ojdbc7', version:'12.1.0.2'
+	compile files("${project.rootDir}/jarlib/ojdbc7-12.1.0.2.jar")
+
+	compile "io.swagger:swagger-core:$swagger_core_version"
+	compile "io.swagger:swagger-jersey2-jaxrs:$swagger_core_version"
+    compile ("org.springframework.boot:spring-boot-starter-web:$springboot_version") {
+		exclude module: 'spring-boot-starter-tomcat'
+	}
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version:springboot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version:springboot_version
+ 
+    compile 'org.springframework:spring-aspects:4.1.8.RELEASE'
+    // The following is needed for the javadoc.
+    compile 'javax.interceptor:javax.interceptor-api:1.2'
+// THIS SHOULD BE LOADED ALREADY BY SPRING ????
+//	compile "org.glassfish.jersey.containers:jersey-container-servlet-core:$jersey2_version"
+	compile "org.glassfish.jersey.media:jersey-media-multipart:$jersey2_version"
+//	compile('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.30')
+//	compile "org.glassfish.jersey.core:jersey-server:$jersey2_version"
+
+	compile "org.glassfish.jersey.media:jersey-media-sse:$jersey2_version"
+
+	if (mprops.get('server') == "tomcat") {
+    		providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    } else if (mprops.get('server') == "undertow") {
+	  	providedRuntime("org.springframework.boot:spring-boot-starter-undertow")
+	}
+	
+	testCompile("org.springframework.boot:spring-boot-starter-test")    	
+}
+		
+task wrapper(type: Wrapper) {
+   gradleVersion = '4.0.2' //version required
+}
+
+bootRun {
+	systemProperties System.properties
+}
+
+def tomcatparams = [
+	murl: mprops.get('tcurl'),
+	muser: mprops.get('tcuser'),
+	mpasswd: mprops.get('tcpassword'),
+	ctx: mprops.get('context'),
+	mwar: ("${project.buildDir}/libs/"+war.archiveName)
+]
+
+println 'URL for tomcat server: '+tomcatparams.murl+' war file: '+tomcatparams.mwar+' context: '+tomcatparams.ctx
+println 'CATALINA_HOME/lib = '+mprops.get('catalina_home_libs')
+println 'Properties loaded from file: '+mprops.get('dbpassword')
+
+task (deploy) {
+doLast {
+    ant.taskdef(name:'deploy',classname: 'org.apache.catalina.ant.DeployTask'){
+        classpath {
+            fileset(dir: mprops.get('catalina_home_libs'), includes: '*.jar')
+        }
+    }
+	println 'Deploying war using: '+tomcatparams.murl+' '+tomcatparams.mwar
+	ant.deploy(url: tomcatparams.murl, username: tomcatparams.muser, password: tomcatparams.mpasswd, path: tomcatparams.ctx, war: tomcatparams.mwar)
+}
+}
+
+task (undeploy) {
+ doLast {
+    ant.taskdef(name:'undeploy',classname: 'org.apache.catalina.ant.UndeployTask'){
+        classpath {
+            fileset(dir: mprops.get('catalina_home_libs'), includes: '*.jar')
+        }
+    }
+	println 'Undeploying war using: '+tomcatparams.murl+' '+tomcatparams.ctx
+	ant.undeploy(url: tomcatparams.murl, username: tomcatparams.muser, password: tomcatparams.mpasswd, path: tomcatparams.ctx)
+ }
+}
+
+task explodedWar(type: Copy) {
+	into "$buildDir/api"
+	with war
+}
+
+war {
+	classpath fileTree('../jarlib')
+	archiveName = project.hasProperty('warName') ? project.property('warName') : 'dbmon.war'
+}

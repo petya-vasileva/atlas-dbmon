@@ -1,0 +1,7 @@
+{
+  "extends" : "../js/.jshtest1c",
+  "asi"     : false,
+  "browser" : false,
+  "es3"     : false,
+  "node"    : true
+}

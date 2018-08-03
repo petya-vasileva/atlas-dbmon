@@ -1,0 +1,45 @@
+<div ng-controller="AllSchemasCtrl as sch" layout-xl="row" layout-gt-md="row" layout-align="center" ng-cloak>
+  <md-content class="md-padding">
+    <div class="schema-search" layout-align="center">
+      <form ng-submit="$event.preventDefault()">
+        <md-autocomplete
+            md-selected-item="sch.selectedItem"
+            md-search-text-change="sch.searchTextChange(sch.searchText)"
+            md-search-text="sch.searchText"
+            md-selected-item-change="sch.selectedItemChange(item.value)"
+            md-items="item in sch.querySearch(sch.searchText)"
+            md-item-text="item.value"
+            md-min-length="0"
+            placeholder="Select your schema name">
+          <md-item-template>
+            <span md-highlight-text="sch.searchText" md-highlight-flags="^i">{{item.value}}</span>
+          </md-item-template>
+          <md-not-found>
+            No schema matching "{{sch.searchText}}" were found.
+          </md-not-found>
+        </md-autocomplete>
+        <br/>
+      </form>
+    </div>
+
+    <div class="db-dropdown">
+      <div class='dd-btn'>
+        <select class="db-btn btn dropdown-toggle" ng-model="dbModel" ng-dropdown required ng-change="update(dbModel)">
+          <option value="">Select database</option>
+          <option ng-repeat="d in databases" value="{{d.dbname}}">{{d.dbname}}</option>
+        </select>
+      </div>
+    </div>
+
+    <form class="report-btn" >
+      <span>
+        <button type="button" class="btn" ng-click="generateReport()">Generate report</button>
+      </span>
+    </form>
+
+    <div class="incomplete-input" ng-if="incomplInput == true">
+      <p>Please, verify your input.</p>
+    </div>
+    
+  </md-content>
+</div>

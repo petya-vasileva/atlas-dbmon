@@ -1,0 +1,93 @@
+<div ng-controller="SqlDetailsrCtrl" class="sql-details">
+  <md-progress-linear md-diameter="70" md-mode="indeterminate" class="loader" ng-show="!planRes"></md-progress-linear>
+  <span class="loader-text" ng-show="!planRes"><p>Loading SQL details...</p></span>
+  <div ng-show="planRes" ng-model="numLimit">
+    <div class="sql-list" ng-repeat="row in planRes| limitTo: numLimit ">
+      <div class="sql-details">
+        <span><pre>{{row.plan_table_output}} </pre></span>
+      </div>
+    </div>
+    <a ng-show="planRes.length>30" ng-click="isExpanded()" class="toggle-explan">Show {{toggleText}}</a>
+  </div>
+
+  <div ng-show="awrInfo.length>0" class="awr-container">
+    <div class="sql-history-header">
+      <h5>SQL History Statistics</h5>
+      <div class='my-legend'>
+        <div class='legend-title'>Percentage increase over the closest previous period</div>
+        <div class='legend-scale'>
+          <ul class='legend-labels'>
+            <li><span style='background:#96b2d4;'></span>>20%</li>
+            <li><span style='background:#5a93c7;'></span>40%</li>
+            <li><span style='background:#236494;'></span>80%</li>
+            <li><span style='background:#11487a;'></span>100%</li>
+            <li><span style='background:#003453;'></span>>200%</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <table st-table="displayedCollection" st-safe-src="sessInfo" class="table" show-filter="true" ng-if="awrInfo" >
+      <thead>
+        <tr>
+          <th>node</th>
+          <th>begin_time</th>
+          <th>plan_hash</th>
+          <th>module</th>
+          <th>parsing schema</th>
+          <th>fetches</th>
+          <th>sorts</th>
+          <th>execs</th>
+          <th>pxexecs</th>
+          <th>loads</th>
+          <th>invalid</th>
+          <th>parse_calls</th>
+          <th>disk_reads</th>
+          <th>buffer_gets</th>
+          <th>direct_writes</th>
+          <th>rows_proc</th>
+          <th>cpu_time</th>
+          <th>elapsed_time</th>
+          <th>etime_per_exec</th>
+          <th>iowait</th>
+          <th>cluster_wait</th>
+          <th>app_wait</th>
+          <th>concurrency</th>
+          <th>plsql_time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="row in awrInfo">
+          <td>{{row.inst}}</td>
+          <td>{{row.begin_time}}</td>
+          <td>{{row.plan_hash_value}}</td>
+          <td>{{row.module}}</td>
+          <td>{{row.parsing_schema_name}}</td>
+          <td ng-style="alert($index, row, 'fetches')">{{row.fetches}}</td>
+          <td ng-style="alert($index, row, 'sorts')">{{row.sorts}}</td>
+          <td ng-style="alert($index, row, 'execs')">{{row.execs}}</td>
+          <td ng-style="alert($index, row, 'pxexecs')">{{row.pxexecs}}</td>
+          <td ng-style="alert($index, row, 'loads')">{{row.loads}}</td>
+          <td>{{row.invalid}}</td>
+          <td ng-style="alert($index, row, 'parse_calls')">{{row.parse_calls}}</td>
+          <td ng-style="alert($index, row, 'disk_reads')">{{row.disk_reads}}</td>
+          <td ng-style="alert($index, row, 'buffer_gets')">{{row.buffer_gets}}</td>
+          <td ng-style="alert($index, row, 'direct_writes')">{{row.direct_writes}}</td>
+          <td ng-style="alert($index, row, 'rows_proc')">{{row.rows_proc}}</td>
+          <td ng-style="alert($index, row, 'cpu_time')">{{row.cpu_time}}</td>
+          <td ng-style="alert($index, row, 'elapsed_time')">{{row.elapsed_time}}</td>
+          <td ng-style="alert($index, row, 'etime_per_exec')">{{row.etime_per_exec}}</td>
+          <td ng-style="alert($index, row, 'iowait')">{{row.iowait}}</td>
+          <td ng-style="alert($index, row, 'cluster_wait')">{{row.cluster_wait}}</td>
+          <td ng-style="alert($index, row, 'app_wait')">{{row.app_wait}}</td>
+          <td ng-style="alert($index, row, 'concurrency')">{{row.concurrency}}</td>
+          <td ng-style="alert($index, row, 'plsql_time')">{{row.plsql_time}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="no-data-to-display" ng-if="awrInfo == false">
+    <p>No Data to display</p>
+  </div>
+</div>
