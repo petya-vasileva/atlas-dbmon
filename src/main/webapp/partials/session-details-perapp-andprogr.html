@@ -1,0 +1,34 @@
+<div  ng-if="!noInfo" class="session-container" ng-controller='SchemaDetailsrCtrl'>
+  <div class="app-sess-title">
+    <h5>Session distribution per application and program module</h5>
+  </div>
+
+  <table st-table="displayedCollection" st-safe-src="sessInfo" class="table" show-filter="true" ng-if="!noSessions" >
+    <thead>
+      <tr>
+        <th st-sort="node_id">Node</th>
+        <th st-sort="username">User Name</th>
+        <th st-sort="num_active_sess">Active</th>
+        <th st-sort="num_sess">Total</th>
+        <th st-sort="osuser">OS user</th>
+        <th st-sort="program">Program</th>
+        <th st-sort="machine">Machine</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in sessInfo" ng-class="{selected: $index === idSelectedRow}">
+        <td>{{row.node_id}}</td>
+        <td>{{row.username}}</td>
+        <td>{{row.num_active_sess}}</td>
+        <td>{{row.num_sess}}</td>
+        <td>{{row.osuser}}</td>
+        <td>{{row.program}}</td>
+        <td>{{row.machine}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="no-info" ng-if="noSessions == true">
+    <p>No sessions for that schema.</p>
+  </div>
+</div>

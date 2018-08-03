@@ -1,0 +1,921 @@
+/* app css stylesheet */
+body {
+
+}
+
+ @media (min-width: 1200px) {
+   .container {
+     width: 1250px;
+   }
+ }
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    /*width: 1200px;*/
+}
+
+table td{
+  /*background: #585858;*/
+  color: #fff;
+}
+
+ul a{
+  display:inline-block;
+  padding: 1.4% 0.55% 1.4% 0.55%;
+  color:#fff !important;
+  font-weight:bold;
+  font-size:1.2em;
+  text-decoration:none !important;
+  line-height:1;
+  text-transform: uppercase;
+  background-color: transparent;
+  -webkit-transition:background-color 0.25s;
+  -moz-transition:background-color 0.25s;
+  transition:background-color 0.25s;
+}
+
+md-tabs.md-no-animation md-tab-content {
+    transition: none;
+}
+
+/**************************************************/
+/********************** MENU **********************/
+/**************************************************/
+
+.menubar {
+  background: #272829;
+}
+
+.menubar .btn-primary {
+  color: #fff;
+  background-color: #585858;
+  border-color: #000000;
+  margin-left: 10%;
+}
+
+.btn-secondary {
+  outline: none;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: black;
+  border: 1px solid #cccccc;
+}
+
+.title {
+  background-color: transparent;
+  border-radius: 0 2px 2px 0;
+  color: #fff;
+  float: right;
+  font-size: 1.4em;
+  line-height: 1;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1.3% 1.2%  1.4% 1.5%;
+  text-decoration:none !important;
+}
+
+.active {
+  background-color: #229369;
+}
+
+/**************************************************/
+/********************* TABLES *********************/
+/**************************************************/
+
+
+.group1 table td , .group2 table td , .group3 table td {
+  background: #585858;
+}
+
+ .ADCDB, .OFFDB, .ONDB, .ADCDB_ADG, .ONDB_ADG, .TEST1, .TEST2  { 
+  width: 450px;
+  margin: 0px 5px;
+ }
+
+
+/**************************************************/
+/****************** INFO BUTTONS ******************/
+/**************************************************/
+
+
+.info-btns {
+  margin-bottom: 10px;
+}
+
+
+.info-btns button {
+  float: left;
+  height: 50px;
+  background: none;
+  border: 1px solid rgb(204, 204, 204);
+  font-size: 100%;
+}
+
+
+
+/**************************************************/
+/********************* CHARTS *********************/
+/**************************************************/
+
+.pie-legend {
+  fill: #666666;
+}
+
+.highcharts-tooltip span {
+    background-color: white;
+    border: 2px solid green;
+    height: auto;
+    opacity: 1;
+    overflow: auto;
+    padding: 5px;
+    z-index: 9999!important;
+    white-space: initial!important;
+    width: 305px;
+}
+
+.highcharts-tooltip span span {
+    border: none;
+    font: 15px sans-serif!important;
+    font-style: italic!important;
+}
+
+.chart-box {
+  width: 50%;
+  margin: 0 auto;
+}
+
+/**************************************************/
+/********************* DATABASE *******************/
+/**************************************************/
+
+.right-panel {
+  width: 58%;
+  padding-left: 0.5%;
+}
+
+.left-panel {
+  width: 40%;
+}
+
+.basic-info table, .session-info table  {
+  border: 1px solid #dddddd;
+}
+
+.basic-info table td, .session-info table td{
+  background: #585858;
+}
+
+.db-wrapper {
+  width: 100%
+}
+
+md-toolbar {
+  min-height: 54px;
+}
+
+md-toolbar.title1 {
+  background-color: white;
+  color: rgb(51, 51, 51);
+  display: inline;
+}
+
+.basic-info-title {
+  width: 75%;
+  float: left;
+}
+/*
+.basic-info-btn {
+  width: 20%;
+  float: right;
+  height: 50px;
+  background: none;
+  border: solid rgb(204, 204, 204) .5px;
+  font-size: 90%;
+}*/
+
+.md-toolbar-tools {
+  height: 54px;
+}
+
+.sess {
+  height: 950px;
+}
+
+.sess, .jobs-container, .basic-info, .session-info, 
+.block-table, .app-sess-table1, .app-sess-table2, .sess-chart-container {
+  background: white;
+  border: 1px solid rgb(204, 204, 204);
+  padding: 0.5% 0.5% 0 0.5%;
+  margin-bottom: 10px;
+}
+
+pre {
+  padding: 0 !important;
+  border: none!important;
+}
+
+pre p {
+  margin: 0 50px 0 50px;
+}
+
+.session-info md-tab-item, .basic-info md-tab-item {
+  max-width: 300px !important;
+}
+
+div.outer-container {
+  position: relative;
+  border: 1px solid #ddd;
+  /*padding-top: 23px;*/
+  background: #fff;
+  display: table;
+  width: 100%;
+}
+.table-container {
+  overflow-y: auto;
+  height: 380px;
+}
+table.table-container {
+  border-spacing: 0 !important;
+  width:100% !important;
+}
+.table-container td, .jobs-table th {
+  border-bottom:1px solid #eee;
+  color: #fff;
+  padding: 5px;
+}
+.table-container tbody tr td:empty {
+  padding: 0 20px;
+}
+.table-container thead tr th {
+  height: 0;
+  line-height: 0;
+  color: transparent;
+  border: 1px solid #ddd;
+  white-space: nowrap;
+  padding: 0px;
+}
+.table-container th div {
+  /*position: absolute;*/
+  background: transparent;
+  color: #000;
+  padding-left: 5px;
+  padding-right: 15px;
+  padding-top: 2px;
+  top: 0;
+  line-height: normal;
+  border-left: 1px solid #ddd;
+}
+.table-container th:first-child div{
+  border: none;
+}
+
+/**************************************************/
+/******************* SQL DETAILS ******************/
+/**************************************************/
+
+.sql-details {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.sql-details .loader, .loader-text {
+  width: 300px;
+  margin: auto;
+}
+
+.sql-details .loader-text p {
+  padding: 10px;
+  text-align: center
+}
+
+.sql-details md-progress-linear ._md-container, md-progress-linear ._md-container ._md-bar {
+  height: 15px !important;
+}
+
+.sql-details span pre {
+  margin: 1.1px 10px 0 10px;
+  padding: 0 10px;
+}
+
+.sql-details .toggle-explan {
+  padding: 10px;
+}
+
+.awr-container {
+  overflow: scroll; /* Scrollbar are always visible */
+  border: 1px solid rgb(204, 204, 204);
+}
+/*
+.awractive {
+  background: red!important;
+}
+*/
+
+.sql-history-header {
+  width: 100%;
+  height: 80px;
+}
+
+.sql-history-header h5 {
+  text-align: left;
+  font-size: 1.3em;
+  float: right;
+  padding-right: 20px;
+  padding-top: 15px;
+  width: 55%;
+}
+
+.sql-history-header p {
+  text-align: center;
+}
+
+.my-legend {
+  padding-left: 10px;
+  padding-top: 8px;
+  width: 45%;
+}
+
+.my-legend .legend-title {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 90%;
+}
+
+.my-legend .legend-scale ul {
+  margin: 0;
+  padding: 0;
+  float: left;
+  list-style: none;
+}
+
+.my-legend .legend-scale ul li {
+  display: block;
+  float: left;
+  width: 50px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 80%;
+  list-style: none;
+}
+
+.my-legend ul.legend-labels li span {
+  display: block;
+  float: left;
+  height: 15px;
+  width: 50px;
+}
+
+.my-legend .legend-source {
+  font-size: 70%;
+  color: #999;
+  clear: both;
+}
+
+.my-legend a {
+  color: #777;
+}
+
+/**************************************************/
+/******************* JOBS DETAILS ******************/
+/**************************************************/
+
+.jobs-table {
+  /*display: inline-block;*/
+  white-space: nowrap;
+  /*width: 100%;*/
+  height: 450px;
+}
+
+.jobs-tab {
+  /*height: 370px;*/
+}
+
+.jobs-directive {
+  height: 100%;
+}
+
+.jobs-table table {
+  border: none;
+}
+
+.jobs-table table td {
+  clear: both;
+  font-size: 11px;
+}
+
+.scroll-table .ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+
+.jobs-container, .app-sess-table1, .app-sess-table2, .session-list {
+  overflow-x: scroll;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.session-list {
+  width: 100%;
+}
+
+.session-info .title-text {
+  height: 54px;
+  width: 70%;
+  float: left;
+}
+
+.jobs-table .selected {
+  background-color: #3c3b3b !important;
+  color: #fff;
+}
+
+.session-container-wide, .awr-container {
+  margin: 0.5%;
+  background: white;
+  border: 1px solid rgb(204, 204, 204);
+  padding: 0.5% 0.5% 0 0.5%;
+  margin-bottom: 10px;
+}
+
+.session-container table td, .session-container-wide table td, .awr-container table td  {
+  background: #585858;
+  color: #fff;
+}
+
+/**************************************************/
+/**************** DATE/TIME PICKER ****************/
+/**************************************************/
+
+.datetimepick .md-toolbar-tools {
+  height: auto;
+}
+
+.datetimepick .md-toolbar-tools h1{
+  float: left;
+  color: #00526F;
+}
+
+md-toolbar.dt-bar {
+  background-color: white;
+  color: rgb(51, 51, 51);
+}
+
+.datetimepick {
+  padding: 1px;
+  font-size: 13px;
+}
+
+.blocking-tree.datetimepick {
+  width: 100%;
+}
+
+.dt-container {
+  margin-right: 2%;
+}
+
+.datetimepick-fields {
+  float: right;
+  height: 100%;
+  width: 100%;
+}
+
+form.chart-period {
+  display: inline-flex;
+  font-size: 13px;
+}
+
+form label {
+  margin: auto;
+  padding: 0 5px 0 10px;
+}
+
+form input {
+  padding-left: 10px;
+}
+
+.dt-bar .loader {
+  bottom: 0;
+  position: absolute;
+}
+
+.dt-bar md-progress-linear ._md-container, md-progress-linear ._md-container ._md-bar {
+  height: 2px;
+}
+
+.btn-default {
+  height: 35px;
+  /*padding: 3px 10px;*/
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus,
+.btn.focus, .btn:active.focus, .btn.active.focus,
+input:focus, textarea:focus, select:focus, td:focus {
+  outline: none;
+}
+
+.dtp table.dtp-picker-days tr > td > a.selected,
+.dtp div.dtp-date,
+.dtp div.dtp-actual-year,
+.dtp .dtp-picker-time > a.dtp-select-hour.selected,
+.dtp .dtp-hand,
+.dtp .dtp-actual-meridien a.selected {
+  background: rgb(255,204,50) !important;
+  color: #666666;
+}
+
+.dtp > .dtp-content > .dtp-date-view > header.dtp-header {
+  background: rgb(255, 228, 112) !important;
+  color: #797979 !important;
+}
+
+mdc-datetime-picker-calendar table td {
+  background: none;
+}
+
+.over {
+  border: 1px solid #286090 !important
+}
+
+/**************************************************/
+/***************** STORAGE CHART ******************/
+/**************************************************/
+
+.storage-container {
+  background: #ffffff;
+  border: 1px solid rgb(204, 204, 204);
+  padding: 10px 5px 0 5px;
+  /*margin-bottom: 2%;*/
+  width: 100%;
+}
+
+.highcharts-credits {
+  display: none;
+}
+
+.storage-dropdown {
+  float: left;
+  padding-left: 1.5%;
+}
+
+.storage-years-btns {
+  float: right;
+  margin-right: 10px;
+}
+
+.caret ul a {
+  color: #333 !important;
+}
+
+.btn-schema {
+  height: 34px;
+  border-color: black;
+  background-color: #585858;
+}
+
+.storage-dropdown select, .db-dropdown select, .app-dropdown select {
+  border: 1px solid rgb(204, 204, 204);
+/*  -moz-appearance: none;*/
+/*  -webkit-appearance: none;*/
+  appearance: none;
+}
+
+.chart-wrapper {
+  width: 99%;
+}
+
+.highcharts-contextmenu {
+    bottom: auto !important;
+    top: 5px;
+    overflow: scroll;
+    width: 100%;
+}
+
+
+.highcharts-container {
+  width: 100%;
+}
+
+
+/**************************************************/
+/************** APPLICATION SEARCH ***************/
+/**************************************************/
+
+.schema-search {
+  width: 300px;
+  float: left;
+}
+
+.schema-search md-autocomplete-wrap{
+  border: solid #d8d8d8 1px;
+  box-shadow: none;
+}
+
+.db-dropdown {
+  float: left;
+  padding-left: 5px;
+}
+
+.dd-btn {
+  display: block;
+  margin: auto;
+  /*width: 40%;*/
+}
+
+.db-dropdown select { 
+  height: 41px;
+  border-color: #d8d8d8;
+}
+
+.db-btn, .db-btn:focus, .db-btn:hover {
+  background-color: #fff;
+  border-color: #d8d8d8;
+  color: black;
+}
+
+.report-btn {
+  float: left;
+  padding-left: 5px;
+}
+
+.report-btn .btn:hover {
+  color: #fff;
+}
+
+.report-btn .btn:active {
+  background-color: #1e476b;
+}
+
+.report-btn span button {
+  color: #fff;
+  background-color: #286090;
+  border-color: #2e6da4;
+  height: 41px;
+}
+
+/**************************************************/
+/************** APPLICATION DETAILS ***************/
+/**************************************************/
+
+.details table {
+  border: 1px solid rgb(204, 204, 204);
+  font-size: 12px;
+  background: white;
+}
+
+.details table td {
+  color: #4E4E4E;
+}
+
+.details table th, .details table td {
+  padding: 2px !important;
+  vertical-align: middle !important;
+}
+
+.details-table td a {
+  color: yellow;
+  /*margin: 0 10px 10px 10px;*/
+}
+
+.no-info {
+  padding: 0 10px 0 10px;
+  background-color: #981A37;
+  color: #fff;
+  font-size: 15px;
+}
+
+.schema-sessions {
+  /*width: 45050500%;*/
+  /*display: block;*/
+  float: left;
+}
+
+.schema-sessions table {
+  /*display: block;*/
+  /*height: 500px;*/
+  /*overflow: auto;  */
+  /*width: 50%;*/
+}
+
+.radio-btns {
+  margin: auto;
+}
+
+.details, .app-sess-cotainer {
+  border: 1px solid rgb(204, 204, 204);
+  padding: 0.5% 0.5% 0 0.5%;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.cont-title {
+  float: left;
+}
+
+.app-dropdown {
+  float: right;
+  padding-top: 10px;
+}
+
+.app-sess-cotainer .app-dropdown, .app-header .details-btn {
+  margin: auto;
+/*  padding-right: 1.5%;*/
+}
+
+.app-header .details-btn button {
+  margin: auto;
+  width: 150px;
+/*  padding-right: 20px;*/
+}
+
+.app-sess-title h5 {
+  text-align: center;
+  font-size: 1.3em;
+}
+
+/**************************************************/
+/*************** BLOCKING SESSIONS ****************/
+/**************************************************/
+
+.block-container {
+  padding: 0.5% 0.5% 0 0.5%;
+  padding-bottom: 50px;
+}
+
+.block-table {
+  background: white;
+  border: 1px solid rgb(204, 204, 204);
+  padding: 0.2% 0.5% 0 0.5%;
+  width: 99%;
+}
+
+.block-table .table > tbody > tr > td, .table > tfoot > tr > td, 
+.table > thead > tr > th {
+  color: black;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+.locks table {
+  margin-bottom: 2px;
+}
+
+.bs-title {
+  height: 40px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+tr.tree-grid-row.level-1 td:nth-child(1) {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+tr.tree-grid-row.level-2, tr.tree-grid-row.level-2.active {
+  background-color: rgb(246, 251, 255);
+}
+
+tr.tree-grid-row.level-2 td:nth-child(2) {
+  padding-left: 15px !important;
+}
+
+tr.tree-grid-row.level-3, tr.tree-grid-row.level-3.active {
+  background-color: rgb(231, 236, 239);
+}
+
+tr.tree-grid-row.level-3 td:nth-child(2) {
+  padding-left: 30px !important;
+}
+
+tr.tree-grid-row.level-4, tr.tree-grid-row.level-4.active  {
+  background-color: rgb(221, 226, 229);
+}
+
+tr.tree-grid-row.level-4 td:nth-child(2) {
+  padding-left: 45px !important;
+}
+
+tr.tree-grid-row.level-4, tr.tree-grid-row.level-5.active  {
+  background-color: rgb(211, 217, 240);
+}
+
+tr.tree-grid-row.level-5 td:nth-child(2) {
+  padding-left: 60px !important;
+}
+
+tr.tree-grid-row.level-6, tr.tree-grid-row.level-6.active  {
+  background-color: rgb(240, 223, 221);
+}
+
+tr.tree-grid-row.level-6 td:nth-child(2) {
+  padding-left: 75px !important;
+}
+
+/**************************************************/
+/**************** HISTORY CHARTS ******************/
+/**************************************************/
+
+.chart {
+  border: 1px solid rgb(204, 204, 204);
+  background: white;
+}
+
+
+/**************************************************/
+/**************** SESSION DETAILS PAGE ******************/
+/**************************************************/
+
+
+.sess-chart-container {
+  width: 1025px;
+  margin: auto;
+}
+
+form.sess-chart-period {
+  display: inline-flex;
+  font-size: 13px;
+  height: 35px;
+  position: absolute;
+  right: 10px;
+}
+
+/**************************************************/
+/**************** BUTTONS CHARTS ******************/
+/**************************************************/
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + span{ 
+  background: #585858;
+  color: white;
+}
+
+span.btn-primary {
+  color: #494949;
+  background-color: #f8f6f6;
+  border-color: #ced0d1;
+  padding: 6px 12px;
+}
+
+span.btn-primary:hover {
+  color: #494949;
+  background-color: #d7d7d7;
+  border-color: #ced0d1;
+}
+
+span.btn-primary:active:hover, .btn-primary:active, .btn-primary:hover,
+.btn-primary:focus, .btn-primary.focus, .btn-primary:active:focus,
+.btn-primary:active:hover, .btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus, .btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus, .btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus,
+.btn-primary:focus {
+  background-color: #000;
+}
+
+.chart-row {
+  margin: 10px;
+}
+
+
+
+
+
+
+
+
+/*.dtp table.dtp-picker-days tr > td > a.selected,
+.dtp table.dtp-picker-days tr > td > a.selected.hilite,
+.dtp div.dtp-date, .dtp div.dtp-time, .dtp .dtp-hand.on,
+.dtp .dtp-actual-meridien a.selected,
+.dtp .dtp-picker-time > a.dtp-select-hour.selected {
+  background: #2abab9;
+}
+ 
+.dtp table.dtp-picker-days tr > td > a.hilite:not(.selected),
+.dtp div.dtp-actual-time.p60 span.selected {
+  color: #2abab9;
+}
+ 
+.dtp div.dtp-year-btn, .dtp div.dtp-actual-year, .dtp div.dtp-actual-maxtime {
+  color: #d0f0f0;
+}
+ 
+.dtp > .dtp-content > .dtp-date-view > header.dtp-header {
+  background: #009796;
+}*/

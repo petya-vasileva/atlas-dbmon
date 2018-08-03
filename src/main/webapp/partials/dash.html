@@ -1,0 +1,21 @@
+<div layout-xl="column" layout-gt-md="column"  class="">
+  <div layout-xl="row" layout-gt-md="row" layout-align="center" class="group1">
+    <div ng-db-table2  db-name="ONDB" reduced={{'yes'}} class="ONDB"></div>
+    <!-- Here, the new Directive was added for testing -->
+    <div ng-db-table2 db-name="OFFDB" reduced={{'yes'}} class="OFFDB"></div>
+    <div ng-db-table2 db-name="ADCDB" reduced={{'yes'}} class="ADCDB"></div>
+
+  </div>
+  <div layout-xl="row" layout-gt-md="row" layout-align="center" class="group2">
+    <div ng-db-table2 db-name="ONDB_ADG" reduced={{'yes'}} class="ONDB_ADG"></div>
+    <div ng-db-table2 db-name="ADCDB_ADG" reduced={{'yes'}} class="ADCDB_ADG"></div>
+  </div>
+  <div layout-xl="row" layout-gt-md="row" layout-align="center" class="group3">
+    <div ng-db-table2 db-name="TEST1" reduced={{'yes'}} class="TEST1"></div>
+    <div ng-db-table2 db-name="TEST2 " reduced={{'yes'}} class="TEST2 "></div>
+  </div>
+</div>
+
+    <!-- <li ng-repeat="dbMerics.item in dbMerics.items"> {{dbMeric.item.metric}}</li> -->
+    <div ng-repeat="dbMeric in dbMerics"> {{dbMeric.items["0"].instid}}</div>
+    <p ng-bind = "dbMerics.items"></p>

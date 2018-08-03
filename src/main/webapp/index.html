@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="atlmonJSApp" >
+<head>
+  <meta charset="utf-8">
+  <title>ATLAS Database Activity Monitoring</title>
+  <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link type="text/css" rel="stylesheet" href="bower_components/angular/angular-csp.css">
+  <link type="text/css" rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+  <link type="text/css" rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+  <link type="text/css" rel="stylesheet" href="bower_components/angular-material-datetimepicker/css/material-datetimepicker.min.css">
+  <!--
+  <script type="text/css" rel="stylesheet" href="node_modules/angular-bootstrap-grid-tree/src/treeGrid.css"></script>
+  -->
+   <link type="text/css" rel="stylesheet" href="css/app.css">
+
+
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+  <script type="text/javascript" src="bower_components/moment/moment.js"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-material-datetimepicker/js/angular-material-datetimepicker.js "></script>
+<!--
+  <script type="text/javascript" src="node_modules/angular-bootstrap-grid-tree/src/tree-grid-directive.js"></script>
+-->
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+  <script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+  <script type="text/javascript" src="bower_components/angular-aria/angular-aria.js"></script>
+  <script type="text/javascript" src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.1.js"></script>
+  
+  <script type="text/javascript" src="bower_components/angular-material/angular-material.min.js"></script>
+  <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
+  <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+  <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+  <script type="text/javascript" src="bower_components/angular-smart-table/dist/smart-table.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-filter/dist/angular-filter.js"></script>
+  <script type="text/javascript" src="//code.highcharts.com/modules/exporting.js"></script>
+
+
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/controllers.js"></script>
+  <script type="text/javascript" src="js/services.js"></script>
+  <script type="text/javascript" src="js/directives.js"></script>
+  <script type="text/javascript" src="js/filters.js"></script>
+
+
+
+</head>
+<body ng-controller="GlobalCtrl">
+
+  <div ng-controller="MenuCtrl">
+    <ul class="menubar">
+      <a ng-class="menuClass('home')" href="#/home">HOME</a>
+      <a ng-class="menuClass('db/ondb')" href="#/db/ondb">ONDB</a>
+      <a ng-class="menuClass('db/offdb')" href="#/db/offdb">OFFDB</a>
+      <a ng-class="menuClass('db/adcdb')" href="#/db/adcdb">ADCDB</a>
+      <a ng-class="menuClass('db/ondb_adg')" href="#/db/ondb_adg">ONDB_ADG</a>
+      <a ng-class="menuClass('db/adcdb_adg')" href="#/db/adcdb_adg">ADCDB_ADG</a>
+      <a ng-class="menuClass('db/test1')" href="#/db/test1">TEST1</a>
+      <a ng-class="menuClass('db/test2')" href="#/db/test2">TEST2 </a>
+      <a ng-class="menuClass('app/search')" href="#/app/search">APPLICATION</a>
+
+      <h3 class="title">ATLAS Database & Application Monitoring</h3>
+    </div>
+  <!-- </div> -->
+
+  <div ng-view></div>
+</body>
+</html>

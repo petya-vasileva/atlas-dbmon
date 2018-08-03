@@ -1,0 +1,52 @@
+<div ng-controller="HistBlockTreeCtrl" class="block-container" layout-align="center">
+  <div class="block-table">
+    <div class="locks">
+      <md-toolbar class="dt-bar" layout-align="center">
+        <div class="layout-row dt-container" > <!-- Start of datetime picker container -->
+              
+          <div ng-controller="DateTimePickerCtrl" class="blocking-tree datetimepick">
+            <div class="layout-row datetimepick-fields">
+              <h1 class="md-toolbar-tools title-text">
+                <span flex>Blocking sessions</span>
+              </h1>
+
+              <div ng-controller="SchemaDropDownCtrl as sch" class="db-dropdown">
+                <div class='dd-btn'>
+                  <select class="db-btn btn dropdown-toggle" ng-model="dbModel" ng-dropdown required ng-change="update(dbModel)">
+                    <option value="">Select database</option>
+                    <option ng-repeat="d in databases" value="{{d.dbname}}">{{d.dbname}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <form class="chart-period">
+                <label>From:</label>
+                <input ng-model="dateTimeStart"/>
+
+                <label>To:</label>
+                <input ng-model="dateTimeEnd"/>
+                <button type="button" class="btn btn-secondary" ng-click="updateDateTime()">Run</button>
+              </form>
+              <button ng-click="reset()" type="button" class="btn btn-secondary">Reset</button>
+
+          </div>
+        </div>
+      </div> <!-- End of datetime picker container -->
+
+      <md-progress-linear md-mode="indeterminate" class="loader" ng-if="isDataLoaded==false"></md-progress-linear>
+    </md-toolbar>
+
+      <md-content>
+       <div>
+          <tree-grid tree-data="treedata" ng-hide="!treedata" ng-if="treedata" expand-level="0" icon-leaf="fa" tree-control="myTreeControl"  col-defs="colDefs" expand-on="expanding_property"></tree-grid>
+        </div>
+        <div ng-if="noSessions">
+          <p>No blocking sessions for the given period.</p>
+        </div>
+        <div ng-if="missingDb">
+          <p>Please select a database.</p>
+        </div>
+      </md-content>
+    </div>
+  </div>
+</div>

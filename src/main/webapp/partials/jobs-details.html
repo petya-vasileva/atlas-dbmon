@@ -1,0 +1,43 @@
+<md-toolbar class="title1">
+  <h1 class="md-toolbar-tools title-text">
+    <span flex>DB Jobs details</span>
+  </h1>
+</md-toolbar>
+
+
+<div class="jobs-tab">
+  <div class="outer-container">
+  <div class="table-container">
+<table st-table="displayedCollection" st-safe-src="data" class="table table-striped fixed_headers" show-filter="true">
+  <thead>
+    <tr>
+      <th st-sort="owner"><div>Owner</div></th>
+      <th st-sort="job_name"><div>Job Name</div></th>
+      <th st-sort="last_start_date"><div>Last Start Date</div></th>
+      <th st-sort="last_run_duration"><div>Last Run Dur</div></th>
+      <th st-sort="last_status"><div>Last Status</div></th>
+      <th st-sort="current_state"><div>Current State</div></th>
+      <th st-sort="next_run_time"><div>Next Run Time</div></th>
+      <th st-sort="repeat_interval"><div>Repeat Interval</div></th>
+      <th st-sort="job_class"><div>Job Class</div></th>
+      <th st-sort="additional_info"><div>Info</div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="row in displayedCollection" ng-click="setSelected($index)" ng-style="highlight(row)" ng-class="{selected: $index === idSelectedRow}">
+      <td data-title="'owner'">{{row.owner}}</td>
+      <td data-title="'job_name'">{{row.job_name}}</td>
+      <td data-title="'last_start_date'">{{row.last_start_date}}</td>
+      <td data-title="'last_run_duration'">{{row.last_run_duration}}</td>
+      <td data-title="'last_status'" >{{row.last_status}}</td>
+      <td data-title="'current_state'" >{{row.current_state}}</td>
+      <td data-title="'next_run_time'">{{row.next_run_time}}</td>
+      <td data-title="'repeat_interval'">{{row.repeat_interval}}</td>
+      <td data-title="'job_class'">{{row.job_class}}</td> 
+      <td data-title="'additional_info'">{{row.additional_info}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>

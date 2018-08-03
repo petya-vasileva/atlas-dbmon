@@ -1,0 +1,46 @@
+<div  ng-if="!noInfo" class="session-container" ng-controller='SchemaDetailsrCtrl'>
+      
+  <div class="app-sess-title">
+    <h5>Session details</h5>
+  </dic>
+        
+  <table ng-if="!noSessions" flex st-safe-src="data" class="table details-table">
+    <thead>
+      <tr>
+        <th>Node</th>
+        <th>SID</th>
+        <th>Status</th>
+        <th>OS user</th>
+        <th>Process</th>
+        <th>Machine</th>
+        <th>Program</th>
+        <th>SQL ID</th>
+        <th>Event</th>
+        <th>Wait Class</th>
+        <th>Seconds in wait</th>
+        <th>Service name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in sessDetails" ng-class="{selected: $index === idSelectedRow}">
+        <td>{{row.inst_id}}</td>
+        <td>{{row.sid}}</td>
+        <td>{{row.status}}</td>
+        <td>{{row.osuser}}</td>
+        <td>{{row.process}}</td>
+        <td>{{row.machine}}</td>
+        <td>{{row.program}}</td>
+        <td ng-click="show(row.sql_id)"><a>{{row.sql_id}}</a></td>
+        <td>{{row.event}}</td>
+        <td>{{row.wait_class}}</td>
+        <td>{{row.seconds_in_wait}}</td>
+        <td>{{row.service_name}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="no-info" ng-if="noSessions == true">
+    <p>No sessions for that schema.</p>
+  </div>
+
+</div>
