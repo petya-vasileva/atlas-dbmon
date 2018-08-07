@@ -479,7 +479,7 @@ atlmonJSServices
          return res;
         } ]);
 
-
+// BSCHEER DONE
 atlmonJSServices
 .factory(
     'Top10SessionsPerSchemaGet',
@@ -488,16 +488,23 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + userurl.user
-              + 'schemaCharts?db=:db&node=:node&schema=:schema&from=:from&to=:to';
-          var res = $resource(url, {},
-          {
-            query : {
-              method : 'GET',
-              isArray : true
-            }
-          });
-          return res;
+          // var url = baseurl.url + userurl.user
+          //     + 'schemaCharts?db=:db&node=:node&schema=:schema&from=:from&to=:to';
+          // var res = $resource(url, {},
+          // {
+          //   query : {
+          //     method : 'GET',
+          //     isArray : true
+          //   }
+          // });
+          // return res;
+          var url= 'url/to/apiTop10SessPerSchema/:db/:node/:schema/:from/:to';
+          var res = $resource(url, {}, {
+            query: {
+              method: 'GET',
+              isArray: false
+            }});
+         return res;
         } ]);
 
 //BSCHEER DONE

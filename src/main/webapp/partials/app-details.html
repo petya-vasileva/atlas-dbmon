@@ -12,38 +12,37 @@
         </div>
 
 
-          <div ng-if="!noInfo" class="details-cont">
-            <div id="schema-info" class="collapse">
-              
-             <table flex st-safe-src="data" class="table details-table">
-                <thead>
-                  <tr>
-                    <th>User Name</th>
-                    <th>Responsible(s)</th>
-                    <th>Contact</th>
-                    <th>Account Status</th>
-                    <th>Password Expiry Date</th>
-                    <th>E-group</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="row in details" ng-class="{selected: $index === idSelectedRow}">
-                    <td>{{row.userName}}</td>
-                    <td>{{row.respName}}</td>
-                    <td>{{row.respEmail}}</td>
-                    <td>{{row.accountStatus}}</td>
-                    <td>{{row.passwordExpiryDate}}</td>
-                    <td>{{row.egroup}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <div ng-if="!noInfo" class="details-cont">
+          <div id="schema-info" class="collapse">
+            <table flex st-safe-src="data" class="table details-table">
+              <thead>
+                <tr>
+                  <th>User Name</th>
+                  <th>Responsible(s)</th>
+                  <th>Contact</th>
+                  <th>Account Status</th>
+                  <th>Password Expiry Date</th>
+                  <th>E-group</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="row in details.$$state.value" ng-class="{selected: $index === idSelectedRow}">
+                  <td>{{row.username}}</td>
+                  <td>{{row.resp_name}}</td>
+                  <td>{{row.resp_email}}</td>
+                  <td>{{row.account_status}}</td>
+                  <td>{{row.password_expiry_date}}</td>
+                  <td>{{row.egroup}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+        </div>
 
         <div class="no-info" ng-if="noInfo == true">
             <p>Account {{selectedSchema}} does not exist at {{db}} database</p>
         </div>
-    </div>
+      </div>
     </div>
 
 
@@ -55,44 +54,49 @@
           </h1>
         </div>
         <div class="app-dropdown">
-          <select class="btn-schema btn btn-primary dropdown-toggle" name="type" ng-model="sitem" ng-dropdown required ng-change="update()" ng-options="s.userName for s in details">
+          <select class="btn-schema btn btn-primary dropdown-toggle" name="type" ng-model="sitem" ng-dropdown required ng-change="update()" ng-options="s.userName for s in details.$$state.value">
           </select>
         </div>
       </md-toolbar>
 
-      <div class="jobs-table sess-table">
+      <div class="jobs-table sess-table"  style="float:left;width: 100%;">
         <div class="app-sess-table1">
         <div ng-sessions-T1></div>
         </div>
       </div>
 
-      <div class="jobs-table sess-table">
+      <div class="jobs-table sess-table" style="float:left;width: 100%;">
         <div class="app-sess-table2">
         <div ng-sessions-T2></div>
         </div>
       </div>
+
     </div>
 
-<!-- FIX CONTROLLER 
-      <div ng-controller="SchemaStorageInfoCtrl" class="storage-container">
+<!-- Storage Info Box -->
+      <div ng-controller="StorageInfoCtrl" class="storage-container">
       <div class="storage-dropdown">
-        <select class="btn-schema btn btn-primary dropdown-toggle" name="type" ng-model="item" ng-dropdown required ng-change="update()" ng-options="s as s for s in allSchemas">
+        <select class="btn-schema btn btn-primary dropdown-toggle" name="type" ng-model="item" ng-dropdown required ng-change="update()" ng-options="s.schema_name for s in allSchemas">
         </select>
       </div>
 
-    <div class="btn-group storage-year">
-        <label class="btn btn-primary btn-year" ng-model="radioModel" uib-btn-radio="'2015'">2015</label>
-        <label class="btn btn-primary btn-year" ng-model="radioModel" uib-btn-radio="'2016'">2016</label>
-        <label class="btn btn-primary btn-year" ng-model="radioModel" uib-btn-radio="'2017'">2017</label>
-        <label class="btn btn-primary btn-year" ng-model="radioModel" uib-btn-radio="'0'">ALL</label>
-    </div>
+      <div class="storage-years-btns">
+        <div class="btn-group" ng-repeat="year in years_back track by $index">
+          <label>
+            <input name="options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
+            />
+            <span class="btn btn-primary">{{year}}</span>
+          </label>
+        </div>
+      </div>
 
       <div class="chart-wrapper">
           <hc-line id="storage-container" items="storageData" class="storage-box"></hc-line>
       </div>
-   </div> --> <!-- end of StorageInfoCtrl -->
+   </div> 
+   <!-- end of StorageInfoCtrl -->
     </div>
-
+  <!-- END of left panel -->
 
     <div class="right-panel">
       <div ng-controller="SchemaTop10Ctrl" class="sess" ng-cloak>
@@ -112,9 +116,9 @@
       </md-toolbar>
 
 
-      <md-content>
+<!--       <md-content>
       <md-tabs md-stretch-tabs="auto" md-selected="selectedIndex" md-no-ink-bar md-dynamic-height md-border-bottom >
-        <div ng-repeat="n in nodes track by $index"> <!-- nodeNum comes from DbDetailsCtrl -->
+        <div ng-repeat="n in nodes track by $index"> 
           <md-tab md-on-select="OnSelectedTab(n)" style="background:green">
             <md-tab-label>Node{{n}}</md-tab-label>
             <md-tab-body class="md-padding">
@@ -135,7 +139,33 @@
           </md-tab>
           </div>
         </md-tabs>
+      </md-content> -->
+
+      <md-content>
+      <md-tabs md-stretch-tabs="auto" md-selected="selectedIndex" md-no-ink-bar md-dynamic-height md-border-bottom >
+        <div ng-repeat="n in nodeNum track by $index"> <!-- nodeNum comes from DbDetailsCtrl -->
+          <md-tab md-on-select="OnSelectedTab($index + 1)" style="background:green">
+            <md-tab-label>Node{{$index + 1}}</md-tab-label>
+            <md-tab-body class="md-padding">
+
+              <md-content layout="row" id="chartRow">
+                <hc-pie id="activity{{$index+1}}" class="chart-box" items="chValues.activity" container="activity{{$index+1}}" title='activity'></hc-pie>
+                <hc-bar id="cpu{{$index+1}}" class="chart-box" items="chValues.cpu" container="cpu{{$index+1}}"></hc-bar>
+              </md-content>
+              <md-content layout="row" id="chartRow">
+                <hc-bar id="disk{{$index+1}}" class="chart-box" items="chValues.disk_reads" container="disk{{$index+1}}"></hc-bar>
+                <hc-bar id="time{{$index+1}}" class="chart-box" items="chValues.elapsed_time" container="time{{$index+1}}"></hc-bar>
+              </md-content>
+              <md-content layout="row" id="chartRow">
+                <hc-bar id="executions{{$index+1}}" class="chart-box" items="chValues.executions" container="executions{{$index+1}}"></hc-bar>
+                <hc-bar id="rows{{$index+1}}" class="chart-box" items="chValues.rows_processed" container="rows{{$index+1}}"></hc-bar>
+              </md-content>
+            </md-tab-body>
+          </md-tab>
+          </div>
+        </md-tabs>
       </md-content>
+
     </div>
 
 

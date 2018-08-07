@@ -162,9 +162,13 @@ atlmonJSDirectives.directive('ngSessTable2', function() {
     });
 
 
-
-                    
-
+//Eigenkreation BSCHEER
+// atlmonJSDirectives.directive('ngSessionsDetTab', function() {
+//         return {
+//             templateUrl: 'partials/app-details.html',
+//             // controller: 'SschemaDetailsrCtrl'
+//         }
+//     });
 
 
 atlmonJSDirectives.directive('ngSessionsT1', function() {
@@ -385,8 +389,10 @@ atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (locati
         //added delay
         // var unit, chTitle, catValues, serValues, palette; //original line
         $timeout(function(){var unit, chTitle, catValues, serValues, palette;},1000);
+        $timeout(function(){console.log(newval)});
         if(newval) {
           chTitle = 'Top SQLs by '+scope.items[0].chart_type;
+          // console.log(scope.items[0]);
           unit = scope.items[0].metric_unit;
           catValues = [];
           serValues = [];
@@ -512,7 +518,8 @@ atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (locati
           resize();
         });
 
-    });
+      });
+  
     }
   }; // Semikolon? ^^
 // }, 3000);
