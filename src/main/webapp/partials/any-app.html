@@ -12,7 +12,7 @@
             md-min-length="0"
             placeholder="Select your schema name">
           <md-item-template>
-            <span md-highlight-text="sch.searchText" md-highlight-flags="^i">{{item.value}}</span>
+            <span md-highlight-text="sch.searchText" md-highlight-flags="^i">{{item.value | uppercase}}</span>
           </md-item-template>
           <md-not-found>
             No schema matching "{{sch.searchText}}" were found.

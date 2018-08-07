@@ -156,7 +156,7 @@ atlmonJSControllers.controller(
           var nodeNums =  result.items[0].dbnodes;
           $scope.nodeNum = Array.apply(null, Array(nodeNums)).map(function (x, i) { return i; })
           // new Array(parseInt(nodeNums));
-          console.log($scope.nodeNum);
+          // console.log($scope.nodeNum);
         });
       }
     ]);
@@ -332,10 +332,11 @@ atlmonJSControllers.controller(
         // we need to substract 1 because in the view the $index starts from 0,
         // so the value is always increased by 1
         $scope.selectedIndex = node - 1;
-        // queryTop10(from, to);
-        var stage3 = queryTop10(from, to);
+        queryTop10(from, to);
+        // $scope.stage3 = queryTop10(from, to);
+                // $scope.stage3 = queryTop10(from, to, node);
         console.log('Checkpoint 3 - Query executed and new Assign to chartvalues');
-        $scope.chartValues = stage3;
+        // $scope.chartValues = stage3;
         // assign of default-node happens within the Top10 function...
 
         //test & Kontrolle
@@ -346,6 +347,7 @@ atlmonJSControllers.controller(
 
         //default tab is 1
         $scope.OnSelectedTab = function(tabId) {
+          // console.log('Selected Node / Tab: ',tabId);
           $scope.tab = tabId;
           RegisterChange.setNode(tabId);
           $scope.isDataLoaded = false;
@@ -353,51 +355,29 @@ atlmonJSControllers.controller(
                             'from': RegisterChange.getDate()[0],
                               'to': RegisterChange.getDate()[1]});
         
-        //   if (tabId == 1) {
-        //     $scope.chValues = stage3.then(function(result){return result[0];});
-        //   } else if (tabId == 2) {
-        //     $scope.chValues = stage3.then(function(result){return result[1];});
-        //   } else if (tabId == 3) {
-        //     $scope.chValues = stage3.then(function(result){return result[2];});
-        //   } else
-        //     $scope.chValues = stage3.then(function(result){return result[3];});
-        // }
-        
-        //BSCHEER - another aproach to avoid double-loading of Data into chValues (&get rid of a refresh of the view)
-         // $timeout(function(){
-         if (tabId == 1 &&  $scope.loadedNode != 1) {
-            $scope.chValues = stage3.then(function(result){
-              console.log('Checkpoint: Node1 selected', result[0]);
-              return result[0];});
-            $scope.loadedNode = 1;
-          } else if (tabId == 2 &&  $scope.loadedNode != 2) {
-            $scope.chValues = stage3.then(function(result){
-              console.log('Checkpoint: Node2 selected', result[1]);
-              return result[1];});
-              console.log('Successfully assigned new nodeData: ', $scope.chValues);
-            $scope.loadedNode = 2;
-          } else if (tabId == 3 &&  $scope.loadedNode != 3) {
-            $scope.chValues = stage3.then(function(result){return result[2];});
-            $scope.loadedNode = 3;
-          } else if (tabId == 4 &&  $scope.loadedNode != 4) {
-            $scope.chValues = stage3.then(function(result){return result[3];});
-            $scope.loadedNode = 4;
+         if         (tabId == 1 ) {
+            $scope.chValues = $scope.stage3[0];
+          } else if (tabId == 2) {
+            $scope.chValues = $scope.stage3[1];
+          } else if (tabId == 3 ) {
+            $scope.chValues = $scope.stage3[2];
+          } else if (tabId == 4 ) {
+            $scope.chValues = $scope.stage3[3];
           }
-          // }, 2000);
-          $scope.isDataLoaded = true;
-                        // console.log('Successfully finished task: ', $scope.chValues);
-                        // $scope.chValues.then(function(result){console.log('Final result from the Update: ', result);});
 
+          $scope.isDataLoaded = true;
         }
           
             
-
         function queryTop10(from, to) {
+        // function queryTop10(from, to, nodesel) {
           var top10sess = Top10SessionsGet.query({db: $routeParams.currentDB, from: from, to: to});
+
 
           $scope.isDataLoaded = false;
           // return top10sess.$promise.then(function(result) {
             var stage2 =  top10sess.$promise.then(function(result) {
+              console.log(result);
             $scope.chartValues = {};
             $scope.loadedNode = 0;
 
@@ -450,15 +430,18 @@ atlmonJSControllers.controller(
                  var stage1 = [node1, node2, node3, node4];
 
               //Alte version:  Hier Übergabe an die Darstellung. Dafür muss die Form korrekt sein.
-              $scope.chValues = stage1[0]; 
+              $scope.chValues = stage1[0];
+              // $scope.chValues = stage1[nodesel]; 
+ 
               $scope.isDataLoaded = true;
               $scope.loadedNode = 1;
               // $timeout(function(){$scope.isDataLoaded = true; },1000);
 
-              return (stage1);
+              $scope.stage3 =  stage1;
+
           });
             //
-            // console.log('stage2' , stage2);
+            console.log('stage2' , stage2);
             return (stage2);
 
         }
@@ -611,10 +594,10 @@ atlmonJSControllers.controller(
         // $scope.nodes = SchemaNodesGet.query({db: db, schema: schema});
         var nodesLoc = SchemaNodesGet.query({db: db, schema: schema});
         $scope.nodes = nodesLoc;
-        console.log($scope.nodes);
+        console.log('Nodes: ',$scope.nodes);
       $timeout(function(){
         nodesLoc.$promise.then(function (result) {
-          console.log(result);
+          // console.log(result);
           RegisterChange.setNode(result.items[0].inst_id);
           $scope.selectedIndex = result.items[0].inst_id;
           getData();
@@ -622,6 +605,7 @@ atlmonJSControllers.controller(
       },3000)
 
         $scope.OnSelectedTab = function(tabId) {
+          console.log('Node selected. ',tabId);
           RegisterChange.setNode(tabId);
           getData();
         }
@@ -705,10 +689,10 @@ atlmonJSControllers.controller(
 
         // awr = AWRInfoGet.query({db: $routeParams.currentDB, sqlId: sid});
         awr = awrfull();
-        console.log('awrstack returned:', awr);
+        // console.log('awrstack returned:', awr);
         
           $scope.awrInfo = awr;
-result = awr;
+          result = awr;
           $scope.alert = function (idx, row, type) {
               var previous;
               if (idx <= result.length-2) {
@@ -769,7 +753,7 @@ result = awr;
               nextURL = result.links[3].href;
               // console.log(nextURL);
               newResult = ContinueQuery.query(nextURL);
-              newResult.$promise.then(function(newresult){console.log('Result from next URL',newresult);});
+              // newResult.$promise.then(function(newresult){console.log('Result from next URL',newresult);});
               return newResult;
             }
             else {
@@ -992,7 +976,7 @@ atlmonJSControllers.controller(
 
         function selectedItemChange(item) {
           if (item !== "undefined" && item != null) {
-            console.log(item);
+            // console.log(item);
             RegisterSearchAppChage.setSchema(item);
             RegisterSearchAppChage.setLastSchema(item);
             // RegisterSearchAppChage.setSchema(item.display);
@@ -1017,7 +1001,7 @@ atlmonJSControllers.controller(
               list.push({ value: name.toLowerCase(), display: allSchemas[i]});
             }
             // var list = result.items;
-            console.log(list);
+            // console.log(list);
             return list;
           });
         }
@@ -1059,9 +1043,9 @@ atlmonJSControllers.controller(
       }
     ]);
 
-/** BSCHEER WIP
+/** BSCHEER DONE
  * Controller for the Dropdown.List in "Application"
- * Or not in use?
+ * 
  */
 atlmonJSControllers.controller(
     'SchemaDropDownCtrl',
@@ -1116,54 +1100,76 @@ atlmonJSControllers.controller(
           toggleHide = !toggleHide;
         }
 
-        getDeteails();
+        // getDeteails();
+        $scope.details = getDeteails();
+        $scope.details.then(function (result) {console.log(result)});
         $scope.accounts = [];
-        function getDeteails() {
-           $scope.details = SchemasDetailsGet.query({'schema': $scope.currSchema,
-                                                        'db': $scope.db});
-          // console.log($scope.currSchema);
+        // function getDeteails() {
+        //    $scope.details = SchemasDetailsGet.query({'schema': $scope.currSchema,
+        //                                                 'db': $scope.db});
 
-          return $scope.details.$promise.then(function (result) {
-            $scope.noSessions = result.length == 0;
-            console.log('SchemaDetailsGet', result);
-            for (var i=0;i<result.length;i++){
-              $scope.accounts.push(result[i].userName);
+        //   return $scope.details.$promise.then(function (result) {
+        //     $scope.noSessions = result.items.length == 0;
+        //     console.log('SchemaDetailsGet', result);
+        //     for (var i=0;i<result.items.length;i++){
+        //       // $scope.accounts.push(result.items[i].userName);
+        //       $scope.accounts.push(result.items[i].username);
+        //     }
+        //     RegisterSchemas.setSchemas($scope.accounts);
+        //     // set default schema
+        //     $scope.sitem = $scope.details[0];
+        //   })
+        // }
+
+       function getDeteails() {
+        // console.log($scope.currSchema, $scope.db);
+           detailsQry = SchemasDetailsGet.query({'schema': $scope.currSchema,
+                                                        'db': $scope.db});
+          // console.log(detailsQry);
+          locdetails = detailsQry.$promise.then(function (result) {
+            $scope.noSessions = result.items.length == 0;
+            // console.log('SchemaDetailsGet', result);
+            for (var i=0;i<result.items.length;i++){
+              // $scope.accounts.push(result.items[i].userName);
+              $scope.accounts.push(result.items[i].username);
             }
             RegisterSchemas.setSchemas($scope.accounts);
             // set default schema
-            $scope.sitem = $scope.details[0];
+            // $scope.sitem = $scope.details[0];
+            $scope.sitem = result.items[0];
+
+            return result.items;
           })
+          // console.log(locdetails);
+          return locdetails;
         }
 
         $scope.selectedSchema = RegisterSchemas.getSchemas();
+        
         $scope.update = function(account) {
-          sessOverview(dbName, account.userName);
-          sessDetails(dbName, "0".concat(account.userName));
+          // console.log('call from update');
+          sessOverview(dbName, account.username);
+          sessDetails(dbName, "0".concat(account.username));
         }
 
-        // sessOverview(dbName, $scope.currSchema);
-        // function sessOverview(db, schema) {
-        //   sessInfoRes = SchemaSessionsGet.query({db: db, schema: schema});
-        //   $scope.sessInfo = sessInfoRes;
-        //   sessInfoRes.$promise.then(function (result) {
-        //     $scope.noSessions = result.items.length == 0;
-        //     // console.log('SchemaSessionsGet', result);
-        //     ResizeSessContainer.setSize($scope.noSessions, '.app-sess-table1', result.items.length);
-        //     //result durch result.items.length ersetzt
-        //   });
-        // }
-
+        // console.log('call from currSchema mit', $scope.currSchema);
         sessOverview(dbName, $scope.currSchema);
+        
         function sessOverview(db, schema) {
           sessInfoRes = SchemaSessionsGet.query({db: db, schema: schema});
           // console.log('SchemaSessionsGet NEU:',sessInfoRes);
-          $scope.sessInfo = sessInfoRes;
-          sessInfoRes.$promise.then(function (result) {
+          // $scope.sessInfo = sessInfoRes;
+
+          $scope.sessInfo = sessInfoRes.$promise.then(function (result) {
             $scope.noSessions = result.items.length == 0;
-            // console.log('SchemaSessionsGet', result);
+            // console.log($scope.noSessions);
+            console.log('SchemaSessionsGet', result.items);
             ResizeSessContainer.setSize($scope.noSessions, '.app-sess-table1', result.items.length);
+
+            return result.items;
             //result durch result.items.length ersetzt
           });
+          // console.log($scope.sessInfo);
         }
 
 
@@ -1190,17 +1196,11 @@ atlmonJSControllers.controller(
             $scope.sessDetails = result.items;            
           })
 
-          // $scope.sessDetails.$promise.then(function (result) {
-          //   $scope.noSessions = result.length == 0;
-          //   // console.log('SchemaSessionsDetailsGet', result);
-          //   ResizeSessContainer.setSize($scope.noSessions, '.app-sess-table2', result);
           sessDetailsRes.$promise.then(function (result) {
           $scope.noSessions = result.items.length == 0;
           ResizeSessContainer.setSize($scope.noSessions, '.app-sess-table2', result.items.length);
           });
         }
-
-
 
         $scope.show =function(sql_id) {
           if (sql_id !== null) {
@@ -1237,11 +1237,22 @@ atlmonJSControllers.controller(
 
             // append 0 to the schema name in order to execute slightly different query 
             // in the function GET_SCHEMA_SESS_DETAILS
-            $scope.nodes = SchemaNodesGet.query({db: db, schema: "0".concat(schema)});
-            $scope.nodes.$promise.then(function (result) {
-              getData(result[0]);
+            // $scope.nodes = SchemaNodesGet.query({db: db, schema: "0".concat(schema)});
+            // $scope.nodes.$promise.then(function (result) {
+            //   getData(result[0]);
+            //   $scope.selectedIndex = 0;
+            // });
+
+            //BSCHEER NEW
+            nodesResult = SchemaNodesGet.query({db: db, schema: "0".concat(schema)});
+            // Woher der Node? Wird der überhaupt gebracuht, wenn sowieso Daten aller Nodes geladen werden?
+
+            $scope.nodes = nodesResult.$promise.then(function (result) {
+              getData(result.items[0]); // Das kann noch nicht stimmen. TAB ID als Input für die Funktion!
               $scope.selectedIndex = 0;
+              return result.items;
             });
+
 
             $scope.OnSelectedTab = function(tabId) {
               $scope.tab = tabId;
