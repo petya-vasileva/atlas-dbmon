@@ -219,9 +219,7 @@ atlmonJSDirectives.directive('addHtml', function($compile){
 
 
 atlmonJSDirectives.directive('hcPie',['$location', '$timeout', function (location, $timeout) {
-  console.log('Checkpoint 1');
   // return $timeout(function(){
-  console.log('Checkpoint 2');
   return {
     restrict: 'E',
     scope: {
@@ -232,9 +230,6 @@ atlmonJSDirectives.directive('hcPie',['$location', '$timeout', function (locatio
     link: function(scope, element, attrs) {
 
         scope.$watch('items', function (newval, oldval) {
-          console.log('Checkpoint: $watch noticed a change');
-          console.log('items before processing: ',scope.items);
-          
           var chTitle = 'Top SQLs by ' + scope.title;
           if(newval) {
             var serValues = [];
@@ -387,12 +382,10 @@ atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (locati
       scope.$watch('items', function (newval, oldval) {
 
         //added delay
-        // var unit, chTitle, catValues, serValues, palette; //original line
-        $timeout(function(){var unit, chTitle, catValues, serValues, palette;},1000);
-        $timeout(function(){console.log(newval)});
+        var unit, chTitle, catValues, serValues, palette; //original line
+        // $timeout(function(){var unit, chTitle, catValues, serValues, palette;},1000);
         if(newval) {
           chTitle = 'Top SQLs by '+scope.items[0].chart_type;
-          // console.log(scope.items[0]);
           unit = scope.items[0].metric_unit;
           catValues = [];
           serValues = [];
@@ -539,17 +532,11 @@ atlmonJSDirectives.directive('hcLine', function() {
           var catValues = [];
           var series1 = [];
           var series2 = [];
-          // for(var i=0;i<scope.items.length;i++){
-          //   catValues.push(scope.items[i].dt)
-          //   series1.push(scope.items[i].tableSize);
-          //   series2.push(scope.items[i].indexSize);
-          // };
 
           for(var i=0;i<scope.items.length;i++){
             catValues.push(Object.values(scope.items[i])[0])
             series1.push(Object.values(scope.items[i])[1]);
             series2.push(Object.values(scope.items[i])[2]);
-            // console.log(Object.values(scope.items[i])[2]);
             
           };
 
@@ -677,7 +664,6 @@ atlmonJSDirectives.directive('hcArea', function() {
             },
             tooltip: {
                 formatter: function () {
-                    // console.log(this);
                     return Highcharts.dateFormat('%e-%b-%Y', new Date(this.x)) + '<br/>' + Highcharts.dateFormat('%H:%M:%S', new Date(this.x)) + ' <br/> Value:<b>' + this.y + '</b>';
                 }
             },
