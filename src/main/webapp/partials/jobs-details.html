@@ -24,7 +24,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="row in displayedCollection" ng-click="setSelected($index)" ng-style="highlight(row)" ng-class="{selected: $index === idSelectedRow}">
+    <tr ng-repeat="row in displayedCollection| orderBy:'owner'" ng-click="setSelected($index)" ng-style="highlight(row)" ng-class="{selected: $index === idSelectedRow}">
       <td data-title="'owner'">{{row.owner}}</td>
       <td data-title="'job_name'">{{row.job_name}}</td>
       <td data-title="'last_start_date'">{{row.last_start_date}}</td>

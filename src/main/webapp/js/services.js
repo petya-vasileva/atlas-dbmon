@@ -2,10 +2,8 @@ var atlmonJSServices = angular.module('atlmonJSServices', [ 'ngResource' ]);
 
 atlmonJSServices.constant('baseurl', {
   //'url' : 'https://atlas-dbamon.web.cern.ch/dbmonapi/'            // When in production with JDBC
-  // 'url' : 'https://test-dbmon.web.cern.ch/test-dbmon/dbmon/'
-  'url' : 'http://localhost:8080/dbmonapi/'                         //When running locally with JDBC
-//  'url' : 'https://oraweb.cern.ch/ords/test1/DBMON_SCHEMA_R/metadata-catalog/'
-//  'url' : 'url/to/api'       // When using Oracle REST API
+  'url' : 'http://localhost:8080/dbmonapi/'                         // When running locally with JDBC
+  //'url' : 'url/to/api'       // When using Oracle REST API
 
 }).constant('userurl', {
   'user' : 'databases/'
@@ -14,10 +12,8 @@ atlmonJSServices.constant('baseurl', {
 .factory(
     'BasicInfoGet', ['$resource', 'baseurl', 'userurl',
         function($resource, baseurl, userurl) {
-          // URL for the REST API
-          //  var url = baseurl.url + 'BasicInfo/' + ':db/' + '5/';
+          // var url = baseurl.url + 'BasicInfo/:db/5';
           var url= 'url/to/apiBasicInfo/:db/5';
-          //  window.alert(url);  // Test URL-construction
           
           var res = $resource(url, {}, {
             query: {
@@ -38,25 +34,13 @@ atlmonJSServices.factory(
         'userurl',
         function($resource, baseurl, userurl) {
           var url= 'url/to/apiStreamsInfo/:db/:node/:metric/:from/:to';
-          //  window.alert(url);  // Test URL-construction
-          
+          // var url = baseurl.url + 'StreamsInfo/:db/:node/:metric/:from/:to';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
               isArray: false
             }});
           return res;
-
-          // var url = baseurl.url + userurl.user
-          //     + ':db/streaminfo?node=:node&metric=:metric&from=:from&to=:to';
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
         } ]);
 
 
@@ -70,7 +54,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + userurl.user;
+          // var url = baseurl.url + 'all_databases/';
           var url = 'url/to/apiall_databases/';
           var res = $resource(url, {}, {
             query: {
@@ -89,8 +73,8 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + userurl.user;
           var url = 'url/to/apiall_databases/:db';
+          // var url = baseurl.url + 'all_databases/:db';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -100,35 +84,7 @@ atlmonJSServices
         } ]);
 
 
-
-// atlmonJSServices
-// .factory(
-//     'SessionsTotalInfo',
-//     [
-//         '$resource',
-//         'baseurl',
-//         'userurl',
-//         function($resource, baseurl, userurl) {
-//           var url = baseurl.url + 'BasicInfo/' + ':db/' + '5/';
-//           var url= 'url/to/apiSessionInfo/total/:db';
-//           var res = $resource(url, {}, {
-//             query: {
-//               method: 'GET',
-//               isArray: false
-//             }});
-    
-//           return res;
-//         } ]);
-
-
-
-
-
-
-
-        // BSCHEER WIP
-        // Not in Use?
-        // jetzt wird plötzlich die URL aufgerufen...also doch o_O
+// BSCHEER DONE
 atlmonJSServices
 .factory(
     'DbDetailsGet',
@@ -137,50 +93,38 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
+          // var url = baseurl.url + 'all_databases/:db';
           var url= 'url/to/apiall_databases/:db';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
               isArray: false
             }});
-    
           return res;
-          // var url = baseurl.url + userurl.user
-          //     + ':db';
-          // // window.alert(url);
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : false
-          //   }
-          // });
-
-          // return res;
         } ]);
 
 
 // NOT IN USE
-atlmonJSServices
-.factory(
-    'MetricHistDataGet',
-    [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + userurl.user
-              + 'basic/db/:db/:metricId';
-          var res = $resource(url, {}, 
-          {
-            query : {
-              method : 'GET',
-              isArray : true
-            }
-          });
-          
-          return res;
-        } ]);
+// atlmonJSServices
+// .factory(
+//     'MetricHistDataGet',
+//     [
+//         '$resource',
+//         'baseurl',
+//         'userurl',
+//         function($resource, baseurl, userurl) {
+//           var url = baseurl.url + userurl.user
+//               + 'basic/db/:db/:metricId';
+//           var res = $resource(url, {}, 
+//           {
+//             query : {
+//               method : 'GET',
+//               isArray : true
+//             }
+//           });
+//           return res;
+//         } ]);
+
 
 // BSCHEER DONE
 atlmonJSServices
@@ -191,10 +135,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + userurl.user
-          //     + 'charts/:db/period?from=:from&to=:to';
-
-          // var url = baseurl.url + 'Top10Sessions/' + ':db/' + ':from/' + ':to/';
+          // var url = baseurl.url + 'Top10Sessions/:db/:from/:to';
           var url= 'url/to/apiTop10Sessions/:db/:from/:to';
           var res = $resource(url, {}, {
             query: {
@@ -203,18 +144,9 @@ atlmonJSServices
             }});
     
           return res;
-
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
         } ]);
 
-/** BSCHEER - WIP
+/** BSCHEER - DONE
  * Service or the Controller of the Session_distr. table in the left half of the application
  */
 atlmonJSServices
@@ -225,7 +157,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + 'BasicInfo/' + ':db/' + '5/';
+          // var url = baseurl.url + 'SessionInfo/:db';
           var url= 'url/to/apiSessionInfo/:db';
           var res = $resource(url, {}, {
             query: {
@@ -245,7 +177,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-                    // var url = baseurl.url + 'SessionChartInfo/:db/:schema/:from/:to/:node';
+          // var url = baseurl.url + 'SessionChartInfo/:db/:schema/:from/:to/:node';
           var url= 'url/to/apiSessionChartInfo/:db/:schema/:from/:to/:node';
           var res = $resource(url, {}, {
             query: {
@@ -254,16 +186,6 @@ atlmonJSServices
             }});
     
           return res;
-          // var url = baseurl.url + userurl.user
-          //     + 'sessionschart?db=:db&schema=:schema&fromDate=:from&toDate=:to&node=:node';
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
         } ]);
 
 // BSCHEER DONE
@@ -275,6 +197,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
+          // var url = baseurl.url + 'ExpPlan/:db/:sqlId';
           var url= 'url/to/apiExpPlan/:db/:sqlId';
           var res = $resource(url, {}, {
             query: {
@@ -282,16 +205,6 @@ atlmonJSServices
               isArray: false
             }});
          return res;
-          // var url = baseurl.url + userurl.user
-          //     + ':db/explan?sqlId=:sqlId';
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
         } ]);
 
 // BSCHEER DONE
@@ -303,6 +216,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
+          // var url = baseurl.url + 'AWRInfo/:db/:sqlId';
           var url= 'url/to/apiAWRInfo/:db/:sqlId';
           var res = $resource(url, {}, {
             query: {
@@ -310,16 +224,6 @@ atlmonJSServices
               isArray: false
             }});
          return res;
-          // var url = baseurl.url + userurl.user
-          //     + ':db/awrinfo?sqlId=:sqlId';
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
         } ]);
 
 /**BSCHEER DONE
@@ -333,9 +237,8 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + 'JobsInfo/:db/:schema'
+          // var url = baseurl.url + 'JobsInfo/:db/:schema';
           var url= 'url/to/apiJobsInfo/:db/:schema';
-          // window.alert(url);
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -355,9 +258,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + userurl.user
-          //     + ':db/storage?schema=:schema&year=:year';
-          // var url = baseurl.url + 'StorageInfo/:db/:schema/:year'
+          // var url = baseurl.url + 'StorageInfo/:db/:schema/:year';
           var url= 'url/to/apiStorageInfo/:db/:schema/:year';
           var res = $resource(url, {}, {
             query: {
@@ -379,7 +280,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + 'AllSchemas/:db'
+          // var url = baseurl.url + 'AllSchemas/:db';
           var url= 'url/to/apiAllSchemas/:db';
           var res = $resource(url, {}, {
             query: {
@@ -401,8 +302,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + userurl.user
-          //     + 'schemaDetails?schema=:schema&db=:db';
+          // var url = baseurl.url + 'SchemaDetails/:db/:schema';
           var url= 'url/to/apiSchemaDetails/:db/:schema';
           var res = $resource(url, {}, {
             query: {
@@ -410,14 +310,6 @@ atlmonJSServices
               isArray: false
             }});
          return res;
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
         } ]);
 
 /**BSCHEER
@@ -431,7 +323,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-        // var url = baseurl.url + 'SchemaSessions/:db/:schema'
+        // var url = baseurl.url + 'SchemaSessions/:db/:schema';
         var url= 'url/to/apiSchemaSessions/:db/:schema';
           var res = $resource(url, {}, {
             query: {
@@ -439,16 +331,6 @@ atlmonJSServices
               isArray: false
             }});
          return res;  
-          // var url = baseurl.url + userurl.user
-          //     + 'sesssions?db=:db&schema=:schema';          
-          //     var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
         } ]);
 
 //BSCHEER DONE
@@ -460,16 +342,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + userurl.user
-          //     + 'sesssionDetails?db=:db&schema=:schema';
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
+          // var url = baseurl.url + 'SchemaSessionDetails/:db/:schema';
           var url= 'url/to/apiSchemaSessionDetails/:db/:schema';
           var res = $resource(url, {}, {
             query: {
@@ -488,17 +361,8 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          // var url = baseurl.url + userurl.user
-          //     + 'schemaCharts?db=:db&node=:node&schema=:schema&from=:from&to=:to';
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
-          var url= 'url/to/apiTop10SessPerSchema/:db/:node/:schema/:from/:to';
+          // var url = baseurl.url + 'Top10SessPerSchema/:db/:schema/:from/:to';
+          var url= 'url/to/apiTop10SessPerSchema/:db/:schema/:from/:to';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -517,6 +381,7 @@ atlmonJSServices
         'userurl',
         function($resource, baseurl, userurl) {
 
+          // var url = baseurl.url + 'SchemaSessNodes/:db/:schema';
           var url= 'url/to/apiSchemaSessNodes/:db/:schema';
           var res = $resource(url, {}, {
             query: {
@@ -524,20 +389,9 @@ atlmonJSServices
               isArray: false
             }});
          return res;
-
-          // var url = baseurl.url + userurl.user
-          //     + 'schemaNodes?db=:db&schema=:schema';
-          // var res = $resource(url, {},
-          // {
-          //   query : {
-          //     method : 'GET',
-          //     isArray : true
-          //   }
-          // });
-          // return res;
         } ]);
 
-//BSCHEER 02/02/2018
+//BSCHEER NOTHING DONE YET
 atlmonJSServices
 .factory(
     'BlockingSessGet',
@@ -549,8 +403,7 @@ atlmonJSServices
           var url = baseurl.url + userurl.user
               + 'blocking_sessions?db=:db&from=:from&to=:to';
           //var url = 'url/to/apiselectBlockingSessions/select/ONDB/30-06-2018/02-07-2018';
-          //var url = baseurl.url + 'selectBlockingSessions/select/' + ':db/:from/:to' 
-
+          // var url = baseurl.url + 'selectBlockingSessions/:db/:from/:to'; 
           var res = $resource(url, {},
           {
             query : {
