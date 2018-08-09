@@ -43,7 +43,8 @@ atlmonJSControllers.run(function($rootScope, $location, DateTimeService, Registe
           angular.isUndefined($location.search().db)) {
           RegisterChange.setDate([DateTimeService.format(DateTimeService.initialTime()[0]),
                               DateTimeService.format(DateTimeService.initialTime()[1])]);
-      }
+      } 
+
     });
 });
 
@@ -116,12 +117,7 @@ atlmonJSControllers.controller(
         $scope.currentDB = $routeParams.currentDB;
 
         var nodesRes = DbDetailsGet.query({db: $routeParams.currentDB.toUpperCase()});
-        // console.log(nodesRes);
         $scope.nodes = nodesRes.$promise.then(function(result){ return result.items[0];});
-        // console.log('scope nodes:', $scope.nodes);
-
-
-        // console.log( DbDetailsGet.query({db: $routeParams.currentDB.toUpperCase()}));
         var from, to;
         from = DateTimeService.format(DateTimeService.streamsPlotInitTime()[0]);
         to = DateTimeService.format(DateTimeService.streamsPlotInitTime()[1]);
@@ -155,8 +151,6 @@ atlmonJSControllers.controller(
         nodesRes.$promise.then(function (result) {
           var nodeNums =  result.items[0].dbnodes;
           $scope.nodeNum = Array.apply(null, Array(nodeNums)).map(function (x, i) { return i; })
-          // new Array(parseInt(nodeNums));
-          // console.log($scope.nodeNum);
         });
       }
     ]);
@@ -173,7 +167,6 @@ atlmonJSControllers.controller(
       'DbNamesGet',
       function($routeParams, $scope, DbNamesGet) {
         $scope.databases = DbNamesGet.query();
-        // console.log( DbNamesGet.query());
         $scope.databases.$promise.then(function (result) {
           // TODO: replace that with Angular material
           // Add group id to the databse scope so the db tables can be grouped in diferent <div>-s
@@ -208,16 +201,14 @@ atlmonJSControllers.controller(
       function( $scope, BasicInfoGet) {
         // This [next 10 lines or so...] can be done better, but for now it's clearer this way:
         dbMericsData = BasicInfoGet.query({db: $scope.dbName});
-        // console.log(dbMericsData);
         res = dbMericsData.$promise.then(function(result) {
         $scope.dbMerics = result.items; 
         });
+
         $scope.dbMerics = res;
 
         dbMericsData.$promise.then(function (result) { 
-              // $scope.nodeNum = result.items[0].instid; // Not sure, if still used by some Elements. Can be deleted in the End of the Project.
-              // $scope.nodeNum = new Array(parseInt(result.items[0].nrofnodes));
-              $scope.NrOfNodes = result.items[0].nrofnodes; // used for dynamic nr of columns in the basicInfo and DB metrics overview
+               $scope.NrOfNodes = result.items[0].nrofnodes; // used for dynamic nr of columns in the basicInfo and DB metrics overview
               
               $scope.alert = function (value, row) {
                 if (value > row.threshold ) {
@@ -249,15 +240,12 @@ atlmonJSControllers.controller(
         to = $location.search().to;
         from = $location.search().from;
 
-        // ??????? o_O   O_o   O_O   x_x
         $scope.nodeNumber = 1;
 
         var nodesRes = DbDetailsGet.query({db: db.toUpperCase()});
         $scope.nodeNum = nodesRes.$promise.then(function(result){ return result.items[0].dbnodes;});
-
         cpuPlot = StreamsInfoGet.query({db: db, node: node, metric: 2057, from: from, to: to});
         cpuPlot.$promise.then(function (result) {
-          // console.log('cpuPlot: ',result.items);
           $scope.cpuData = result.items;
         });
 
@@ -352,7 +340,6 @@ atlmonJSControllers.controller(
           } else if (tabId == 4 ) {
             $scope.chValues = $scope.chartValues.node4;
           }
-
           $scope.isDataLoaded = true;
         }
           
@@ -367,8 +354,8 @@ atlmonJSControllers.controller(
             $scope.chartValues = {};
             $scope.loadedNode = 0;
 
-          // Here: Shape data for further processing in the chValues
-          // result of query is one big List, here seperated to Arrays, containing just the data for the charts.
+          // Shape data for further processing in the chValues
+          // Result of query is one big List, here seperated to Arrays, containing just the data for the charts.
                 // Declare Objects for the Data of each node
             var node1 = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
                         elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
@@ -490,14 +477,6 @@ atlmonJSControllers.controller(
               $scope.NrOfNodes = result.items[0].dbnodes; // used for dynamic nr of columns in the basicInfo and DB metrics overview
         });
 
-
-          // ThisSessInfo.$promise.then(function (result) {
-          // // $scope.nodeNum = angular.fromJson($scope.sessInfo[0].nodeMap);
-          // var noSessions = result.items.length == 0; //working
-          // ResizeSessContainer.setSize(noSessions, '.session-list', result);
-          // });
-
-
           ThisSessInfo.$promise.then(function (result) { 
               var noSessions = result.items.length == 0; //working
               var nrOfSessions = result.items.length;
@@ -537,7 +516,6 @@ atlmonJSControllers.controller(
         var db = RegisterChange.getDb();
         var schema = RegisterChange.getSchema();
 
-        // $scope.nodes = SchemaNodesGet.query({db: db, schema: schema});
         var nodesLoc = SchemaNodesGet.query({db: db, schema: schema});
         $scope.nodes = nodesLoc;
       $timeout(function(){
@@ -684,7 +662,6 @@ atlmonJSControllers.controller(
             if (result.links[3].rel == "next") {
               nextURL = result.links[3].href;
               newResult = ContinueQuery.query(nextURL);
-              // newResult.$promise.then(function(newresult){console.log('Result from next URL',newresult);});
               return newResult;
             }
             else {
@@ -706,22 +683,16 @@ atlmonJSControllers.controller(
             for (i in result.items) {
                 AWRStack.push(result.items[i]);
             };
-            // console.log('awrstack vom ersten Run: ', AWRStack);
-            // console.log('result hasMore',result.hasMore);
-            if (result.hasMore == true) {hasMore = true;}
-            // console.log('variable hasmore after setting to result state', hasMore);
 
+            if (result.hasMore == true) {hasMore = true;}
             if (hasMore == true) {
-              // console.log('Aufruf whileMore durch if hasMore == true');
               whileMore(result);
             }});  
 
             function whileMore(prevResult){
-              // console.log('Aufruf der whileMore Funktion');
               awrContinue = getMore(prevResult);
                 if (awrContinue != "nomore"){
                 awrContinue.then(function (subresult) {
-                  // console.log('Checkout subresult', subresult);
                   $timeout(function(){
                   for (var i = 0;  i < subresult.items.length ; i++) {
                     AWRStack.push(subresult.items[i]);
@@ -730,9 +701,7 @@ atlmonJSControllers.controller(
                   else {hasMore = false}
                   },1700);
 
-                  // console.log('AWRStack nach  for-Schleife',AWRStack);
                   if (hasMore == true) {
-                    // console.log('Aufruf der Funktion durch sich selbst');
                     whileMore(subresult);
                   }
                   else {
@@ -831,7 +800,6 @@ atlmonJSControllers.controller(
               return obj.schema_name == RegisterChange.getSchema().toUpperCase();   })
             var schemaPosition = result.items.indexOf(searchSchema[0]);
             // set default value in the dropdown
-            // $scope.item = $scope.allSchemas[0];
             $scope.item = $scope.allSchemas[schemaPosition];
         });
 
@@ -868,7 +836,7 @@ atlmonJSControllers.controller(
       }
     ]);
 
-// BSCHEER WIP
+// BSCHEER DONE
 atlmonJSControllers.controller(
     'AllSchemasCtrl',
     [
@@ -879,8 +847,9 @@ atlmonJSControllers.controller(
       'RegisterSearchAppChage',
       'DbNamesGet',
       'RegisterChange',
+      'DateTimeService',
       function($routeParams, $scope, $location, AllSchemasGet,
-        RegisterSearchAppChage, DbNamesGet, RegisterChange, $timeout, $q, $log) {
+        RegisterSearchAppChage, DbNamesGet, RegisterChange, DateTimeService, $timeout, $q, $log) {
         var self = this;
         self.schemas = loadAll();
         self.querySearch = querySearch;
@@ -914,9 +883,6 @@ atlmonJSControllers.controller(
           if (item !== "undefined" && item != null) {
             RegisterSearchAppChage.setSchema(item);
             RegisterSearchAppChage.setLastSchema(item);
-            // RegisterSearchAppChage.setSchema(item.display);
-            // RegisterSearchAppChage.setLastSchema(item.display);
-
           }
         }
 
@@ -963,7 +929,6 @@ atlmonJSControllers.controller(
         $scope.generateReport = function() {
           var schema = RegisterSearchAppChage.getSchema();
           var db = RegisterSearchAppChage.getDb();
-          console.log('schema für Report:', schema);
           if (schema != null && db != null) {
             $location.path('/app').search({'schema': schema, 'db': db});
             RegisterSearchAppChage.resetInput();
@@ -1002,7 +967,7 @@ atlmonJSControllers.controller(
     ]);
 
 /**BSCHEER
-* WIP
+* DONE
 */
 atlmonJSControllers.controller(
     'SchemaDetailsrCtrl',
@@ -1022,6 +987,7 @@ atlmonJSControllers.controller(
         $scope.currSchema = RegisterChange.getSchema();
         $scope.db = dbName;
 
+
         var toggleHide = true;
         $scope.text = 'See';
         $scope.changeText = function () {
@@ -1034,103 +1000,56 @@ atlmonJSControllers.controller(
         }
 
         getDeteails();
-        // $scope.details = getDeteails();
         $scope.accounts = [];
-        // function getDeteails() {
-        //    $scope.details = SchemasDetailsGet.query({'schema': $scope.currSchema,
-        //                                                 'db': $scope.db});
-
-        //   return $scope.details.$promise.then(function (result) {
-        //     $scope.noSessions = result.items.length == 0;
-        //     console.log('SchemaDetailsGet', result);
-        //     for (var i=0;i<result.items.length;i++){
-        //       // $scope.accounts.push(result.items[i].userName);
-        //       $scope.accounts.push(result.items[i].username);
-        //     }
-        //     RegisterSchemas.setSchemas($scope.accounts);
-        //     // set default schema
-        //     $scope.sitem = $scope.details[0];
-        //   })
-        // }
 
        function getDeteails() {
-        // console.log($scope.currSchema, $scope.db);
            detailsQry = SchemasDetailsGet.query({'schema': $scope.currSchema,
                                                         'db': $scope.db});
-          // console.log(detailsQry);
           locdetails = detailsQry.$promise.then(function (result) {
             $scope.noSessions = result.items.length == 0;
-            // console.log('SchemaDetailsGet', result);
             for (var i=0;i<result.items.length;i++){
-              // $scope.accounts.push(result.items[i].userName);
               $scope.accounts.push(result.items[i].username);
             }
             RegisterSchemas.setSchemas($scope.accounts);
+
             // set default schema
-            // $scope.sitem = $scope.details[0];
             $scope.sitem = result.items[0];
-
-            //test
             $scope.details = result.items;
-            // console.log($scope.details);
-
-            // return result.items;
           })
-          // console.log(locdetails);
-          // return locdetails;
         }
 
         $scope.selectedSchema = RegisterSchemas.getSchemas();
         
-        $scope.update = function(account) {
-          // console.log('call from update');
-          sessOverview(dbName, account.username);
-          sessDetails(dbName, "0".concat(account.username));
+        $scope.update = function() {
+          selectedSchema = $scope.sitem.username;
+          sessOverview(dbName, selectedSchema);
+          sessDetails(dbName, "0".concat(selectedSchema));
         }
 
-        // console.log('call from currSchema mit', $scope.currSchema);
         sessOverview(dbName, $scope.currSchema);
         
         function sessOverview(db, schema) {
           sessInfoRes = SchemaSessionsGet.query({db: db, schema: schema});
-          // console.log('SchemaSessionsGet NEU:',sessInfoRes);
-          // $scope.sessInfo = sessInfoRes;
 
           $scope.sessInfo = sessInfoRes.$promise.then(function (result) {
             $scope.noSessions = result.items.length == 0;
-            // console.log($scope.noSessions);
-            // console.log('SchemaSessionsGet', result.items);
             ResizeSessContainer.setSize($scope.noSessions, '.app-sess-table1', result.items.length);
-
             return result.items;
-            //result durch result.items.length ersetzt
           });
-          // console.log($scope.sessInfo);
         }
 
 
-        // append 0 to the schema name in order to execute slightly different query 
-        // in the function GET_SCHEMA_SESS_DETAILS
-        // Searches with 0 are treated als "schemaName like "mySchema%" " and without 0 as "schemaName = "mySchema""
-        // sessDetails(dbName, "0".concat(RegisterChange.getSchema()));
-        // function sessDetails(db, schema) {
-        //   $scope.sessDetails = SchemaSessionsDetailsGet.query({db: db, schema: schema});
-        //   $scope.sessDetails.$promise.then(function (result) {
-        //     $scope.noSessions = result.length == 0;
-        //     console.log('SchemaSessionsDetailsGet', result);
-        //     ResizeSessContainer.setSize($scope.noSessions, '.app-sess-table2', result);
-        //   });
-        // }
-
         SelSchema = RegisterChange.getSchema();
-        // $timeout(function(){console.log(SelSchema);}, 1000); 
-        // sessDetails(dbName, SelSchema);
         sessDetails(dbName, "0".concat(SelSchema));
         function sessDetails(db, schema) {
           sessDetailsRes = SchemaSessionsDetailsGet.query({db: db, schema: schema});
           sessDetailsRes.$promise.then(function(result){
-            // console.log('SessionDetails',result.items);
-            $scope.sessDetails = result.items;            
+
+            $timeout(function(){
+              $scope.$apply(function() {
+                $scope.sessDetails = result.items;
+              });
+            })
           })
 
           sessDetailsRes.$promise.then(function (result) {
@@ -1155,67 +1074,97 @@ atlmonJSControllers.controller(
 atlmonJSControllers.controller(
         'SchemaTop10Ctrl',
         [
+          '$routeParams',
           '$scope',
           '$location',
           'DateTimeService',
           'Top10SessionsPerSchemaGet',
           'SchemaNodesGet',
           'RegisterChange',
-          function($scope, $location, DateTimeService,
-            Top10SessionsPerSchemaGet, SchemaNodesGet, RegisterChange) {
+          'DateTimeService',
+          function($routeParams, $scope, $location, DateTimeService,
+            Top10SessionsPerSchemaGet, SchemaNodesGet, RegisterChange, DateTimeService) {
             var schema = RegisterChange.getSchema();
             var db = RegisterChange.getDb();
+            var node = RegisterChange.getNode(); 
+            var from = DateTimeService.format(DateTimeService.streamsPlotInitTime()[0]);
+            var to = DateTimeService.format(DateTimeService.streamsPlotInitTime()[1]);
 
-            var from = RegisterChange.getDate()[0];
-            var to = RegisterChange.getDate()[1];
-            // from.setMinutes(to.getMinutes() - 20);
-            // from = DateTimeService.format(moment(from).toDate());
-            // to = DateTimeService.format(moment(to).toDate())
+            $scope.selectedIndex = node - 1;
+            querySessTop10(from, to);
 
-            // append 0 to the schema name in order to execute slightly different query 
-            // in the function GET_SCHEMA_SESS_DETAILS
-            // $scope.nodes = SchemaNodesGet.query({db: db, schema: "0".concat(schema)});
-            // $scope.nodes.$promise.then(function (result) {
-            //   getData(result[0]);
-            //   $scope.selectedIndex = 0;
-            // });
-
-            //BSCHEER NEW
             //returns only nodes 
             nodesResult = SchemaNodesGet.query({db: db, schema: "0".concat(schema)});
-            // Where does the node info come from? Is it needed, if data for all nodes is fetched anyway?
-
-            $scope.nodes = nodesResult.$promise.then(function (result) {
-              getData(result.items[0].inst_id); //tab_id / node as input for function
+            nodesResult.$promise.then(function (result) {
               $scope.selectedIndex = 0;
-              console.log(result);
-              return result.items;
+              $scope.nodes = result.items;
             });
 
 
-            $scope.OnSelectedTab = function(tabId) {
-              $scope.tab = tabId;
-              getData(tabId);
-            }
+        $scope.OnSelectedTab = function(tabId) {
+          $scope.tab = tabId;
+          RegisterChange.setNode(tabId);
+          $scope.isDataLoaded = false;
+          // $location.search({'node': tabId,
+          //                   'from': RegisterChange.getDate()[0],
+          //                     'to': RegisterChange.getDate()[1]});
+        
+         if         (tabId == 1 ) {
+            $scope.chValues = $scope.chartValues.node1;
+          } else if (tabId == 2) {
+            $scope.chValues = $scope.chartValues.node2;
+          } else if (tabId == 3 ) {
+            $scope.chValues = $scope.chartValues.node3;
+          } else if (tabId == 4 ) {
+            $scope.chValues = $scope.chartValues.node4;
+          }
+          $scope.isDataLoaded = true;
+        }
 
-            function getData(tabId) {
-              $scope.top10 = Top10SessionsPerSchemaGet.query({db: db, 
-                                    node: tabId, 
-                                    schema: schema,
-                                    from: from, 
-                                    to: to });
-              $scope.top10.$promise.then(function (result) {
-                console.log('result from schematop10:',result);
-                if (tabId == 1) {
-                  $scope.chValues = result[0].nodeMap.node1;
-                } else if (tabId == 2) {
-                  $scope.chValues = result[0].nodeMap.node2;
-                } else if (tabId == 3) {
-                  $scope.chValues = result[0].nodeMap.node3;
-                } else
-                  $scope.chValues = result[0].nodeMap.node4;
-              });
-            }
+
+        function querySessTop10(from, to) {
+          var top10sess = Top10SessionsPerSchemaGet.query({db: db, schema: schema, from: from, to: to });
+
+          $scope.isDataLoaded = false;
+          top10sess.$promise.then(function(result) {
+
+            $scope.chartValues = {};
+            $scope.loadedNode = 0;
+
+          // Shape data for further processing in the chValues
+          // Result of query is one big List, here seperated to Arrays, containing just the data for the charts.
+                // Declare Objects for the Data of each node
+            var node1 = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+                        elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
+            var node2 = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+                        elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
+            var node3 = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+                        elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
+            var node4 = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+                        elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
+
+            result.items.forEach(function(item){
+            // Every item gets pushed to the object/array according to its own values inst_id (node) and chart_type
+              eval("node" + item.inst_id + "."+item.chart_type).push(item);
+            });
+              
+            var stage1 = {node1:node1, node2:node2, node3:node3, node4:node4}
+            // Assigning a default-value and updating check-variables 
+            $scope.chValues = stage1[0];
+            $scope.isDataLoaded = true;
+            $scope.loadedNode = 1;
+
+            // Passing the results of the query to the scope variable we will be working with.
+            $scope.chartValues =  stage1;
+          });
+        }
+
+        $scope.updateDateTime = function() {
+          // get the new dates from the service DateTimeRegisterChange
+          from = RegisterChange.getDate()[0];
+          to = RegisterChange.getDate()[1];
+        };
+
           }
         ]);
 
@@ -1456,6 +1405,9 @@ atlmonJSControllers.controller(
 
           }
         ]);
+
+
+// Check if used and delete in later Version!
 
 // BSCHEER: Normal Storage Controller used now. 
 // TOFIX: Make StorageInfoCtrl generic. Don't use the following controller. 
