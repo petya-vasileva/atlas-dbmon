@@ -411,6 +411,7 @@ atlmonJSServices
               isArray : true
             }
           });
+          console.log(url);
           return res;
         } ]);
 
@@ -580,13 +581,13 @@ atlmonJSServices
       function () {
         return {
           setSize: function(noSessions, container, nrOfSessions) {
-            // console.log(noSessions, container, nrOfSessions);
             if (noSessions) {
               height = '100%';
             } else if (nrOfSessions < 10) {
-              height = (nrOfSessions * 50).toString();
+              // *35+120px as a correction for the presence of the header (insted of *50)
+              height = (nrOfSessions * 35+120).toString();
               height = height + 'px';
-            } else if (nrOfSessions > 10) {
+            } else if (nrOfSessions >= 10) {
               height = '400px';
             }
             angular.element(container).css('height', height);

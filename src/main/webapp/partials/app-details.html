@@ -102,9 +102,10 @@
     <div ng-controller="SchemaTop10Ctrl" class="sess">
       <!-- Start of top 10 sessions charts container -->
       <md-toolbar class="dt-bar" layout-align="center">
-        <div class="layout-row dt-container">
-          <!-- Start of datetime picker container - no function at the moment-->
-<!--           <div ng-controller="DateTimePickerCtrl" class="container datetimepick">
+        
+      <!-- Start of datetime picker container - no function at the moment-->
+      <!--   <div class="layout-row dt-container">
+          <div ng-controller="DateTimePickerCtrl" class="container datetimepick">
             <div class="layout-row datetimepick-fields">
               <h1 class="md-toolbar-tools title-text">
                 <span flex>Query performance</span>
@@ -125,8 +126,8 @@
 
               </form>
             </div>
-          </div> -->
-        </div>
+          </div>
+        </div> -->
         <!-- End of datetime picker container -->
 
         <md-progress-linear md-mode="indeterminate" class="loader" ng-if="isDataLoaded==false"></md-progress-linear>
