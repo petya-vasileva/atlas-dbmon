@@ -400,18 +400,33 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + userurl.user
-              + 'blocking_sessions?db=:db&from=:from&to=:to';
-          //var url = 'url/to/apiselectBlockingSessions/select/ONDB/30-06-2018/02-07-2018';
+          var url = 'url/to/apiselectBlockingSessions/:db/:from/:to';
           // var url = baseurl.url + 'selectBlockingSessions/:db/:from/:to'; 
-          var res = $resource(url, {},
-          {
-            query : {
-              method : 'GET',
-              isArray : true
-            }
-          });
-          console.log(url);
+          var res = $resource(url, {}, {
+            query: {
+              method: 'GET',
+              isArray: false
+            }});
+          return res;
+        } ]);
+
+
+//Necessary to get the data without the data-variables (NULL for to and from)
+atlmonJSServices
+.factory(
+    'BlockingSessGetDefault',
+    [
+        '$resource',
+        'baseurl',
+        'userurl',
+        function($resource, baseurl, userurl) {
+          var url = 'url/to/apiselectBlockingSessions/:db';
+          // var url = baseurl.url + 'selectBlockingSessions/:db'; 
+          var res = $resource(url, {}, {
+            query: {
+              method: 'GET',
+              isArray: false
+            }});
           return res;
         } ]);
 
@@ -462,7 +477,6 @@ atlmonJSServices
             } else return "all";
           },
           setSchema: function(name) {
-            console.log(name);
             schema = name;
           },
           getDb: function () {
@@ -552,15 +566,17 @@ atlmonJSServices
         return {
           buildTree: function(data) {
             var children, e, id, o, pid, temp, _i, _len, _ref;
-            id = data.child_sess_id || "child_sess_id";
-            pid = data.parent_sess_id || "parent_sess_id";
+            // id = data.child_sess_id || "child_sess_id";
+            // pid = data.parent_sess_id || "parent_sess_id";
+            id = data.waiting_sess_id || "waiting_sess_id";            
+            pid = data.blocking_sess_id || "blocking_sess_id";
             children = data.children || "children";
             temp = {};
             o = [];
             _ref = data;
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               e = _ref[_i];
-              e[children] = [];
+              e[children] = []; 
               temp[e[id]] = e;
               if (temp[e[pid]] != null) {
                 temp[e[pid]][children].push(e);

@@ -1,45 +1,7 @@
 var atlmonJSDirectives = angular.module('atlmonJSDirectives', []);
 
-/**
- * The directive that builds the tables with database info. 
- * For each DB name it creates dedicated table.
- */
-// atlmonJSDirectives.directive('ngDbTable', function() {
-//         return {
-//             restrict: 'A',
-//             scope: {
-//               dbName: '@',
-//               reduced: '@'
-//             },
-//             template: '\
-//                   <div ng-if="reduced==\'yes\'" class="headline">\
-//                   <h4>{{dbName}}</h4>\
-//                   </div>\
-//                   <table class="table table-bordered">\
-//                     <thead>\
-//                       <tr>\
-//                         <th>Metric</th>\
-//                         <th ng-repeat="n in nodeNum ">Node{{$index+1}}</th>\
-//                       </tr>\
-//                     </thead>\
-//                     <tbody>\
-//                       <tr ng-repeat="row in dbMerics | tableType: reduced | orderBy : \'-metric\'">\
-//                         <td >{{row.metric}}</td>\
-//                         <td ng-repeat="(key, value) in row.nodeMap" ng-style="alert(value, row)">\
-//                           {{value}}\
-//                         </td>\
-//                       </tr>\
-//                     </tbody>\
-//                   </table>',
-//             controller: 'BasicInfoCtrl'
-//         }
-//     });
-
-
 /** BSCHEER
  * The new directive to build the tables out of the new data structure.
- * ORDER BY removed because not compatible!
- * Maybe find a new solution to that, which works on the resource Object & ORDS structure
  */
 atlmonJSDirectives.directive('ngDbTable', function() {
         return {
@@ -65,7 +27,7 @@ atlmonJSDirectives.directive('ngDbTable', function() {
                       </tr>\
                     </thead>\
                     <tbody>\
-                      <tr ng-repeat="row in dbMerics | tableType: reduced">\
+                      <tr ng-repeat="row in dbMerics | tableType: reduced | toArray:false | orderBy:\'-metric\'">\
                         <td >{{row.metric}}</td>\
                        <td ng-repeat="(key, value) in row" ng-style="alert(value, row)" ng-if="$index < NrOfNodes">\
                           {{value}}\
@@ -77,52 +39,8 @@ atlmonJSDirectives.directive('ngDbTable', function() {
         }
     });
 
-
-
-
-// BSCHEER END
-
-
-
-/**
- * The directive that builds the tables with database info. 
- * For each DB name it creates dedicated table.
- */
-// atlmonJSDirectives.directive('ngSessTable', function() {
-//         return {
-//             restrict: 'A',
-//             scope: {
-//               dbName: '@'
-//             },
-//             template: '\
-//                   <div class="outer-container"><div class="table-container"><table class="table table-bordered fixed_headers">\
-//                     <thead>\
-//                       <tr>\
-//                         <th><div>Schema</div></th>\
-//                         <th ng-repeat="n in nodeNum"><div>Node{{$index+1}}</div></th>\
-//                         <th><div>Total</div></th>\
-//                       </tr>\
-//                     </thead>\
-//                     <tbody>\
-//                       <tr ng-repeat="row in sessInfo | orderBy : \'+userName\'" ng-click="show(row)" \
-//                       ng-mouseover="rowselected($index)" ng-mouseleave="rowselected()" ng-class="{over : $index == rowNumber}">\
-//                         <td >{{row.userName}}</td>\
-//                         <td ng-repeat="(key, value) in row.nodeMap" ng-style="alert(value, row)">\
-//                           {{value}}\
-//                         </td>\
-//                         <td >{{row.activeOutOfTotal}}</td>\
-//                       </tr>\
-//                     </tbody>\
-//                   </table></div></div>',
-//             controller: 'SessDistrCtrl'
-//         }
-//     });
-
-
-/** BSCHEER - WIP
- * The directive that builds the tables with database info. 
- * For each DB name it creates dedicated table.
- * This one is to work with the new data structure
+/** BSCHEER 
+ * The directive that builds the tables with database info. For each DB name it creates dedicated table.
  */
 atlmonJSDirectives.directive('ngSessTable', function() {
         return {
@@ -146,7 +64,7 @@ atlmonJSDirectives.directive('ngSessTable', function() {
                       </tr>\
                     </thead>\
                     <tbody>\
-                      <tr ng-repeat="row in sessInfo" ng-click="show(row)" \
+                      <tr ng-repeat="row in sessInfo" | toArray:false | orderBy:\'+username\' ng-click="show(row)" \
                       ng-mouseover="rowselected($index)" ng-mouseleave="rowselected()" ng-class="{over : $index == rowNumber}">\
                         <td >{{row.username}}</td>\
                         <td ng-style="alert(value, row)">{{row.node1}}</td>\
@@ -160,7 +78,6 @@ atlmonJSDirectives.directive('ngSessTable', function() {
             controller: 'SessDistrCtrl'
         }
     });
-
 
 
 atlmonJSDirectives.directive('ngSessionsT1', function() {
@@ -207,7 +124,6 @@ atlmonJSDirectives.directive('addHtml', function($compile){
     }
   }
 });
-
 
 
 atlmonJSDirectives.directive('hcPie',['$location', '$timeout', function (location, $timeout) {
