@@ -1,6 +1,6 @@
 var dbmonJSApp = angular.module('atlmonJSApp', [ 'ngRoute', 'atlmonJSControllers',
   'atlmonJSDirectives', 'atlmonJSServices', 'atlmonJSFilters', 'angular.filter',
-  'smart-table','ui.bootstrap', 'ngMaterialDatePicker', 'ngMaterial' ]); //, 'treeGrid']);
+  'smart-table','ui.bootstrap', 'ngMaterialDatePicker', 'ngMaterial' , 'treeGrid']);
 
 dbmonJSApp.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.
@@ -27,11 +27,11 @@ dbmonJSApp.config([ '$routeProvider', function($routeProvider) {
     when('/sessions', {
       templateUrl: 'partials/all-sessions-details.html',
     }).
-/*    when('/hist-blocking-tree', {
+    when('/hist-blocking-tree', {
       templateUrl: 'partials/hist-blocking-tree.html',
       reloadOnSearch: false
     }).
-  */  otherwise({
+    otherwise({
       redirectTo: '/home'
     });
 } ]);

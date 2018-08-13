@@ -942,8 +942,7 @@ atlmonJSControllers.controller(
     ]);
 
 /** BSCHEER DONE
- * Controller for the Dropdown.List in "Application"
- * 
+ * Controller for the Dropdown.List in "Application" and HistTree
  */
 atlmonJSControllers.controller(
     'SchemaDropDownCtrl',
@@ -957,7 +956,11 @@ atlmonJSControllers.controller(
         if (db !== undefined)
           $scope.dbModel = db.toUpperCase();
 
-        // $scope.databases = DbNamesGet.query();
+        dbs = DbNamesGet.query();
+        dbs.$promise.then(function(result){
+          console.log(result.items);
+          $scope.all_databases = result.items;
+        });
         // On dropdown item change
         $scope.update = function(item) {
           RegisterChange.setDb(item.toLowerCase());
@@ -1182,17 +1185,29 @@ atlmonJSControllers.controller(
           '$interval',
           'BlockingSessGet',
           'BlockingTree',
-          function($scope, $location, $routeParams, $window, $interval, BlockingSessGet, BlockingTree) {
+          'BlockingSessGetDefault',
+          function($scope, $location, $routeParams, $window, $interval, BlockingSessGet, BlockingTree, BlockingSessGetDefault) {
             // var schema = $location.search().selected;
             var db = $routeParams.currentDB;
             GetLocks();
 
             function GetLocks() {
-              var data = BlockingSessGet.query({db: db});
+              //new: new Service for default-URL-path.
+              // var from = 'NULL';
+              // var to = 'NULL';
+
+              //TEST
+              // var from = '2018-08-10T10:04';
+              // var to = '2018-08-10T10:24';
+
+              // var data = BlockingSessGet.query({db: db, from: from, to: to});
+              var data = BlockingSessGetDefault.query({db: db});
               
               // TOFIX: This is not the correct way to wait for the data to load.
+
+              //BSCHEER LAST TOUCHED
               data.$promise.then(function (result) {
-                var get_tree = BlockingTree.buildTree(result);
+                var get_tree = BlockingTree.buildTree(result.items);
                 if (get_tree.length == 0)
                   angular.element('.block-tree').html('<p>There are no blocking sessions in the last minutes.</p>');
                 $scope.treedata= get_tree;
@@ -1217,16 +1232,26 @@ atlmonJSControllers.controller(
               $window.open(path, '_blank');
             }
 
+            // $scope.expandingProperty = {
+            //   field: "child_sess_id",
+            //   displayName: "Session ID"
+            // };
             $scope.expandingProperty = {
-              field: "child_sess_id",
+              field: "waiting_sess_id",
               displayName: "Session ID"
             };
 
+            // $scope.colDefs = [
+            // {
+            //   field: "child_sess_id",
+            //   displayName: "Session ID"
+            // },
             $scope.colDefs = [
             {
-              field: "child_sess_id",
+              field: "waiting_sess_id",
               displayName: "Session ID"
             },
+
             {
               field: "logon_time",
               displayName: "Logon Time"
@@ -1310,12 +1335,12 @@ atlmonJSControllers.controller(
 
               // TOFIX: This is not the correct way to wait for the data to load.
               data.$promise.then(function (result) {
-                if (result.length == 0) {
+                if (result.items.length == 0) {
                   $scope.noSessions = true;
                 }
                 else {
                   $scope.noSessions = false;
-                  $scope.treedata = BlockingTree.buildTree(result);
+                  $scope.treedata = BlockingTree.buildTree(result.items);
                 }
                 $scope.isDataLoaded = true;
               });
@@ -1346,11 +1371,17 @@ atlmonJSControllers.controller(
 
             $scope.expandingProperty = "child_sess_id";
 
+            // $scope.colDefs = [
+            // {
+            //   field: "child_sess_id",
+            //   displayName: "Session ID"
+            // },
             $scope.colDefs = [
             {
-              field: "child_sess_id",
+              field: "waiting_sess_id",
               displayName: "Session ID"
             },
+
             {
               field: "logon_time",
               displayName: "Logon Time"
