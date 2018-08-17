@@ -941,6 +941,44 @@ BEGIN
   return tab;
 END TOP10_TEST;
 
+--##########################################################################
+
+create or replace FUNCTION                                      GET_APPLY_LAG (db VARCHAR2) 
+
+RETURN APPLYLAG_TAB AS 
+  -- The AUTONOMOUS_TRANSACTION and the rollback at the end of the proc are neccessary to close 
+  -- the transaction open by Oracle because of the used DB link.
+  PRAGMA AUTONOMOUS_TRANSACTION;
+  sql_tab APPLYLAG_TAB:= APPLYLAG_TAB();
+  sql_text VARCHAR2(4000);
+
+BEGIN
+
+  IF (UPPER(DB) = 'OFFDB') THEN
+	sql_text := 'select a.apply_name as source, TO_CHAR((APPLY_TIME - APPLIED_MESSAGE_CREATE_TIME)*86400) as apply_lag, TO_CHAR(SYSDATE, ''YYYY-MM-DD HH24:MI:SS'') as snapshot_time, status 
+from DBA_APPLY_PROGRESS@offdb p, dba_apply@offdb a where p.apply_name = a.apply_name';
+        DBMS_OUTPUT.put_line(sql_text);
+  ELSE 
+    sql_text := 'SELECT NULL as source, sysdate + (TO_DSINTERVAL(VALUE) * 86400) - sysdate as apply_lag, NULL as snapshot_time, NULL as status FROM gV$DATAGUARD_STATS@'||db||' WHERE NAME = ''apply lag'' AND value IS NOT NULL';
+        DBMS_OUTPUT.put_line(sql_text);
+
+  END IF;  
+
+
+    sql_text := 'SELECT DBMON_SCHEMA.APPLYLAG_OBJ(SOURCE,APPLY_LAG,SNAPSHOT_TIME,STATUS) 
+           FROM (' || sql_text || ')';
+                   DBMS_OUTPUT.put_line(sql_text);
+
+
+  	execute immediate sql_text bulk collect into sql_tab;
+
+  rollback;
+
+  RETURN sql_tab;
+
+END GET_APPLY_LAG;
+
+
 
 
 --##########################################################################
@@ -959,5 +997,17 @@ SQL_TEXT	VARCHAR2(4000 BYTE)
 
 --##########################################################################
 create or replace TYPE             TOP10_TAB AS TABLE OF DBMON_SCHEMA.TOP10_OBJ;
+
+--##########################################################################
+create or replace TYPE             APPLYLAG_OBJ AS OBJECT
+(
+source  		VARCHAR2(30 BYTE),
+apply_lag		VARCHAR2(64 BYTE),
+snapshot_time 	VARCHAR2(30 BYTE),
+status  		VARCHAR2(32 BYTE)
+);
+
+--##########################################################################
+create or replace TYPE             APPLYLAG_TAB AS TABLE OF DBMON_SCHEMA.APPLYLAG_OBJ;
 
 --##########################################################################
