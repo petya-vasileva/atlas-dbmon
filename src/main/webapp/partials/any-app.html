@@ -1,5 +1,15 @@
 <div ng-controller="AllSchemasCtrl as sch" layout-xl="row" layout-gt-md="row" layout-align="center" ng-cloak>
   <md-content class="md-padding">
+
+    <div class="db-dropdown">
+      <div class='dd-btn'>
+        <select class="db-btn btn dropdown-toggle" ng-model="dbModel" ng-dropdown required ng-change="update(dbModel)">
+          <option value="">Select database</option>
+          <option ng-repeat="d in databases" ng-model="dbModel" value="{{d.dbname}}">{{d.dbname}}</option>
+        </select>
+      </div>
+    </div>
+
     <div class="schema-search" layout-align="center">
       <form ng-submit="$event.preventDefault()">
         <md-autocomplete
@@ -22,24 +32,14 @@
       </form>
     </div>
 
-    <div class="db-dropdown">
-      <div class='dd-btn'>
-        <select class="db-btn btn dropdown-toggle" ng-model="dbModel" ng-dropdown required ng-change="update(dbModel)">
-          <option value="">Select database</option>
-          <option ng-repeat="d in databases" value="{{d.dbname}}">{{d.dbname}}</option>
-        </select>
-      </div>
-    </div>
-
     <form class="report-btn" >
       <span>
         <button type="button" class="btn" ng-click="generateReport()">Generate report</button>
       </span>
     </form>
-
-    <div class="incomplete-input" ng-if="incomplInput == true">
-      <p>Please, verify your input.</p>
+    <div class="incomplete-input" ng-if="incomplInput == true" ng-style = "InputErrorStyle">
+      <p>Please verify your input.</p>
     </div>
-    
+
   </md-content>
 </div>

@@ -7,9 +7,9 @@ BEGIN
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -48,9 +48,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -75,7 +75,7 @@ BEGIN
       p_mimes_allowed  => '',
       p_comments       => NULL,
       p_source         => 
-'select * from table(atlas_dbmon.GET_AWR_STATS4_SQLID(:db, :sqlID))'
+'select * from table(ATLAS_DBMON.GET_AWR_STATS4_SQLID(:db, :sqlID))'
       );
 
 
@@ -89,9 +89,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -146,9 +146,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -187,9 +187,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -228,9 +228,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -256,7 +256,7 @@ BEGIN
       p_comments       => NULL,
       p_source         => 
 'select username, resp_name, resp_email, account_status, password_expiry_date, egroup
-from table(atlas_dbmon.GET_SCHEMA_DETAILS(UPPER(:schema), :db))'
+from table(ATLAS_DBMON.GET_SCHEMA_DETAILS(UPPER(:schema), :db))'
       );
 
 
@@ -270,9 +270,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -311,9 +311,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -358,9 +358,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -402,9 +402,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -461,9 +461,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -502,9 +502,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -601,9 +601,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -643,9 +643,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -687,9 +687,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -730,9 +730,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(
@@ -793,9 +793,9 @@ END;
 BEGIN
   ORDS.ENABLE_SCHEMA(
       p_enabled             => TRUE,
-      p_schema              => 'ATLAS_DBMON',
+      p_schema              => 'ATLAS_DBMON_R',
       p_url_mapping_type    => 'BASE_PATH',
-      p_url_mapping_pattern => 'atlas_dbmon',
+      p_url_mapping_pattern => 'atlas_dbmon_r',
       p_auto_rest_auth      => FALSE);    
 
   ORDS.DEFINE_MODULE(

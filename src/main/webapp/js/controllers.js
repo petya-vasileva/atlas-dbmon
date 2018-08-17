@@ -198,7 +198,9 @@ atlmonJSControllers.controller(
     [
       '$scope',
       'BasicInfoGet',
-      function( $scope, BasicInfoGet) {
+      'JobsBasicInfoGet',
+      'ApplyLagGet',
+      function( $scope, BasicInfoGet, JobsBasicInfoGet, ApplyLagGet) {
         // This [next 10 lines or so...] can be done better, but for now it's clearer this way:
         dbMericsData = BasicInfoGet.query({db: $scope.dbName});
         res = dbMericsData.$promise.then(function(result) {
@@ -217,7 +219,46 @@ atlmonJSControllers.controller(
                 else {
                   return { background: "#229369", color: "#fff" }}
             };
-           });
+        });
+
+        //Get basic Infos about jobs running on the database
+        var data = JobsBasicInfoGet.query({db: $scope.dbName, schema: 'all'});
+        data.$promise.then(function (result) {
+          $scope.dbJobs = result.items;
+          if (result.items[0].total_jobs == 0){
+            $scope.hasJobs =  false;
+          } else {$scope.hasJobs =  true;}
+        });
+
+        $scope.jobAlert = function (job) {
+          if (job.failed_jobs > 0 ) {
+            return { background: "#981A37", color: "#fff" }}
+          else {
+            return { background: "#229369", color: "#fff" }}
+          };
+
+        //Get Infos about the apply-Lag for the ADGs and OFFDB
+        var lag = ApplyLagGet.query({db: $scope.dbName});
+        lag.$promise.then(function (result) {
+          $scope.applyLag = result.items;
+          $scope.isOFFDB = false;
+          if (result.items.length >0) {
+            if (result.items[0].dbname == 'OFFDB') {$scope.isOFFDB = true}
+          }
+          console.log(result.items);
+        // console.log($scope.isOFFDB);
+        });
+        // Distinguish "is ADG" ! ==> Can be achieved with dbName!
+
+        $scope.lagAlert = function (lag) {
+          if (lag > 600 ) {
+            return { background: "#981A37", color: "#fff" }}
+          else if ( lag > 300) {
+            return { background: "#5a93c7", color: "#fff" }}
+          else {
+            return { background: "#229369", color: "#fff" }}
+          };
+
       }
     ]);
 
@@ -386,6 +427,8 @@ atlmonJSControllers.controller(
           // get the new dates from the service DateTimeRegisterChange
           from = RegisterChange.getDate()[0];
           to = RegisterChange.getDate()[1];
+          queryTop10(from, to);
+
         };
       }
     ]);
@@ -429,6 +472,19 @@ atlmonJSControllers.controller(
         $scope.$watchCollection("[dateTimeStart, dateTimeEnd]", function(date) {
           var start = date[0];
           var end = date[1];
+          var RegexpDate = new RegExp(/^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)\s([01][0-9]|2[0-3]):[0-5][0-9]$/);
+          normalStyle = {"background-color" : "white"}
+          dateErrorStyle = {"background-color" : "LightPink"}
+
+          // Checking the input-Format and setting Style for Input-Box
+          if (RegexpDate.test(date[0]) ) {
+            $scope.dpstyleFrom = normalStyle; 
+          } else {$scope.dpstyleFrom = dateErrorStyle;}       
+
+          if (RegexpDate.test(date[1]) ) {
+            $scope.dpstyleTo = normalStyle; 
+          } else {$scope.dpstyleTo = dateErrorStyle;} 
+
           RegisterChange.setDate([DateTimeService.formatQuery(start), DateTimeService.formatQuery(end)]);
         }, true);
       }
@@ -446,10 +502,10 @@ atlmonJSControllers.controller(
       '$location',
       '$window',
       'SessionDistrGet',
-      'SingleDbInfoGet',
+      'DbDetailsGet',
       'ResizeSessContainer',
       'RegisterChange',
-      function($routeParams, $scope, $location, $window, SessionDistrGet, SingleDbInfoGet, ResizeSessContainer, RegisterChange) {
+      function($routeParams, $scope, $location, $window, SessionDistrGet, DbDetailsGet, ResizeSessContainer, RegisterChange) {
         $scope.username = '%';
 
         $scope.show = function(row) {
@@ -472,7 +528,7 @@ atlmonJSControllers.controller(
             });
 
         //added 2nd Query for Information about the NrOfNodes in theDatabase.
-        ThisDbInfo = SingleDbInfoGet.query({db: $routeParams.currentDB});
+        ThisDbInfo = DbDetailsGet.query({db: $routeParams.currentDB});
         ThisDbInfo.$promise.then(function (result) { 
               $scope.NrOfNodes = result.items[0].dbnodes; // used for dynamic nr of columns in the basicInfo and DB metrics overview
         });
@@ -524,7 +580,7 @@ atlmonJSControllers.controller(
           $scope.selectedIndex = result.items[0].inst_id;
           getData();
         });        
-      },500)
+      },200)
 
         $scope.OnSelectedTab = function(tabId) {
           RegisterChange.setNode(tabId);
@@ -596,7 +652,19 @@ atlmonJSControllers.controller(
 
         $scope.expPlan = ExpPlanGet.query({db: $routeParams.currentDB, sqlId: sid});
         $scope.expPlan.$promise.then(function (result) {
-          $scope.planRes = result.items;
+          // switch for the sometimes strange 1-string resultsets.
+          if (result.items[1].plan_table_output.length > 140 &&result.items.length == 2) {
+            var chunks = result.items[1].plan_table_output.split(/(.{100}\S*)\s/).filter(function(e){return e;});
+            var resultset = result.items;
+            resultset.splice(1,1);
+              for (var i = 0;  i < chunks.length ; i++) {
+                resultset.push({plan_table_output: chunks[i]});
+              }
+            $scope.planRes = resultset;
+
+          } else {
+            $scope.planRes = result.items;
+          }
         });
 
         awr = awrfull();
@@ -655,8 +723,9 @@ atlmonJSControllers.controller(
 
             }
 
-        
+
         // Queries the ContinueQuery Service which can be used for any URL
+        // Not needed anymore
         function getMore(queryresult) {
             var continuation =  queryresult.$promise.then(function (result) {
             if (result.links[3].rel == "next") {
@@ -687,7 +756,9 @@ atlmonJSControllers.controller(
             if (result.hasMore == true) {hasMore = true;}
             if (hasMore == true) {
               whileMore(result);
-            }});  
+            }
+
+          });  
 
             function whileMore(prevResult){
               awrContinue = getMore(prevResult);
@@ -837,6 +908,7 @@ atlmonJSControllers.controller(
     ]);
 
 // BSCHEER DONE
+//Controller of the any-App
 atlmonJSControllers.controller(
     'AllSchemasCtrl',
     [
@@ -844,27 +916,48 @@ atlmonJSControllers.controller(
       '$scope',
       '$location',
       'AllSchemasGet',
+      'AllSchemasGetNoAll',
       'RegisterSearchAppChage',
       'DbNamesGet',
       'RegisterChange',
       'DateTimeService',
-      function($routeParams, $scope, $location, AllSchemasGet,
+      function($routeParams, $scope, $location, AllSchemasGet, AllSchemasGetNoAll,
         RegisterSearchAppChage, DbNamesGet, RegisterChange, DateTimeService, $timeout, $q, $log) {
         var self = this;
         self.schemas = loadAll();
+        loadedSchemas = loadAll();
         self.querySearch = querySearch;
         self.selectedItemChange = selectedItemChange;
         self.searchTextChange  = searchTextChange;
+        $scope.InputErrorStyle = {"position": "absolute", "bottom": "0"};
 
         var db = $location.search().db;
         if (db !== undefined)
           $scope.dbModel = db;
 
-        function querySearch (query) {
-          var sch = self.schemas.$$state.value;
 
-          var results = query ? sch.filter( createFilterFor(query) ) : self.schemas,
+        //Create a watcher on the database
+        //Execute query on schemas get with db
+        //change scope.schemas to the new list of schemas
+        $scope.$watch("dbModel", function(newValue, oldValue) {
+          console.log(newValue);
+          if (newValue !== undefined && newValue !== oldValue){
+            self.schemas = loadSchemasDb(newValue);
+            loadedSchemas = loadSchemasDb(newValue);
+          } else if (newValue == undefined) {self.schemas = loadAll(); loadedSchemas = loadAll();}
+          console.log(self.schemas);
+          console.log(loadedSchemas);
+        }, true);
+
+
+
+
+        function querySearch (query) {
+          var sch = loadedSchemas.$$state.value; //self.schemas.$$state.value;
+          console.log(sch);
+          var results = query ? sch.filter( createFilterFor(query) ) : loadedSchemas,  //self.schemas,
               deferred;
+              console.log(results);
           if (self.simulateQuery) {
             deferred = $q.defer();
             $timeout(function () {
@@ -875,6 +968,23 @@ atlmonJSControllers.controller(
             return results;
           }
         }
+
+
+        // function querySearch (query) {
+        //   var sch = loadedSchemas.$$state.value; //self.schemas.$$state.value;
+
+        //   var results = query ? sch.filter( createFilterFor(query) ) : loadedSchemas,  //self.schemas,
+        //       deferred;
+        //   if (self.simulateQuery) {
+        //     deferred = $q.defer();
+        //     $timeout(function () {
+        //       deferred.resolve( results );
+        //     }, 500, false);
+        //     return deferred.promise;
+        //   } else {
+        //     return results;
+        //   }
+        // }
 
         function searchTextChange(text) {
         }
@@ -905,6 +1015,19 @@ atlmonJSControllers.controller(
           });
         }
 
+        //BSCHEER NEW
+        function loadSchemasDb(selectedDb) {
+          var allSchemas = AllSchemasGetNoAll.query({db: selectedDb});
+          return allSchemas.$promise.then(function (result) {
+            var list = [];
+            for(var i=0;i<result.items.length;i++){
+              name = result.items[i].schema_name;
+              list.push({ value: name.toLowerCase(), display: allSchemas[i]});
+            }
+            return list;
+          });
+        }
+
         //Create filter function for a query string
         function createFilterFor(query) {
           var lowercaseQuery = angular.lowercase(query);
@@ -916,7 +1039,6 @@ atlmonJSControllers.controller(
           };
         }
 
-        //BSCHEER changed to ORDS
         DbNamesGet.query().$promise.then(function(result) {
         $scope.databases = result.items; 
         });
@@ -1443,48 +1565,48 @@ atlmonJSControllers.controller(
 // BSCHEER: Normal Storage Controller used now. 
 // TOFIX: Make StorageInfoCtrl generic. Don't use the following controller. 
 // The code is almost the same!
-atlmonJSControllers.controller(
-    'SchemaStorageInfoCtrl',
-    [
-      '$scope',
-      '$location',
-      'StorageInfoGet',
-      'AllSchemasGet',
-      'RegisterSchemas',
-      'RegisterChange',
-      function($scope, $location, StorageInfoGet, AllSchemasGet, RegisterSchemas, RegisterChange) {
-          db = $location.search().db;
+// atlmonJSControllers.controller(
+//     'SchemaStorageInfoCtrl',
+//     [
+//       '$scope',
+//       '$location',
+//       'StorageInfoGet',
+//       'AllSchemasGet',
+//       'RegisterSchemas',
+//       'RegisterChange',
+//       function($scope, $location, StorageInfoGet, AllSchemasGet, RegisterSchemas, RegisterChange) {
+//           db = $location.search().db;
 
-        // TOFIX: data is available later than requested
-        var schemas = RegisterSchemas.getSchemas();
+//         // TOFIX: data is available later than requested
+//         var schemas = RegisterSchemas.getSchemas();
 
-        var selectedSchema = 'ALL'
-        // var selectedSchema = RegisterChange.getSchema();
-        // $scope.item = RegisterChange.getSchema();
+//         var selectedSchema = 'ALL'
+//         // var selectedSchema = RegisterChange.getSchema();
+//         // $scope.item = RegisterChange.getSchema();
 
-        // On dropdown item change
-        $scope.update = function() {
-          selectedSchema = $scope.item;
-          queryStorageData();
-        }
+//         // On dropdown item change
+//         $scope.update = function() {
+//           selectedSchema = $scope.item;
+//           queryStorageData();
+//         }
 
-        // radio buttons
-        $scope.radioModel = '2016';
-        $scope.$watch("radioModel", function(newValue, oldValue) {
-          queryStorageData();
-        }, true);
+//         // radio buttons
+//         $scope.radioModel = '2016';
+//         $scope.$watch("radioModel", function(newValue, oldValue) {
+//           queryStorageData();
+//         }, true);
 
 
-        function queryStorageData() {
-          var storageInfo = StorageInfoGet.query({db: $routeParams.currentDB,
-                                              schema: selectedSchema,
-                                                year: $scope.radioModel});
-          $scope.isDataLoaded = false;
-          return storageInfo.$promise.then(function(result) {
-            $scope.storageData = angular.fromJson(result);
-            $scope.isDataLoaded = true;
-          });
-        }
-      }
-    ]);
+//         function queryStorageData() {
+//           var storageInfo = StorageInfoGet.query({db: $routeParams.currentDB,
+//                                               schema: selectedSchema,
+//                                                 year: $scope.radioModel});
+//           $scope.isDataLoaded = false;
+//           return storageInfo.$promise.then(function(result) {
+//             $scope.storageData = angular.fromJson(result);
+//             $scope.isDataLoaded = true;
+//           });
+//         }
+//       }
+//     ]);
 

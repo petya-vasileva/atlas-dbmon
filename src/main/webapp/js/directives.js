@@ -33,8 +33,41 @@ atlmonJSDirectives.directive('ngDbTable', function() {
                           {{value}}\
                         </td>\
                       </tr>\
+                      <tr ng-if="hasJobs">\
+                        <td>Jobs (Run / Fail / Total)</td>\
+                        <td colspan="{{NrOfNodes}}" ng-repeat="job in dbJobs" ng-style="jobAlert(job)"><center>\
+                          ( {{job.running_jobs}} / {{job.failed_jobs}} / {{job.total_jobs}} )</center></td>\
+                      </tr>\
+                      <tr ng-if="dbName==\'ondb_adg\' || dbName==\'ONDB_ADG\' || dbName==\'adcdb_adg\' || dbName==\'ADCDB_ADG\'">\
+                        <td>Apply-lag</td>\
+                        <td colspan="{{NrOfNodes}}" ng-repeat="item in applyLag" ng-style="lagAlert(item.apply_lag)">\
+                        <center>{{item.apply_lag}} seconds</center></td>\
+                      </tr>\
                     </tbody>\
-                  </table>',
+                  </table>\
+                  <table ng-if="isOFFDB" class="table table-bordered">\
+                    <thead>\
+                      <tr>\
+                        <th>Source</th>\
+                        <th>Lag</th>\
+                        <th>Status</th>\
+                        <th>Snapshot time</th>\
+                      </tr>\
+                    </thead>\
+                    <tbody>\
+                      <tr ng-repeat="lag in applyLag | toArray:false">\
+                        <td>{{lag.source}}</td>\
+                        <td>{{lag.apply_lag}}</td>\
+                        <td>{{lag.status}}</td>\
+                        <td>{{lag.snapshot_time}}</td>\
+                      </tr>\
+                    </tbody>\
+                  </table>'
+
+
+
+
+                  ,
             controller: 'BasicInfoCtrl'
         }
     });
@@ -738,3 +771,4 @@ atlmonJSDirectives.directive('hcSessArea', function() {
     }
   }
 });
+
