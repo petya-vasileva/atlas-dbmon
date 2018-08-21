@@ -11,64 +11,9 @@ atlmonJSDirectives.directive('ngDbTable', function() {
               reduced: '@',
               NrOfNodes: '@'
             },
-            template: '\
-                  <div ng-if="reduced==\'yes\'" class="headline">\
-                  <h4>{{dbName}}</h4>\
-                  </div>\
-                  <table class="table table-bordered">\
-                    <thead>\
-                      <tr ng-switch on="NrOfNodes">\
-                        <th>Metric</th>\
-                        <th>Node1</th>\
-                        <th>Node2</th>\
-                        <th ng-switch-when="3">Node3</th>\
-                        <th ng-switch-when="4">Node3</th>\
-                        <th ng-switch-when="4">Node4</th>\
-                      </tr>\
-                    </thead>\
-                    <tbody>\
-                      <tr ng-repeat="row in dbMerics | tableType: reduced | toArray:false | orderBy:\'-metric\'">\
-                        <td >{{row.metric}}</td>\
-                       <td ng-repeat="(key, value) in row" ng-style="alert(value, row)" ng-if="$index < NrOfNodes">\
-                          {{value}}\
-                        </td>\
-                      </tr>\
-                      <tr ng-if="hasJobs">\
-                        <td>Jobs (Run / Fail / Total)</td>\
-                        <td colspan="{{NrOfNodes}}" ng-repeat="job in dbJobs" ng-style="jobAlert(job)"><center>\
-                          ( {{job.running_jobs}} / {{job.failed_jobs}} / {{job.total_jobs}} )</center></td>\
-                      </tr>\
-                      <tr ng-if="dbName==\'ondb_adg\' || dbName==\'ONDB_ADG\' || dbName==\'adcdb_adg\' || dbName==\'ADCDB_ADG\'">\
-                        <td>Apply-lag</td>\
-                        <td colspan="{{NrOfNodes}}" ng-repeat="item in applyLag" ng-style="lagAlert(item.apply_lag)">\
-                        <center>{{item.apply_lag}} seconds</center></td>\
-                      </tr>\
-                    </tbody>\
-                  </table>\
-                  <table ng-if="isOFFDB" class="table table-bordered">\
-                    <thead>\
-                      <tr>\
-                        <th>Source</th>\
-                        <th>Lag</th>\
-                        <th>Status</th>\
-                        <th>Snapshot time</th>\
-                      </tr>\
-                    </thead>\
-                    <tbody>\
-                      <tr ng-repeat="lag in applyLag | toArray:false">\
-                        <td>{{lag.source}}</td>\
-                        <td>{{lag.apply_lag}}</td>\
-                        <td>{{lag.status}}</td>\
-                        <td>{{lag.snapshot_time}}</td>\
-                      </tr>\
-                    </tbody>\
-                  </table>'
 
-
-
-
-                  ,
-            controller: 'BasicInfoCtrl'
+            templateUrl: 'partials/db-table.html',
+            controller:  'BasicInfoCtrl'
         }
     });
 

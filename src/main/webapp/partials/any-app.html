@@ -11,8 +11,24 @@
     </div>
 
     <div class="schema-search" layout-align="center">
-      <form ng-submit="$event.preventDefault()">
+      <form ng-submit="$event.preventDefault()" ng-focus="sch.searchTextChange('')">
         <md-autocomplete
+            md-selected-item="sch.selectedItem"
+            md-search-text-change="sch.searchTextChange(sch.searchText)"
+            md-search-text="sch.searchText"
+            md-selected-item-change="sch.selectedItemChange(item.value)"
+            md-items="item in queryItems"
+            md-item-text="item.value"
+            md-min-length="0"
+            placeholder="Select your schema name">
+          <md-item-template>
+            <span md-highlight-text="sch.searchText" ng-model="queryItems" md-highlight-flags="^i">{{item.value | uppercase}}</span>
+          </md-item-template>
+          <md-not-found>
+            No schema matching "{{sch.searchText}}" were found.
+          </md-not-found>
+        </md-autocomplete>
+        <!--         <md-autocomplete
             md-selected-item="sch.selectedItem"
             md-search-text-change="sch.searchTextChange(sch.searchText)"
             md-search-text="sch.searchText"
@@ -27,7 +43,7 @@
           <md-not-found>
             No schema matching "{{sch.searchText}}" were found.
           </md-not-found>
-        </md-autocomplete>
+        </md-autocomplete> -->
         <br/>
       </form>
     </div>
