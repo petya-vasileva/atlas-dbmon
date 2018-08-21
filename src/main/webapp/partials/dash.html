@@ -1,7 +1,6 @@
 <div layout-xl="column" layout-gt-md="column"  class="">
   <div layout-xl="row" layout-gt-md="row" layout-align="center" class="group1">
     <div ng-db-table  db-name="ONDB" reduced={{'yes'}} class="ONDB"></div>
-    <!-- Here, the new Directive was added for testing -->
     <div ng-db-table db-name="OFFDB" reduced={{'yes'}} class="OFFDB"></div>
     <div ng-db-table db-name="ADCDB" reduced={{'yes'}} class="ADCDB"></div>
 
@@ -12,6 +11,7 @@
   </div>
   <div layout-xl="row" layout-gt-md="row" layout-align="center" class="group3">
     <div ng-db-table db-name="TEST1" reduced={{'yes'}} class="TEST1"></div>
+    <!-- When TEST1 is finally shut down, move INT8R to the group2 -->
     <div ng-db-table db-name="INT8R" reduced={{'yes'}} class="INT8R"></div>
   </div>
 </div>

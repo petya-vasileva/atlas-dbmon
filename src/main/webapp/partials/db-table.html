@@ -1,0 +1,57 @@
+<div ng-controller="BasicInfoCtrl"> 
+  <div ng-if="reduced=='yes'" class="headline">
+    <h4>{{dbName}}
+      <md-button class="md-primary md-raised" ng-click="showError($event)" ng-style="downAlert(dbisup.state)" ng-disabled="dbisup.state" aria-label="statusicon">
+      {{dbisup.message}}
+    </md-button></h4>
+  </div>
+  <table class="table table-bordered" ng-style="noBottomMargin(dbName)">
+    <thead>
+      <tr ng-switch on="NrOfNodes">
+        <th>Metric</th>
+        <th>Node1</th>
+        <th>Node2</th>
+        <th ng-switch-when="3">Node3</th>
+        <th ng-switch-when="4">Node3</th>
+        <th ng-switch-when="4">Node4</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in dbMerics | tableType: reduced | toArray:false | orderBy:'-metric'">
+        <td >{{row.metric}}</td>
+       <td ng-repeat="(key, value) in row" ng-style="alert(value, row)" ng-if="$index < NrOfNodes">
+          {{value}}
+        </td>
+      </tr>
+      <tr ng-if="hasJobs">
+        <td>Jobs</td>
+        <td colspan="{{NrOfNodes}}" ng-repeat="job in dbJobs" ng-style="jobAlert(job)"><center>
+          Running: {{job.running_jobs}} &nbsp Failed: {{job.failed_jobs}} &nbsp Total: {{job.total_jobs}}</center></td>
+      </tr>
+      <tr ng-if="dbName=='ondb_adg' || dbName=='ONDB_ADG' || dbName=='adcdb_adg' || dbName=='ADCDB_ADG'">
+        <td>Apply-lag</td>
+        <td colspan="{{NrOfNodes}}" ng-repeat="item in applyLag" ng-style="lagAlert(item.apply_lag)">
+        <center>{{item.apply_lag | number : 0}} sec.</center></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 ng-if="isOFFDB">{{dbName}} GG Apply Lag</h5>
+  <table ng-if="isOFFDB" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Lag</th>
+        <th>Status</th>
+        <th>Snapshot time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="lag in applyLag | toArray:false">
+        <td>{{lag.source}}</td>
+        <td ng-style="lagAlert(lag.apply_lag)">{{lag.apply_lag | number : 0}} sec.</td>
+        <td ng-style="statusAlert(lag.status)" >{{lag.status}}</td>
+        <td>{{lag.snapshot_time}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
