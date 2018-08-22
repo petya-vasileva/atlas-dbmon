@@ -1,0 +1,25 @@
+{
+  "name": "dbmon_schema",
+  "version": "1.0.0",
+  "description": "dbmon_schema with ORDS",
+  "main": "js\\app.js",
+  "dependencies": {
+    "angular-bootstrap-grid-tree": "^0.4.0",
+    "angular-bootstrap-datetimepicker": "latest",
+    "angular-resource": "latest",
+    "angular-strap": "latest",
+    "angular-bootstrap": "latest",
+    "angular-material": "latest",
+    "angular-motion": "latest",
+    "angular-route": "latest",
+    "bootstrap": "latest",
+    "jquery": "~1.9.1",
+    "jquery-ui": "~1.10.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bscheer",
+  "license": "ISC"
+}
