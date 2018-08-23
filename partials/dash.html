@@ -1,21 +1,24 @@
 <div layout-xl="column" layout-gt-md="column"  class="">
+
   <div layout-xl="row" layout-gt-md="row" layout-align="center" class="group1">
     <div ng-db-table  db-name="ONDB" reduced={{'yes'}} class="ONDB"></div>
     <div ng-db-table db-name="OFFDB" reduced={{'yes'}} class="OFFDB"></div>
     <div ng-db-table db-name="ADCDB" reduced={{'yes'}} class="ADCDB"></div>
-
   </div>
+
   <div layout-xl="row" layout-gt-md="row" layout-align="center" class="group2">
     <div ng-db-table db-name="ONDB_ADG" reduced={{'yes'}} class="ONDB_ADG"></div>
     <div ng-db-table db-name="ADCDB_ADG" reduced={{'yes'}} class="ADCDB_ADG"></div>
   </div>
+
   <div layout-xl="row" layout-gt-md="row" layout-align="center" class="group3">
     <div ng-db-table db-name="TEST1" reduced={{'yes'}} class="TEST1"></div>
     <!-- When TEST1 is finally shut down, move TEST2  to the group2 -->
     <div ng-db-table db-name="TEST2 " reduced={{'yes'}} class="TEST2 "></div>
   </div>
+  
 </div>
 
     <!-- <li ng-repeat="dbMerics.item in dbMerics.items"> {{dbMeric.item.metric}}</li> -->
-    <div ng-repeat="dbMeric in dbMerics"> {{dbMeric.items["0"].instid}}</div>
-    <p ng-bind = "dbMerics.items"></p>
+<!--     <div ng-repeat="dbMeric in dbMerics"> {{dbMeric.items["0"].instid}}</div>
+    <p ng-bind = "dbMerics.items"></p> -->

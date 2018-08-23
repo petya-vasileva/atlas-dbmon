@@ -142,7 +142,7 @@
               <md-tab-label>Node{{$index+1}}</md-tab-label>
               <md-tab-body class="md-padding">
                 <md-content layout="row" id="chartRow">
-                  <hc-pie id="activity{{$index+1}}" class="chart-box" items="chValues.activity" container="activity{{$index+1}}" title='activity'></hc-pie>
+                  <hc-pie id="buffer_gets{{$index+1}}" class="chart-box" items="chValues.buffer_gets" container="buffer_gets{{$index+1}}" title='buffer gets'></hc-pie>
                   <hc-bar id="cpu{{$index+1}}" class="chart-box" items="chValues.cpu" container="cpu{{$index+1}}"></hc-bar>
                 </md-content>
                 <md-content layout="row" id="chartRow">

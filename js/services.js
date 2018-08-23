@@ -355,6 +355,8 @@ atlmonJSServices
          return res;
         } ]);
 
+
+// TODO: replace with Data from new table!
 atlmonJSServices
 .factory(
     'Top10SessionsPerSchemaGet',

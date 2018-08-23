@@ -1,4 +1,5 @@
 var http = require("http"),
+    // https = require('https');
     url = require("url"),
     path = require("path"),
     fs = require("fs"),
@@ -35,7 +36,8 @@ http.createServer(function(request, response) {
 }).listen(parseInt(port, 10));
 
 console.log("Static file server for DBMON_SCHEMA running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
-
+// For https:
+// https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener
 
 
 // #####################################################################
