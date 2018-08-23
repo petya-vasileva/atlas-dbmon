@@ -8,11 +8,12 @@ var atlmonJSFilters = angular.module('atlmonJSFilters', []);
  */
 atlmonJSFilters.filter('tableType', function () {
     return function (items, reduced) {
+      // console.log(items);
+      // console.log(reduced);
         var filtered = [];
         if (reduced === 'yes') {
           for (var i = 0; i < items.length; i++) {
               var item = items[i];
-              // console.log(reduced);
               if (item.visible === 'Y') {
                   filtered.push(item);
               }

@@ -203,22 +203,13 @@ atlmonJSControllers.controller(
       'DbUpInfoGet',
       '$mdDialog',
       function( $scope, BasicInfoGet, JobsBasicInfoGet, ApplyLagGet, DbUpInfoGet, $mdDialog) {
-        // This [next 10 lines or so...] can be done better, but for now it's clearer this way:
-        dbMericsData = BasicInfoGet.query({db: $scope.dbName});
-        res = dbMericsData.$promise.then(function(result) {
-        $scope.dbMerics = result.items; 
-        });
-        $scope.dbMerics = res;
-
-        dbMericsData.$promise.then(function (result) { 
+        //Get infos about the metrics and nodes of the database
+        BasicInfoGet.query({db: $scope.dbName}).$promise.then(function(result) {
+          $scope.dbMerics = result.items;
           $scope.NrOfNodes = result.items[0].nrofnodes; 
-          // used for dynamic nr of columns in the basicInfo and DB metrics overview
-          $scope.alert = function (value, row) {
-            if (value > row.threshold ) { return { background: "#981A37", color: "#fff" }}
-            else                        { return { background: "#229369", color: "#fff" }}
-        };});
+        });
 
-        //Get basic Infos about jobs running on the database
+        //Get Infos about JOBS running on the database
         var data = JobsBasicInfoGet.query({db: $scope.dbName, schema: 'all'});
         data.$promise.then(function (result) {
           $scope.dbJobs = result.items;
@@ -227,20 +218,39 @@ atlmonJSControllers.controller(
           } else {$scope.hasJobs =  true;}
         });
 
-        $scope.jobAlert = function (job) {
-          if (job.failed_jobs > 0 ) { return { background: "#981A37", color: "#fff" }}
-          else                      { return { background: "#229369", color: "#fff" }}
-        };
 
-        //Get Infos about the apply-Lag for the ADGs and OFFDB
-        var lag = ApplyLagGet.query({db: $scope.dbName});
-        lag.$promise.then(function (result) {
-          $scope.applyLag = result.items;
-          $scope.isOFFDB = false;
-          if (result.items.length >0) {
-            if (result.items[0].dbname == 'OFFDB') {$scope.isOFFDB = true}
-          }
-        });
+        //Get Infos about the APPLY-LAG only for the ADGs and OFFDB
+        // console.time("ApplyLagTimer" + $scope.dbName);
+        if($scope.dbName.toUpperCase() == "OFFDB" || $scope.dbName.toUpperCase() == "ONDB_ADG" 
+            || $scope.dbName.toUpperCase() == "ADCDB_ADG" ){
+          var lag = ApplyLagGet.query({db: $scope.dbName});
+          lag.$promise.then(function (result) {
+            $scope.applyLag = result.items;
+            $scope.isOFFDB = false;
+            if (result.items.length >0) {
+              if (result.items[0].dbname.toUpperCase() == 'OFFDB') {$scope.isOFFDB = true}
+            } 
+          // console.timeEnd("ApplyLagTimer" + $scope.dbName);
+          });
+        }
+
+
+        // Get infos about DB UP / DOWN
+        // console.time("DBUP_Timer" + $scope.dbName);
+        var dbup = DbUpInfoGet.query({db: $scope.dbName});
+        dbup.$promise.then(function (result) {
+          if (result.items[0].status == 1){
+            $scope.dbisup = {state: true, message: "UP"};
+          } else {
+            $scope.dbisup = {state: false, message: "DOWN"};          
+        }        
+        // console.timeEnd("DBUP_Timer"+ $scope.dbName);
+});
+
+        $scope.alert = function (value, row) {
+            if (value > row.threshold ) { return { background: "#981A37", color: "#fff" }}
+            else                        { return { background: "#229369", color: "#fff" }}
+        };
 
         $scope.lagAlert = function (lag) {
           if (lag > 600 )      { return { background: "#981A37", color: "#fff" }}
@@ -254,21 +264,22 @@ atlmonJSControllers.controller(
           } else                  { return { background: "#DAA520", color: "#fff" }
         }};
 
-        // Getting the basic info about db down / up&running
-        var dbup = DbUpInfoGet.query({db: $scope.dbName});
-        dbup.$promise.then(function (result) {
-          if (result.items[0].status == 1){
-            $scope.dbisup = {state: true, message: "UP"};
-          } else {
-            $scope.dbisup = {state: false, message: "DOWN"};          
-        }});
-
+        $scope.jobAlert = function (job) {
+          if (job.failed_jobs > 0 ) { return { background: "#981A37", color: "#fff" }}
+          else                      { return { background: "#229369", color: "#fff" }}
+        };
 
         $scope.downAlert = function (dbup) {
           if (dbup == false) {
-            return { background: "#981A37", color: "#fff", margin: "1px 8px", lineHeight: "25px", minHeight: "25px", minWidth: "70px" };
+            return { background: "#981A37", color: "#fff", margin: "1px 8px", 
+                     lineHeight: "25px", minHeight: "25px", minWidth: "70px" };
           } else {
-            return { background: "#229369", color: "#fff", margin: "1px 8px", lineHeight: "25px", minHeight: "25px", minWidth: "70px" }};
+            return { background: "#229369", color: "#fff", margin: "1px 8px", 
+                     lineHeight: "25px", minHeight: "25px", minWidth: "70px" }};
+        };
+
+        $scope.noBottomMargin = function() {
+          if ($scope.isOFFDB == true) {return {marginBottom: "0px"};}
         };
 
         $scope.showError = function(ev) {
@@ -277,17 +288,11 @@ atlmonJSControllers.controller(
             .parent(angular.element(document.querySelector('#popupContainer')))
             .clickOutsideToClose(true)
             .title("Error-details:")
-            .textContent("Database is currently not available. Please contact the administrator for further details")
+            .textContent("Database is currently not available. Please contact the administrator for more details")
             .ariaLabel('Alert Dialog Demo')
             .ok('close')
             .targetEvent(ev)
         );};
-
-        $scope.noBottomMargin = function() {
-          if ($scope.isOFFDB == true) {return {marginBottom: "0px"};}
-        };
-
-      
 
       }
     ]);
@@ -970,13 +975,13 @@ atlmonJSControllers.controller(
         //Execute query on schemas get with db
         //change scope.schemas to the new list of schemas
         $scope.$watch("dbModel", function(newValue, oldValue) {
-          console.log(newValue);
+          // console.log(newValue);
           if (newValue !== undefined && newValue !== oldValue){
             self.schemas = loadSchemasDb(newValue);
             loadedSchemas = loadSchemasDb(newValue);
           } else if (newValue == undefined) {self.schemas = loadAll(); loadedSchemas = loadAll();}
-          console.log(self.schemas);
-          console.log(loadedSchemas);
+          // console.log(self.schemas);
+          // console.log(loadedSchemas);
         }, true);
 
 
@@ -984,16 +989,17 @@ atlmonJSControllers.controller(
 
         function querySearch (query) {
           var sch = loadedSchemas.$$state.value; //self.schemas.$$state.value;
-          console.log(sch);
-          console.log('this is the query passed to the fn:', query);
+          // console.log(sch);
+          // console.log('this is the query passed to the fn:', query);
           var results = query ? sch.filter( createFilterFor(query) ) : loadedSchemas,  //self.schemas,
               deferred;
-              console.log(results);
+              // console.log(results);
           if (self.simulateQuery) {
             deferred = $q.defer();
             $timeout(function () {
               deferred.resolve( results );
-            }, 500, false);
+            // }, 500, false);
+            }, 250, false);
             return deferred.promise;
           } else {
             return results;
@@ -1001,25 +1007,9 @@ atlmonJSControllers.controller(
         }
 
 
-        // function querySearch (query) {
-        //   var sch = loadedSchemas.$$state.value; //self.schemas.$$state.value;
-
-        //   var results = query ? sch.filter( createFilterFor(query) ) : loadedSchemas,  //self.schemas,
-        //       deferred;
-        //   if (self.simulateQuery) {
-        //     deferred = $q.defer();
-        //     $timeout(function () {
-        //       deferred.resolve( results );
-        //     }, 500, false);
-        //     return deferred.promise;
-        //   } else {
-        //     return results;
-        //   }
-        // }
-
         function searchTextChange(text) {
-          console.log('searchTextChange', text);
-          console.log(text);
+          // console.log('searchTextChange', text);
+          // console.log(text);
           $scope.queryItems = querySearch(text);
         }
 
@@ -1051,7 +1041,7 @@ atlmonJSControllers.controller(
 
         //BSCHEER NEW
         function loadSchemasDb(selectedDb) {
-          console.log('loading schemas for ', selectedDb);
+          // console.log('loading schemas for ', selectedDb);
           var allSchemas = AllSchemasGetNoAll.query({db: selectedDb});
           return allSchemas.$promise.then(function (result) {
             var list = [];
@@ -1059,7 +1049,7 @@ atlmonJSControllers.controller(
               name = result.items[i].schema_name;
               list.push({ value: name.toLowerCase(), display: allSchemas[i]});
             }
-            console.log('loading:', list);
+            // console.log('loading:', list);
             return list;
           });
         }
@@ -1082,7 +1072,7 @@ atlmonJSControllers.controller(
         $scope.update = function(item) {
           RegisterChange.setDb(item);
           RegisterSearchAppChage.setDb(item);
-          console.log('uebergebenes item:', item);
+          // console.log('uebergebenes item:', item);
           $scope.dbModel = item;
           searchTextChange('');
           querySearch('');
@@ -1120,14 +1110,12 @@ atlmonJSControllers.controller(
 
         dbs = DbNamesGet.query();
         dbs.$promise.then(function(result){
-          console.log(result.items);
+          // console.log(result.items);
           $scope.all_databases = result.items;
         });
         // On dropdown item change
         $scope.update = function(item) {
           RegisterChange.setDb(item.toLowerCase());
-                    console.log('uebergebenes item:', item);
-
         }
 
       }
@@ -1235,7 +1223,7 @@ atlmonJSControllers.controller(
       }
     ]);
 
-/**
+/** This is not perfect but could be adapted quickly to use the new Top10 per schema data
  * The controller for getting the charts data for a schema name
  */
 atlmonJSControllers.controller(
@@ -1294,6 +1282,7 @@ atlmonJSControllers.controller(
 
           $scope.isDataLoaded = false;
           top10sess.$promise.then(function(result) {
+            console.log(result.items);
 
             $scope.chartValues = {};
             $scope.loadedNode = 0;
@@ -1301,13 +1290,13 @@ atlmonJSControllers.controller(
           // Shape data for further processing in the chValues
           // Result of query is one big List, here seperated to Arrays, containing just the data for the charts.
                 // Declare Objects for the Data of each node
-            var node1 = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+            var node1 = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],  
                         elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
-            var node2 = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+            var node2 = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],  
                         elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
-            var node3 = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+            var node3 = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],  
                         elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
-            var node4 = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+            var node4 = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],  
                         elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
 
             result.items.forEach(function(item){

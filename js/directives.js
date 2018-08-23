@@ -12,8 +12,8 @@ atlmonJSDirectives.directive('ngDbTable', function() {
               NrOfNodes: '@'
             },
 
-            templateUrl: 'partials/db-table.html',
-            controller:  'BasicInfoCtrl'
+            templateUrl: 'partials/db-table.html'
+            // controller:  'BasicInfoCtrl'
         }
     });
 
