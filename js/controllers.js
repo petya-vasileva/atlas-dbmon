@@ -202,10 +202,15 @@ atlmonJSControllers.controller(
       'ApplyLagGet',
       'DbUpInfoGet',
       '$mdDialog',
-      function( $scope, BasicInfoGet, JobsBasicInfoGet, ApplyLagGet, DbUpInfoGet, $mdDialog) {
+      '$location',
+      function( $scope, BasicInfoGet, JobsBasicInfoGet, ApplyLagGet, DbUpInfoGet, $mdDialog, $location) {
         //Get infos about the metrics and nodes of the database
         BasicInfoGet.query({db: $scope.dbName}).$promise.then(function(result) {
-          $scope.dbMerics = result.items;
+          var curr_loc = $location.path().split("/");
+          if (curr_loc[1] == 'home') {
+            $scope.dbMerics = reduceMetrics(result.items)
+          }
+          else { $scope.dbMerics = result.items;}
           $scope.NrOfNodes = result.items[0].nrofnodes; 
         });
 
@@ -217,7 +222,6 @@ atlmonJSControllers.controller(
             $scope.hasJobs =  false;
           } else {$scope.hasJobs =  true;}
         });
-
 
         //Get Infos about the APPLY-LAG only for the ADGs and OFFDB
         // console.time("ApplyLagTimer" + $scope.dbName);
@@ -234,7 +238,6 @@ atlmonJSControllers.controller(
           });
         }
 
-
         // Get infos about DB UP / DOWN
         // console.time("DBUP_Timer" + $scope.dbName);
         var dbup = DbUpInfoGet.query({db: $scope.dbName});
@@ -243,9 +246,18 @@ atlmonJSControllers.controller(
             $scope.dbisup = {state: true, message: "UP"};
           } else {
             $scope.dbisup = {state: false, message: "DOWN"};          
-        }        
+          }        
         // console.timeEnd("DBUP_Timer"+ $scope.dbName);
-});
+        });
+
+        function reduceMetrics (metrics) {
+          var filtered = [];
+          for (var i = 0; i < metrics.length; i++) {
+            if (metrics[i].visible === 'Y') filtered.push(metrics[i]);
+          };
+          return filtered;
+        } 
+
 
         $scope.alert = function (value, row) {
             if (value > row.threshold ) { return { background: "#981A37", color: "#fff" }}
