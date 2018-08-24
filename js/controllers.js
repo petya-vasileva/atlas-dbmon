@@ -77,7 +77,7 @@ atlmonJSControllers.controller('MenuCtrl',
   function($scope, $location, $interval, $route, RegisterChange, DateTimeService) {
 
     $scope.menuClass = function(page) {
-      // we need to take always the first 2 attributes form the URL. Ex.:"db/adcdb"
+      // we need to take always the first 2 attributes form the URL, e.g.:"db/adcdb"
       var attr = $location.path().split("/");
       var loc = "";
 
@@ -87,12 +87,12 @@ atlmonJSControllers.controller('MenuCtrl',
       else
         // in case it's "/home"
         loc = $location.path().substr(1);
-
       if ($location.search().db)
         loc = 'db/' + $location.search().db;
 
       // keep the "APPLICATION" tab active even when we change the URL
-      if (loc == 'app')
+      // if (loc == 'app')
+      if (attr[1] == 'app')
         loc = 'app/search';
 
       return page === loc ? "active" : "";
@@ -1282,7 +1282,7 @@ atlmonJSControllers.controller(
 
           $scope.isDataLoaded = false;
           top10sess.$promise.then(function(result) {
-            console.log(result.items);
+            // console.log(result.items);
 
             $scope.chartValues = {};
             $scope.loadedNode = 0;
