@@ -4,7 +4,7 @@
       <div class="details">
         <div class="app-header" layout-xl="row" layout-gt-md="row">
           <h1 class="md-toolbar-tools title-text">
-            <span flex>{{currSchema}} @ {{db}}</span>
+            <span flex>{{currSchema | uppercase}} @ {{db | uppercase}}</span>
           </h1>
           <div ng-if="!noInfo" class='details-btn'>
             <button ng-click="changeText()" type="button" class="panel panel-default" data-toggle="collapse" data-target="#schema-info">{{text}} details &raquo;</button>
