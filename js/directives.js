@@ -271,6 +271,7 @@ atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (locati
         var unit, chTitle, catValues, serValues, palette; //original line
         // $timeout(function(){var unit, chTitle, catValues, serValues, palette;},1000);
         if(newval) {
+          console.log(scope.items);
           chTitle = 'Top SQLs by '+scope.items[0].chart_type;
           unit = scope.items[0].metric_unit;
           catValues = [];

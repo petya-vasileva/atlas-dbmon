@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="row in dbMerics | tableType: reduced | toArray:false | orderBy:'-metric'">
+      <tr ng-repeat="row in dbMerics | toArray:false | orderBy:'-metric'">
         <td >{{row.metric}}</td>
        <td ng-repeat="(key, value) in row" ng-style="alert(value, row)" ng-if="$index < NrOfNodes">
           {{value}}

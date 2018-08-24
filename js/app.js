@@ -1,5 +1,5 @@
 var dbmonJSApp = angular.module('atlmonJSApp', [ 'ngRoute', 'atlmonJSControllers',
-  'atlmonJSDirectives', 'atlmonJSServices', 'atlmonJSFilters', 'angular.filter',
+  'atlmonJSDirectives', 'atlmonJSServices', 'angular.filter',
   'smart-table','ui.bootstrap', 'ngMaterialDatePicker', 'ngMaterial' , 'treeGrid']);
 
 dbmonJSApp.config([ '$routeProvider', function($routeProvider) {
