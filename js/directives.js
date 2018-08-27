@@ -267,11 +267,10 @@ atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (locati
       // scope.getChartValues({chartType: scope.type});
       scope.$watch('items', function (newval, oldval) {
 
-        //added delay
         var unit, chTitle, catValues, serValues, palette; //original line
         // $timeout(function(){var unit, chTitle, catValues, serValues, palette;},1000);
         if(newval) {
-          console.log(scope.items);
+          if(scope.items.length > 0){
           chTitle = 'Top SQLs by '+scope.items[0].chart_type;
           unit = scope.items[0].metric_unit;
           catValues = [];
@@ -283,6 +282,7 @@ atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (locati
             serValues.push({color: palette[i], y: scope.items[i].y,
                             schema: scope.items[i].parsing_schema_name,
                             sqlText: scope.items[i].sql_text.substr(0, 100)});
+          };
           };
         }
 
