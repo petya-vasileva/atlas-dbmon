@@ -27,7 +27,7 @@ dbmonJSApp.config([ '$routeProvider', function($routeProvider) {
     when('/sessions', {
       templateUrl: 'partials/all-sessions-details.html',
     }).
-    when('/hist-blocking-tree', {
+    when('/blocking-tree', {
       templateUrl: 'partials/hist-blocking-tree.html',
       reloadOnSearch: false
     }).

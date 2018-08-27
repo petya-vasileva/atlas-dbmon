@@ -633,6 +633,15 @@ atlmonJSServices
 
             return [start, end];
           },
+          initialTimeBlockingTree: function() {
+            var now = new Date();
+            // starting point is 20min ago
+            var start = new Date(now);
+            start.setMinutes(now.getMinutes() - 180);
+            var end = now;
+
+            return [start, end];
+          },
           streamsPlotInitTime: function() {
             var now = new Date();
             // starting point is 10min ago

@@ -31,13 +31,13 @@ atlmonJSControllers.run(function($rootScope, $location, DateTimeService, Registe
         RegisterChange.setSchema($location.search().schema);
         RegisterChange.setDb($location.search().db);
         RegisterChange.setDate([$location.search().from, $location.search().to]);
-      } else if ($location.path().startsWith('/hist-blocking-tree') &&
+      } else if ($location.path().startsWith('/blocking-tree') &&
           angular.isDefined($location.search().from) ||
           angular.isDefined($location.search().to) ||
           angular.isDefined($location.search().db)) {
           RegisterChange.setDate([$location.search().from, $location.search().to]);
           RegisterChange.setDb($location.search().db);
-      } else if ($location.path().startsWith('/hist-blocking-tree') &&
+      } else if ($location.path().startsWith('/blocking-tree') &&
           angular.isUndefined($location.search().from) ||
           angular.isUndefined($location.search().to) ||
           angular.isUndefined($location.search().db)) {
@@ -60,8 +60,8 @@ atlmonJSControllers.controller(
     'RegisterChange',
     'DateTimeService',
   function($interval, $route, $location, RegisterChange, DateTimeService) {
-    // there is no point to auto refresh the historical page on the blovking sessions
-    if (!$location.path().startsWith('/hist-blocking-tree')) {
+    // there is no point to auto refresh the historical page on the blocking sessions
+    if (!$location.path().startsWith('/blocking-tree')) {
       $interval(function(){
         console.log('reload');
         location.reload();
@@ -1051,7 +1051,6 @@ atlmonJSControllers.controller(
           });
         }
 
-        //BSCHEER NEW
         function loadSchemasDb(selectedDb) {
           // console.log('loading schemas for ', selectedDb);
           var allSchemas = AllSchemasGetNoAll.query({db: selectedDb});
@@ -1294,7 +1293,6 @@ atlmonJSControllers.controller(
 
           $scope.isDataLoaded = false;
           top10sess.$promise.then(function(result) {
-            // console.log(result.items);
 
             $scope.chartValues = {};
             $scope.loadedNode = 0;
@@ -1351,26 +1349,16 @@ atlmonJSControllers.controller(
           'BlockingSessGet',
           'BlockingTree',
           'BlockingSessGetDefault',
-          function($scope, $location, $routeParams, $window, $interval, BlockingSessGet, BlockingTree, BlockingSessGetDefault) {
-            // var schema = $location.search().selected;
+          'RegisterSearchAppChage',
+          'DateTimeService',
+          function($scope, $location, $routeParams, $window, $interval, BlockingSessGet, 
+            BlockingTree, BlockingSessGetDefault, RegisterSearchAppChage, DateTimeService) {
             var db = $routeParams.currentDB;
             GetLocks();
 
             function GetLocks() {
-              //new: new Service for default-URL-path.
-              // var from = 'NULL';
-              // var to = 'NULL';
-
-              //TEST
-              // var from = '2018-08-10T10:04';
-              // var to = '2018-08-10T10:24';
-
-              // var data = BlockingSessGet.query({db: db, from: from, to: to});
               var data = BlockingSessGetDefault.query({db: db});
               
-              // TOFIX: This is not the correct way to wait for the data to load.
-
-              //BSCHEER LAST TOUCHED
               data.$promise.then(function (result) {
                 var get_tree = BlockingTree.buildTree(result.items);
                 if (get_tree.length == 0)
@@ -1381,7 +1369,10 @@ atlmonJSControllers.controller(
 
             $scope.goToURL = function() {
               $location.search({}); // clean up all query parameters
-              var path = '/#/hist-blocking-tree';
+              var BlockingTimes = DateTimeService.initialTimeBlockingTree();
+              console.log(BlockingTimes);
+              var path ='/#/blocking-tree?db='+db+'&from='+DateTimeService.format(BlockingTimes[0])
+              +'&to='+DateTimeService.format(BlockingTimes[1]);
               $window.open(path, '_blank');
             }
 
@@ -1397,20 +1388,11 @@ atlmonJSControllers.controller(
               $window.open(path, '_blank');
             }
 
-            // $scope.expandingProperty = {
-            //   field: "child_sess_id",
-            //   displayName: "Session ID"
-            // };
             $scope.expandingProperty = {
               field: "waiting_sess_id",
               displayName: "Session ID"
             };
 
-            // $scope.colDefs = [
-            // {
-            //   field: "child_sess_id",
-            //   displayName: "Session ID"
-            // },
             $scope.colDefs = [
             {
               field: "waiting_sess_id",
@@ -1483,11 +1465,13 @@ atlmonJSControllers.controller(
           'BlockingSessGet',
           'BlockingTree',
           'RegisterChange',
-          function($scope, $location, $window, BlockingSessGet, BlockingTree, RegisterChange) {
+          'RegisterSearchAppChage',
+          function($scope, $location, $window, BlockingSessGet, BlockingTree, RegisterChange, RegisterSearchAppChage) {
 
             $scope.noSessions, $scope.missingDb;
-
+            $scope.lastPageDb = RegisterSearchAppChage.getDb();
             var db = RegisterChange.getDb();
+            console.log(db);
             var from = RegisterChange.getDate()[0];
             var to = RegisterChange.getDate()[1];
             if (db != null && from != null && to != null)
