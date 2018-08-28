@@ -236,7 +236,8 @@ div.outer-container {
 }
 .table-container {
   overflow-y: auto;
-  height: 380px;
+  height: 390px;
+  width:99.3%;
 }
 table.table-container {
   border-spacing: 0 !important;
@@ -306,7 +307,8 @@ table.table-container {
 }
 
 .awr-container {
-  overflow: scroll; /* Scrollbar are always visible */
+  overflow-y: auto;
+  overflow-x: scroll;  /* Scrollbar is always visible on x-axis */
   border: 1px solid rgb(204, 204, 204);
 }
 /*
@@ -388,7 +390,8 @@ table.table-container {
   /*display: inline-block;*/
   white-space: nowrap;
   /*width: 100%;*/
-  height: 450px;
+  height: 100%;
+  max-height: 450px; /*BSCHEER made height to max-height, new 100% height*/
 }
 
 .jobs-tab {
@@ -416,7 +419,19 @@ table.table-container {
 
 .jobs-container, .app-sess-table1, .app-sess-table2, .session-list {
   overflow-x: scroll;
-  overflow-y: scroll;
+  overflow-y: auto; /*BSCHEER CHANGE from scroll*/
+  height: 100%;
+}
+
+.app-sess-table1 {
+  overflow-x: auto;
+  overflow-y: auto; /*BSCHEER CHANGE moved sess-table1 to standalone, both auto*/
+  height: 100%;
+}
+
+.session-list {
+  overflow-x: auto; /*took session-list from above, changed scroll to auto*/
+  overflow-y: auto;
   height: 100%;
 }
 
