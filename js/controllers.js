@@ -850,17 +850,14 @@ atlmonJSControllers.controller(
         function($rootScope, $routeParams, $location, $scope, JobsInfoGet, RegisterChange) {
           var db = RegisterChange.getDb();
           var schema = RegisterChange.getSchema();
-          var hasJobs;
           getData(schema);
 
           function getData(schema) {
             var data = JobsInfoGet.query({db: db, schema: schema});
               data.$promise.then(function (result) {
               $scope.data = result.items;
-              // console.log(result.items);
-              if (result.items.length == 0) {hasJobs = false;}
-              else {hasJobs = true;};
-              // console.log(hasJobs); 
+              if (result.items.length == 0) {$scope.hasJobs = false;}
+              else {$scope.hasJobs = true;};
             });
           }
 
