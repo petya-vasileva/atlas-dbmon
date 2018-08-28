@@ -850,18 +850,24 @@ atlmonJSControllers.controller(
         function($rootScope, $routeParams, $location, $scope, JobsInfoGet, RegisterChange) {
           var db = RegisterChange.getDb();
           var schema = RegisterChange.getSchema();
+          var hasJobs;
           getData(schema);
 
           function getData(schema) {
             var data = JobsInfoGet.query({db: db, schema: schema});
               data.$promise.then(function (result) {
               $scope.data = result.items;
+              console.log(result.items);
+              if (result.items.length == 0) {hasJobs = false;}
+              else {hasJobs = true;};
+              console.log(hasJobs); 
             });
           }
 
           // ADGs don't have jobs
-          if (db == 'adcdb_adg' || db == 'ondb_adg')
+          if (db == 'adcdb_adg' || db == 'ondb_adg') {
             angular.element('.jobs-table').css('display', 'none');
+          }
 
           $scope.idSelectedRow = null;
           $scope.setSelected = function(idSelectedRow) {
