@@ -128,9 +128,9 @@
     <!-- End of top 10 sessions charts container -->
 
 
-    <div class="jobs-table">
+    <div ng-controller="JobsInfoCtrl" class="jobs-table">
       <!-- Start of jobs details container -->
-      <div ng-controller="JobsInfoCtrl" class="scroll-table jobs-container">
+      <div class="scroll-table jobs-container" ng-show="hasJobs == true">
         <div ng-jobs class="jobs-directive"></div>
       </div>
     </div>
