@@ -36,9 +36,6 @@ http.createServer(function(request, response) {
 }).listen(parseInt(port, 10));
 
 console.log("Static file server for ATLAS_DBMON running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
-// For https:
-// https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener
-
 
 // #####################################################################
 // # Server with defined response-types								   #
