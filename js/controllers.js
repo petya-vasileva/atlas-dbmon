@@ -976,6 +976,7 @@ atlmonJSControllers.controller(
         var self = this;
         self.schemas = loadAll();
         loadedSchemas = loadAll();
+        self.simulateQuery = false; // added by BSCHEER
         self.querySearch = querySearch;
         self.selectedItemChange = selectedItemChange;
         self.searchTextChange  = searchTextChange;
@@ -990,13 +991,16 @@ atlmonJSControllers.controller(
         //Execute query on schemas get with db
         //change scope.schemas to the new list of schemas
         $scope.$watch("dbModel", function(newValue, oldValue) {
-          // console.log(newValue);
           if (newValue !== undefined && newValue !== oldValue){
-            self.schemas = loadSchemasDb(newValue);
-            loadedSchemas = loadSchemasDb(newValue);
+            if (newValue == ''){
+              self.schemas = loadAll();
+              loadedSchemas = loadAll(); 
+            } else {
+              self.schemas = loadSchemasDb(newValue);
+              loadedSchemas = loadSchemasDb(newValue); 
+            }
           } else if (newValue == undefined) {self.schemas = loadAll(); loadedSchemas = loadAll();}
-          // console.log(self.schemas);
-          // console.log(loadedSchemas);
+          $scope.update(newValue);
         }, true);
 
 
@@ -1004,17 +1008,13 @@ atlmonJSControllers.controller(
 
         function querySearch (query) {
           var sch = loadedSchemas.$$state.value; //self.schemas.$$state.value;
-          // console.log(sch);
-          // console.log('this is the query passed to the fn:', query);
           var results = query ? sch.filter( createFilterFor(query) ) : loadedSchemas,  //self.schemas,
               deferred;
-              // console.log(results);
           if (self.simulateQuery) {
             deferred = $q.defer();
             $timeout(function () {
               deferred.resolve( results );
-            // }, 500, false);
-            }, 250, false);
+            }, 300, false);
             return deferred.promise;
           } else {
             return results;
@@ -1023,8 +1023,6 @@ atlmonJSControllers.controller(
 
 
         function searchTextChange(text) {
-          // console.log('searchTextChange', text);
-          // console.log(text);
           $scope.queryItems = querySearch(text);
         }
 
@@ -1055,7 +1053,6 @@ atlmonJSControllers.controller(
         }
 
         function loadSchemasDb(selectedDb) {
-          // console.log('loading schemas for ', selectedDb);
           var allSchemas = AllSchemasGetNoAll.query({db: selectedDb});
           return allSchemas.$promise.then(function (result) {
             var list = [];
@@ -1063,7 +1060,6 @@ atlmonJSControllers.controller(
               name = result.items[i].schema_name;
               list.push({ value: name.toLowerCase(), display: allSchemas[i]});
             }
-            // console.log('loading:', list);
             return list;
           });
         }
@@ -1086,7 +1082,6 @@ atlmonJSControllers.controller(
         $scope.update = function(item) {
           RegisterChange.setDb(item);
           RegisterSearchAppChage.setDb(item);
-          // console.log('uebergebenes item:', item);
           $scope.dbModel = item;
           searchTextChange('');
           querySearch('');

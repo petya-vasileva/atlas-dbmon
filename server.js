@@ -38,7 +38,7 @@ http.createServer(function(request, response) {
 console.log("Static file server for DBMON_SCHEMA running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
 
 // #####################################################################
-// # Server with defined response-types								   #
+// # Server with defined response-types								                 #
 // #####################################################################
 
 // var http = require("http"),

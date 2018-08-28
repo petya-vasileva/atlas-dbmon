@@ -13,6 +13,7 @@
     <div class="schema-search" layout-align="center">
       <form ng-submit="$event.preventDefault()" ng-focus="sch.searchTextChange('')">
         <md-autocomplete
+            md-no-cache="true"
             md-selected-item="sch.selectedItem"
             md-search-text-change="sch.searchTextChange(sch.searchText)"
             md-search-text="sch.searchText"
