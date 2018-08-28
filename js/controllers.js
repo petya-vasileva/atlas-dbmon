@@ -857,10 +857,10 @@ atlmonJSControllers.controller(
             var data = JobsInfoGet.query({db: db, schema: schema});
               data.$promise.then(function (result) {
               $scope.data = result.items;
-              console.log(result.items);
+              // console.log(result.items);
               if (result.items.length == 0) {hasJobs = false;}
               else {hasJobs = true;};
-              console.log(hasJobs); 
+              // console.log(hasJobs); 
             });
           }
 
