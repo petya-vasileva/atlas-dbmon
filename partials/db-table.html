@@ -30,8 +30,9 @@
       </tr>
       <tr ng-if="dbName=='ondb_adg' || dbName=='ONDB_ADG' || dbName=='adcdb_adg' || dbName=='ADCDB_ADG'">
         <td>Apply-lag</td>
-        <td colspan="{{NrOfNodes}}" ng-repeat="item in ::applyLag" ng-style="lagAlert(item.apply_lag)">
-        <center>{{item.apply_lag | number : 0}} sec.</center></td>
+        <!-- <td colspan="{{NrOfNodes}}" ng-repeat="item in ::applyLag" ng-style="lagAlert(item.apply_lag)"> -->
+        <td colspan="{{NrOfNodes}}" ng-model="applyLag" ng-style="lagAlert(applyLag[0].apply_lag)">
+        <center>{{applyLag[0].apply_lag | number : 0}} sec.</center></td>
       </tr>
     </tbody>
   </table>
