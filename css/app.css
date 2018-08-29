@@ -399,6 +399,12 @@ table.table-container {
   /*height: 370px;*/
 }
 
+.jobs-table-container {
+  overflow: visible;
+  height: 390px;
+  width:99.3%;
+}
+
 .jobs-directive {
   height: 100%;
 }
