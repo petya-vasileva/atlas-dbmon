@@ -23,21 +23,20 @@
           {{value}}
         </td>
       </tr>
-      <tr ng-if="hasJobs">
+      <tr ng-if="hasJobs && isDataLoaded">
         <td>Jobs</td>
         <td colspan="{{NrOfNodes}}" ng-repeat="job in ::dbJobs" ng-style="jobAlert(job)"><center>
           Running: {{job.running_jobs}} &nbsp Failed: {{job.failed_jobs}} &nbsp Total: {{job.total_jobs}}</center></td>
       </tr>
-      <tr ng-if="dbName=='ondb_adg' || dbName=='ONDB_ADG' || dbName=='adcdb_adg' || dbName=='ADCDB_ADG'">
+      <tr ng-if="(dbName=='ondb_adg' || dbName=='ONDB_ADG' || dbName=='adcdb_adg' || dbName=='ADCDB_ADG') && isDataLoaded == true">
         <td>Apply-lag</td>
-        <!-- <td colspan="{{NrOfNodes}}" ng-repeat="item in ::applyLag" ng-style="lagAlert(item.apply_lag)"> -->
         <td colspan="{{NrOfNodes}}" ng-model="applyLag" ng-style="lagAlert(applyLag[0].apply_lag)">
         <center>{{applyLag[0].apply_lag | number : 0}} sec.</center></td>
       </tr>
     </tbody>
   </table>
-  <h5 ng-if="isOFFDB">{{dbName | uppercase}} GG Apply Lag</h5>
-  <table ng-if="isOFFDB" class="table table-bordered">
+  <h5 ng-if="isOFFDB && isDataLoaded == true">{{dbName | uppercase}} GG Apply Lag</h5>
+  <table ng-if="isOFFDB && isDataLoaded == true" class="table table-bordered">
     <thead>
       <tr>
         <th>Source</th>
