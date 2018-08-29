@@ -1020,9 +1020,13 @@ atlmonJSControllers.controller(
           }
         }
 
-
         function searchTextChange(text) {
           $scope.queryItems = querySearch(text);
+      
+          var uppercase = text.toUpperCase();
+          if (text !== uppercase)  {
+            self.searchText = uppercase;
+          }
         }
 
         function selectedItemChange(item) {
@@ -1045,7 +1049,7 @@ atlmonJSControllers.controller(
             var list = [];
             for(var i=0;i<result.items.length;i++){
               name = result.items[i].schema_name;
-              list.push({ value: name.toLowerCase(), display: allSchemas[i]});
+              list.push({ value: name.toUpperCase(), display: allSchemas[i]});
             }
             return list;
           });
@@ -1057,7 +1061,7 @@ atlmonJSControllers.controller(
             var list = [];
             for(var i=0;i<result.items.length;i++){
               name = result.items[i].schema_name;
-              list.push({ value: name.toLowerCase(), display: allSchemas[i]});
+              list.push({ value: name.toUpperCase(), display: allSchemas[i]});
             }
             return list;
           });
@@ -1065,10 +1069,10 @@ atlmonJSControllers.controller(
 
         //Create filter function for a query string
         function createFilterFor(query) {
-          var lowercaseQuery = angular.$$lowercase(query);
+          var uppercaseQuery = angular.$$uppercase(query);
 
           return function filterFn(schema) {
-            if (schema.value.includes(lowercaseQuery))
+            if (schema.value.includes(uppercaseQuery))
               return true;
             return false;
           };
