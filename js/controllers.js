@@ -238,15 +238,11 @@ atlmonJSControllers.controller(
         }
 
         // Get infos about DB UP / DOWN
-        // console.time("DBUP_Timer" + $scope.dbName);
         var dbup = DbUpInfoGet.query({db: $scope.dbName});
         dbup.$promise.then(function (result) {
           if (result.items[0].status == 1){
             $scope.dbisup = {state: true, message: "UP"};
-          } else {
-            $scope.dbisup = {state: false, message: "DOWN"};          
-          }        
-        // console.timeEnd("DBUP_Timer"+ $scope.dbName);
+          } else {$scope.dbisup = {state: false, message: "DOWN"};}        
         });
 
         function reduceMetrics (metrics) {
@@ -274,6 +270,7 @@ atlmonJSControllers.controller(
           } else                  { return { background: "#DAA520", color: "#fff" }
         }};
 
+        // TEST1 & INT8R have different color for failed jobs, because there are always non-critical, failed jobs.
         $scope.jobAlert = function (job) {
           if (job.failed_jobs > 0 ) { 
             if ($scope.dbName.toUpperCase() == "TEST1" || $scope.dbName.toUpperCase() == "INT8R") {
