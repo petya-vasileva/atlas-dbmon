@@ -211,7 +211,8 @@ atlmonJSControllers.controller(
             $scope.dbMerics = reduceMetrics(result.items)
           }
           else { $scope.dbMerics = result.items;}
-          $scope.NrOfNodes = result.items[0].nrofnodes; 
+          $scope.NrOfNodes = result.items[0].nrofnodes;
+          $scope.isDataLoaded = true;
         });
 
         //Get Infos about JOBS running on the database
@@ -224,7 +225,6 @@ atlmonJSControllers.controller(
         });
 
         //Get Infos about the APPLY-LAG only for the ADGs and OFFDB
-        // console.time("ApplyLagTimer" + $scope.dbName);
         if($scope.dbName.toUpperCase() == "OFFDB" || $scope.dbName.toUpperCase() == "ONDB_ADG" 
             || $scope.dbName.toUpperCase() == "ADCDB_ADG" ){
           var lag = ApplyLagGet.query({db: $scope.dbName});
@@ -234,7 +234,6 @@ atlmonJSControllers.controller(
             if (result.items.length >0) {
               if (result.items[0].dbname.toUpperCase() == 'OFFDB') {$scope.isOFFDB = true}
             } 
-          // console.timeEnd("ApplyLagTimer" + $scope.dbName);
           });
         }
 
@@ -267,7 +266,6 @@ atlmonJSControllers.controller(
         $scope.lagAlert = function (lag) {
           if (lag > 600 )      { return { background: "#981A37", color: "#fff" }}
           else if ( lag > 300) { return { background: "#DAA520", color: "#fff" }}
-            // return { background: "#AA8C30", color: "#fff" }} //color used in jobs
           else                 { return { background: "#229369", color: "#fff" }}
         };
 
@@ -277,9 +275,13 @@ atlmonJSControllers.controller(
         }};
 
         $scope.jobAlert = function (job) {
-          if (job.failed_jobs > 0 ) { return { background: "#981A37", color: "#fff" }}
-          else                      { return { background: "#229369", color: "#fff" }}
-        };
+          if (job.failed_jobs > 0 ) { 
+            if ($scope.dbName.toUpperCase() == "TEST1" || $scope.dbName.toUpperCase() == "INT8R") {
+              return { background: "#DAA520", color: "#fff" };
+            } else {return { background: "#981A37", color: "#fff" };}
+          } else {
+            return { background: "#229369", color: "#fff" };
+          }};
 
         $scope.downAlert = function (dbup) {
           if (dbup == false) {
@@ -301,7 +303,7 @@ atlmonJSControllers.controller(
             .clickOutsideToClose(true)
             .title("Error-details:")
             .textContent("Database is currently not available. Please contact the administrator for more details")
-            .ariaLabel('Alert Dialog Demo')
+            .ariaLabel('DB-Error Dialog')
             .ok('close')
             .targetEvent(ev)
         );};
