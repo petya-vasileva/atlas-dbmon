@@ -1,7 +1,8 @@
 var atlmonJSServices = angular.module('atlmonJSServices', [ 'ngResource' ]);
 
 atlmonJSServices.constant('baseurl', {
-  'url' : 'url/to/api'       // When using Oracle REST API
+  'url' : 'url/to/api'       // For the testbed
+  // 'url' : 'https://oraweb.cern.ch/ords/offdb/dbmon_schema/'         // For production 
 
 }).constant('userurl', {
   'user' : 'databases/'
