@@ -1022,7 +1022,7 @@ atlmonJSControllers.controller(
 
         function searchTextChange(text) {
           $scope.queryItems = querySearch(text);
-      
+          //converts all input to upper case
           var uppercase = text.toUpperCase();
           if (text !== uppercase)  {
             self.searchText = uppercase;
