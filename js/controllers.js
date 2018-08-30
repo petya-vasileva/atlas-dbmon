@@ -74,18 +74,23 @@ atlmonJSControllers.controller(
  * The controller for selecting an item from the menu
  */
 atlmonJSControllers.controller('MenuCtrl',
-  function($scope, $location, $interval, $route, RegisterChange, DateTimeService) {
+  function($scope, $location, $interval, $route, RegisterChange, DateTimeService, AppMessageGet) {
 
+    $scope.showMessage = false;
     $scope.menuClass = function(page) {
+
+      // needed for the display of the messagebox
+      var curr_loc =  $location.path().split("/");
+      if (curr_loc[1] == 'home') {$scope.relevantDb = 'all';}
+      else { $scope.relevantDb = curr_loc[2]; }
+
       // we need to take always the first 2 attributes form the URL, e.g.:"db/adcdb"
       var attr = $location.path().split("/");
       var loc = "";
-
       if (attr.length>3) {
         loc = attr[1] + "/" + attr[2];
       }
-      else
-        // in case it's "/home"
+      else  // in case it's "/home"
         loc = $location.path().substr(1);
       if ($location.search().db)
         loc = 'db/' + $location.search().db;
@@ -94,9 +99,24 @@ atlmonJSControllers.controller('MenuCtrl',
       // if (loc == 'app')
       if (attr[1] == 'app')
         loc = 'app/search';
-
       return page === loc ? "active" : "";
     };
+
+    //Message-functionality:
+    var messages = AppMessageGet.query();
+    messages.$promise.then(function(result){
+      $scope.current_messages = result.items;
+      if (result.items.length > 0) {
+        $scope.showMessage = true;
+      }
+    });
+
+    $scope.downtime = function (downtime) {
+      if (downtime == 'yes') { return { backgroundColor: "#981A37"};}
+      else                   { return { backgroundColor: "#ed943b"};}
+    };
+
+
 });
 
 
@@ -1472,7 +1492,6 @@ atlmonJSControllers.controller(
             $scope.noSessions, $scope.missingDb;
             $scope.lastPageDb = RegisterSearchAppChage.getDb();
             var db = RegisterChange.getDb();
-            console.log(db);
             var from = RegisterChange.getDate()[0];
             var to = RegisterChange.getDate()[1];
             if (db != null && from != null && to != null)

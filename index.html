@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <title>ATLAS Database Activity Monitoring</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
   <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link type="text/css" rel="stylesheet" href="bower_components/angular/angular-csp.css">
   <link type="text/css" rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
@@ -40,11 +43,13 @@
 
 </head>
 <body ng-controller="GlobalCtrl">
-
   <div ng-controller="MenuCtrl">
     <ul class="menubar">
-      <!-- <img class="menu-logo" src="atlas_logo_white_68px.png"/> -->
-      <img class="menu-logo" src="atlas_logo_white_50px.png"/>
+      <div class="menu-logo">
+        <a class="menu-logo-container" href="#/home">
+          <img src="atlas_logo_white_50px.png"/>
+        </a>
+      </div>
       <a ng-class="menuClass('home')" href="#/home">HOME</a>
       <a ng-class="menuClass('db/ondb')" href="#/db/ondb">ONDB</a>
       <a ng-class="menuClass('db/offdb')" href="#/db/offdb">OFFDB</a>
@@ -54,10 +59,36 @@
       <a ng-class="menuClass('db/test1')" href="#/db/test1">TEST1</a>
       <a ng-class="menuClass('db/test2')" href="#/db/test2">TEST2 </a>
       <a ng-class="menuClass('app/search')" href="#/app/search">APPLICATION</a>
-
       <h3 class="title">ATLAS Database & Application Monitoring</h3>
-    </div>
+    </ul>
+    <span ng-repeat="message in current_messages">
+    <ul class="messagebar" ng-style="downtime(message.downtime)" ng-if="showMessage && 
+      (message.db_name == relevantDb || message.db_name == 'all' || relevantDb == 'all')">
+      {{message.message}}
+    </ul>
+    </span>
+  </div>
+
   <!-- </div> -->
+
+<!-- New Menu -->
+<!-- <div class="container-fluid" ng-controller="MenuCtrl">
+  <div class="row" style="background:#343a40;color:white; ">
+    <div class="col align-self-center"> <img href="#/home" class="menu-logo" src="atlas_logo_white_50px.png" style="margin-top: 5%;margin-bottom: 5%;"/></div>
+    <div class="col align-self-center" href="#/home" style="text-align:center;">HOME</div>
+    <div class="col align-self-center" href="#/db/ondb" style="text-align:center;">ONDB</div>
+    <div class="col align-self-center" href="#/db/offdb" style="text-align:center;">OFFDB</div>
+    <div class="col align-self-center" href="#/db/adcdb" style="text-align:center;">ADCDB</div>
+    <div class="col align-self-center" href="#/db/ondb_adg" style="text-align:center;">ONDB_ADG</div>
+    <div class="col align-self-center" href="#/db/adcdb_adg" style="text-align:center;">ADCDB_ADG</div>
+    <div class="col align-self-center" href="#/db/test1" style="text-align:center;">TEST1</div>
+    <div class="col align-self-center" href="#/db/test2" style="text-align:center;">TEST2 </div>
+    <div class="col align-self-center" href="#/app/search" style="text-align:center;">APPLICATION</div>
+    <div class="col-3 align-self-center" style="text-align:right;">ATLAS Database & Application Monitoring</div> 
+  </div>
+</div> -->
+
+<!-- End of New Menu -->
 
   <div ng-view></div>
 </body>
