@@ -49,6 +49,16 @@ md-tabs.md-no-animation md-tab-content {
   padding-left:20px;
 }
 
+.messagebar {
+  background: #ed943b;
+  color: #fff;
+  background-color: #ed943b;
+  border-color: #000000;
+  height:25px;
+  margin-top:-10px;
+  /*display: none;*/
+}
+
 .menubar .btn-primary {
   color: #fff;
   background-color: #585858;
@@ -83,10 +93,23 @@ md-tabs.md-no-animation md-tab-content {
   background-color: #229369;
 }
 
-.menu-logo {
-  float:left;
-  margin-right: 20px;
+.menu-logo-container {
+  background-color: transparent;
+  border-radius: 0 2px 2px 0;
+  color: #fff;
+  float: left;
+  font-size: 1.4em;
+  line-height: 1;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0.25% 1.2%  0% 0;
+  text-decoration:none !important;
+  /*margin-right: 20px;*/
 }
+
+.menu-logo {
+}
+
 
 /**************************************************/
 /********************* TABLES *********************/

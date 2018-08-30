@@ -445,6 +445,24 @@ atlmonJSServices
           return res;
         } ]);
 
+atlmonJSServices
+.factory(
+    'AppMessageGet',
+    [
+        '$resource',
+        'baseurl',
+        'userurl',
+        function($resource, baseurl, userurl) {
+          var url = baseurl.url + 'app_message'; 
+          var res = $resource(url, {}, {
+            query: {
+              method: 'GET',
+              isArray: false
+            }});
+          return res;
+        } ]);
+
+
 //BSCHEER: Changed from wildcard % to "all" and added switch on this word in the ORDS
 atlmonJSServices
 .service(

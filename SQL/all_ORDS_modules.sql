@@ -634,6 +634,35 @@ from table(ATLAS_DBMON.GET_TOP10_PER_SCHEMA_ALLNODES(:db, UPPER(:schema), :fromD
 from table(ATLAS_DBMON.GET_TOP10_SESSIONS_DATA(:db, :fromDate, :toDate))'
       );
 
+  ORDS.DEFINE_MODULE(
+      p_module_name    => 'app_message',
+      p_base_path      => '/app_message/',
+      p_items_per_page =>  25,
+      p_status         => 'PUBLISHED',
+      p_comments       => NULL);      
+  ORDS.DEFINE_TEMPLATE(
+      p_module_name    => 'app_message',
+      p_pattern        => '/',
+      p_priority       => 0,
+      p_etag_type      => 'HASH',
+      p_etag_query     => NULL,
+      p_comments       => NULL);
+  ORDS.DEFINE_HANDLER(
+      p_module_name    => 'app_message',
+      p_pattern        => '/',
+      p_method         => 'GET',
+      p_source_type    => 'json/collection',
+      p_items_per_page =>  25,
+      p_mimes_allowed  => '',
+      p_comments       => NULL,
+      p_source         => 
+'select MESSAGE_TS, MESSAGE, LOWER(DB_NAME) as DB_NAME, VALID_FROM, VALID_TO, IS_ACTIVE, MESSAGE_ID, DOWNTIME from ATLAS_DBMON.APP_MESSAGE 
+where VALID_FROM < SYSDATE 
+AND VALID_TO > SYSDATE 
+AND IS_ACTIVE = ''true'' 
+order by message_ts desc'
+      );	  
+
 
   COMMIT; 
 END;
