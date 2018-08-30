@@ -1,6 +1,6 @@
 <div ng-controller="BasicInfoCtrl"> 
   <div ng-if="reduced=='yes'" class="headline">
-    <h4>{{dbName}}
+    <h4><a ng-href="#/db/{{dbName | lowercase}}" class="hiddenLink">{{dbName}}</a>
       <md-button class="md-primary md-raised" ng-click="showError($event)" ng-style="downAlert(dbisup.state)" ng-disabled="dbisup.state" aria-label="statusicon">
       {{dbisup.message}}
     </md-button></h4>
