@@ -36,6 +36,7 @@
 
     <div ng-controller="StorageInfoCtrl" class="storage-container">
 
+<span> <!-- span is experimental to avoid the chart sqeezing in between dropdown and buttons in some occasions -->
       <div class="storage-dropdown">
         <select class="btn-schema btn btn-primary dropdown-toggle" name="type" ng-model="item" ng-dropdown required ng-change="update()"
           ng-options="s as s.schema_name for s in allSchemas">
@@ -51,7 +52,7 @@
           </label>
         </div>
       </div>
-
+</span>
 
       <div class="chart-wrapper">
         <hc-line id="storage-container" items="storageData" class="storage-box"></hc-line>

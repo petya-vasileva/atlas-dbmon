@@ -23,5 +23,6 @@ INSERT INTO APP_MESSAGE (MESSAGE_ID, MESSAGE_TS, MESSAGE, DB_NAME, VALID_FROM, V
 INSERT INTO APP_MESSAGE (MESSAGE_ID, MESSAGE_TS, MESSAGE, DB_NAME, VALID_FROM, VALID_TO, IS_ACTIVE) 
 	VALUES ((SELECT MAX(MESSAGE_ID)+1 FROM APP_MESSAGE), SYSDATE, 'This message is not currently shown', 'ADCDB', SYSDATE, SYSDATE + 10, 'false');
 
-	
+INSERT INTO APP_MESSAGE (MESSAGE_ID, MESSAGE) 
+	VALUES ((SELECT MAX(MESSAGE_ID)+1 FROM APP_MESSAGE), 'This message is added with all possible defaults');	
 -- Maybe add more defaults for from / to, e.g. sysdate and sysdate +3

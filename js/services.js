@@ -623,8 +623,7 @@ atlmonJSServices
             if (noSessions) {
               height = '100%';
             } else if (nrOfSessions < 10) {
-              // *35+120px as a correction for the presence of the header (insted of *50)
-              height = (nrOfSessions * 35+120).toString();
+              height = (nrOfSessions * 35 + 120).toString();
               height = height + 'px';
             } else if (nrOfSessions >= 10) {
               height = '400px';

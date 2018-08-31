@@ -965,7 +965,7 @@ atlmonJSControllers.controller(
           if (year == 'ALL')
             year = 0;
 
-            var storageInfo = StorageInfoGet.query({db: db,
+          var storageInfo = StorageInfoGet.query({db: db,
                                               schema: schema,
                                                 year: year});
           $scope.isDataLoaded = false;
