@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <title>ATLAS Database Activity Monitoring</title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 
   <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link type="text/css" rel="stylesheet" href="bower_components/angular/angular-csp.css">
@@ -47,7 +47,9 @@
     <ul class="menubar">
       <div class="menu-logo">
         <a class="menu-logo-container" href="#/home">
-          <img src="atlas_logo_white_50px.png"/>
+          <!-- <img src="atlas_schmal_50px.png"/> -->
+          <!-- <img src="atlas_logo_white_50px.png"/> -->
+          <img src="atlas_square_50px.png"/>
         </a>
       </div>
       <a ng-class="menuClass('home')" href="#/home">HOME</a>
@@ -61,12 +63,12 @@
       <a ng-class="menuClass('app/search')" href="#/app/search">APPLICATION</a>
       <h3 class="title">ATLAS Database & Application Monitoring</h3>
     </ul>
-    <!-- <span ng-repeat="message in current_messages">
+    <span ng-repeat="message in current_messages">
     <ul class="messagebar" ng-style="downtime(message.downtime)" ng-if="showMessage && 
       (message.db_name == relevantDb || message.db_name == 'all' || relevantDb == 'all')">
       {{message.message}}
     </ul>
-    </span> -->
+    </span>
   </div>
 
   <!-- </div> -->

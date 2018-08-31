@@ -76,6 +76,7 @@ atlmonJSControllers.controller(
 atlmonJSControllers.controller('MenuCtrl',
   function($scope, $location, $interval, $route, RegisterChange, DateTimeService, AppMessageGet) {
 
+    $scope.current_messages = [];
     $scope.showMessage = false;
     $scope.menuClass = function(page) {
 
@@ -112,8 +113,8 @@ atlmonJSControllers.controller('MenuCtrl',
     });
 
     $scope.downtime = function (downtime) {
-      if (downtime == 'yes') { return { backgroundColor: "#981A37"};}
-      else                   { return { backgroundColor: "#ed943b"};}
+      if (downtime == 'yes') { return { backgroundColor: "#981A37", visibility: "visible"};}
+      else                   { return { backgroundColor: "#ed943b", visibility: "visible"};}
     };
 
 
