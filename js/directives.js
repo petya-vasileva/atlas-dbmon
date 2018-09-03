@@ -238,6 +238,7 @@ atlmonJSDirectives.directive('hcPie',['$location', '$timeout', function (locatio
         });
 
         function resize() {
+            console.log(chart);
             height = chart.height
             width = $("#chartRow").width() / 2
             chart.setSize(width, height);
