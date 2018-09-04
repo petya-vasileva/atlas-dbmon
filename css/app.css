@@ -605,7 +605,7 @@ mdc-datetime-picker-calendar table td {
 /***************** STORAGE CHART ******************/
 /**************************************************/
 
-.storage-container {
+.storage-container, .Table-container {
   background: #ffffff;
   border: 1px solid rgb(204, 204, 204);
   padding: 10px 5px 0 5px;
@@ -664,6 +664,9 @@ mdc-datetime-picker-calendar table td {
 
 /*BSCHEER - quickfix for chart*/
 .storage-box {
+  height: 100%;
+}
+.tables-box {
   height: 100%;
 }
 

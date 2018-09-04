@@ -972,10 +972,124 @@ atlmonJSControllers.controller(
           return storageInfo.$promise.then(function(result) {
             $scope.storageData = result.items;
             $scope.isDataLoaded = true;
+            console.log('storageData', $scope.storageData);
           });
         }
       }
     ]);
+
+
+// TOP10Tables Controller
+
+atlmonJSControllers.controller(
+    'Top10TablesCtrl',
+    [
+      '$routeParams',
+      '$scope',
+      '$location',
+      'TOP10TablesGet',
+      'DateTimeService',
+      'RegisterChange',
+      function($routeParams, $scope, $location, TOP10TablesGet,
+        DateTimeService, RegisterChange) {
+
+        var db = RegisterChange.getDb();
+        var selectedSchema = RegisterChange.getSchema().toUpperCase();
+        console.log(db);
+        console.log(selectedSchema);
+        var year = '2018';
+
+        if (db == 'adcdb_adg' || db == 'ondb_adg')
+          angular.element('.storage-container').css('display', 'none');
+
+
+
+        years = DateTimeService.lastTwoYears();
+        $scope.years_back = years;
+        $scope.selected_year = years[years.length - 1];
+
+        queryTableData(year, selectedSchema);
+
+        $scope.$watch("selected_year", function(newValue, oldValue) {
+          queryTableData(newValue, selectedSchema);
+        }, true);
+
+    // Functions collection:
+        function queryTableData(year, schema) {
+        // Oracle expects a number
+        if (year == 'ALL')
+        year = 0;
+        //get the data
+        var topTablesRS = TOP10TablesGet.query({db: db, schema: selectedSchema, year: year});
+        topTablesRS.$promise.then(function (result) {
+        //a) create array of Table-names and of the Chart-Dates
+          var uniqueTablenames = makeUniqueNames(result.items);
+          chartDates = makeUniqueDates(result.items);
+          $scope.chartDates = chartDates;
+
+        //b) Create all the needed arrays.
+          var topTables = {};
+          for (i in uniqueTablenames) {
+            topTables[uniqueTablenames[i]] = {name:uniqueTablenames[i], data:[]};
+          }
+        //c) order & push data to the arrays
+          orderedItems = result.items.sort(function(a, b){
+            var keyA = new Date(a.dt),
+            keyB = new Date(b.dt);
+            if(keyA < keyB) return -1;
+            if(keyA > keyB) return 1;
+            return 0;
+          });
+
+          orderedItems.forEach(function(item){
+            eval("topTables." + item.object_name + ".data").push(item.table_size_gb);
+          });
+          //d) Fill up missing data values
+          for (item in topTables) {
+            if (topTables[item].data.length != chartDates.length) {
+              var diff = chartDates.length - topTables[item].data.length;
+              for (var i = 0; i<diff; i++) {
+                topTables[item].data.unshift(0);
+              };
+            }
+          };  
+          // $scope.topTables = Object.values(topTables);
+          $scope.topTables = Object.values(topTables).sort(function(a, b){
+            var keyA = a.data[a.data.length - 1],
+            keyB = b.data[a.data.length - 1];
+            if(keyA < keyB) return 1;
+            if(keyA > keyB) return -1;
+            return 0;
+          });
+        });
+      }
+
+
+      function makeUniqueNames(items){
+        var uniqueArray=[];
+        for(var i=0;i < items.length;i++){
+          if(!uniqueArray.includes(items[i].object_name)){
+            uniqueArray.push(items[i].object_name);
+          }
+        }
+        return uniqueArray;
+      }
+
+      function makeUniqueDates(items){
+        var uniqueArray=[];
+        for(var i=0;i < items.length;i++){
+          if(!uniqueArray.includes(items[i].dt)){
+            uniqueArray.push(items[i].dt);
+          }
+        }
+        return uniqueArray;
+      }
+     }
+    ]);
+
+
+
+
 
 // BSCHEER DONE
 //Controller of the any-App
@@ -1392,7 +1506,6 @@ atlmonJSControllers.controller(
             $scope.goToURL = function() {
               $location.search({}); // clean up all query parameters
               var BlockingTimes = DateTimeService.initialTimeBlockingTree();
-              console.log(BlockingTimes);
               var path ='/#/blocking-tree?db='+db+'&from='+DateTimeService.format(BlockingTimes[0])
               +'&to='+DateTimeService.format(BlockingTimes[1]);
               $window.open(path, '_blank');
