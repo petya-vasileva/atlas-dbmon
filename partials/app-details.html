@@ -160,6 +160,24 @@
       </md-content>
     </div>
     <!-- End of top 10 sessions charts container -->
+
+    <!-- Table Size Info Box -->
+      <div ng-controller="Top10TablesCtrl" class="storage-container">
+      <div class="storage-years-btns">
+        <div class="btn-group" ng-repeat="year in years_back track by $index">
+          <label>
+            <input name="options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
+            />
+            <span class="btn btn-primary">{{year}}</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+          <hc-stacked id="Table-container" items="topTables" dates="chartDates" class="tables-box"></hc-stacked>
+      </div>
+   </div> 
+   <!-- end of Top10TablesCtrl -->
     
 
 </div> 

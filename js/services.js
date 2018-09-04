@@ -462,6 +462,24 @@ atlmonJSServices
           return res;
         } ]);
 
+//BSCHEER
+atlmonJSServices
+.factory(
+    'TOP10TablesGet',
+    [
+        '$resource',
+        'baseurl',
+        'userurl',
+        function($resource, baseurl, userurl) {
+          var url = baseurl.url + 'top10_tables/:db/:schema/:year'; 
+          var res = $resource(url, {}, {
+            query: {
+              method: 'GET',
+              isArray: false
+            }});
+          return res;
+        } ]);
+
 
 //BSCHEER: Changed from wildcard % to "all" and added switch on this word in the ORDS
 atlmonJSServices
