@@ -102,8 +102,6 @@ atlmonJSControllers.controller('MenuCtrl',
         loc = 'app/search';
       return page === loc ? "active" : "";
     };
-
-    //Logo-resize:
    
     //Message-functionality:
     var messages = AppMessageGet.query();
