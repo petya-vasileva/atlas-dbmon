@@ -244,9 +244,13 @@ atlmonJSDirectives.directive('hcPie',['$location', '$timeout', function (locatio
             chart.setSize(width, height);
           }
 
-        $(window).resize(function() {
+        // $(window).resize(function() {
+        //   resize();
+        // });
+
+        window.onresize = function(event) {
           resize();
-        });
+        };
 
       }); // beendet watch
     }
@@ -383,12 +387,17 @@ atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (locati
         function resize() {
           height = chart.height
           width = $("#chartRow").width() / 2
-          chart.setSize(width, height);
+          // chart.setSize(width, height);
+          chart.setSize(null, null);
         }
 
-        $(window).resize(function() {
+        // $(window).resize(function() {
+        //   resize();
+        // });
+        window.onresize = function(event) {
           resize();
-        });
+        };
+
 
         // This is a hack of the highchart. It is neccessary to resize the
         // chart after the data is received, otherwize the chart gets out
@@ -740,7 +749,8 @@ atlmonJSDirectives.directive('hcStacked', function() {
                 plotShadow: false,
                 spacingRight: 5,
                 height: 370,
-                width: 600
+                width: 600,
+                reflow: true
     },
     colors:[
                 '#5485BC', '#AA8C30', '#229369', '#981A37', '#FCB319', '#86A033',
@@ -784,14 +794,13 @@ atlmonJSDirectives.directive('hcStacked', function() {
 
         function resize() {
           height = chart.height;
-          // width = $(".chart-wrapper").width();
           width = $(".tables-box").width();
           chart.setSize(width, height);
         }
 
-        $(window).resize(function() {
+        window.onresize = function(event) {
           resize();
-        });
+        };
 
         scope.$watch('isDataLoaded', function() {
           resize();
