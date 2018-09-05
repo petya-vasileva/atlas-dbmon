@@ -768,7 +768,7 @@ atlmonJSDirectives.directive('hcStacked', function() {
     },
     xAxis: {
         // categories: ['Jan', 'Feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sept', 'okt', 'nov', 'dec'],
-        categories: scope.dates,
+        categories: scope.items[1],
         tickmarkPlacement: 'on',
         title: {
             enabled: false
@@ -794,7 +794,7 @@ atlmonJSDirectives.directive('hcStacked', function() {
             }
         }
     },
-    series: scope.items
+    series: scope.items[0]
 });
 
 

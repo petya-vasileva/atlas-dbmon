@@ -260,6 +260,7 @@ atlmonJSControllers.controller(
 
         // Get infos about DB UP / DOWN
         var dbup = DbUpInfoGet.query({db: $scope.dbName});
+            $scope.dbisup = {state: false, message: "DOWN"}; //default
         dbup.$promise.then(function (result) {
           if (result.items[0].status == 1){
             $scope.dbisup = {state: true, message: "UP"};
@@ -972,7 +973,6 @@ atlmonJSControllers.controller(
           return storageInfo.$promise.then(function(result) {
             $scope.storageData = result.items;
             $scope.isDataLoaded = true;
-            console.log('storageData', $scope.storageData);
           });
         }
       }
@@ -1024,8 +1024,14 @@ atlmonJSControllers.controller(
         topTablesRS.$promise.then(function (result) {
         //a) create array of Table-names and of the Chart-Dates
           var uniqueTablenames = makeUniqueNames(result.items);
-          chartDates = makeUniqueDates(result.items);
-          $scope.chartDates = chartDates;
+          chartDates = makeUniqueDates(result.items).sort(function(a, b){
+            var keyA = new Date(a),
+            keyB = new Date(b);
+            if(keyA < keyB) return -1;
+            if(keyA > keyB) return 1;
+            return 0;
+          });
+          // $scope.chartDates = chartDates;
 
         //b) Create all the needed arrays.
           var topTables = {};
@@ -1054,13 +1060,15 @@ atlmonJSControllers.controller(
             }
           };  
           // $scope.topTables = Object.values(topTables);
-          $scope.topTables = Object.values(topTables).sort(function(a, b){
+          // $scope.topTables = Object.values(topTables).sort(function(a, b){
+          topTables = Object.values(topTables).sort(function(a, b){
             var keyA = a.data[a.data.length - 1],
             keyB = b.data[a.data.length - 1];
             if(keyA < keyB) return 1;
             if(keyA > keyB) return -1;
             return 0;
           });
+          $scope.topTables= [topTables, chartDates];
         });
       }
 
