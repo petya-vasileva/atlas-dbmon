@@ -979,8 +979,7 @@ atlmonJSControllers.controller(
     ]);
 
 
-// TOP10Tables Controller
-
+// Controller for the view of the 10 biggest tables per Schema
 atlmonJSControllers.controller(
     'Top10TablesCtrl',
     [
@@ -1010,11 +1009,30 @@ atlmonJSControllers.controller(
         }, true);
 
     // Functions collection:
+        function makeUniqueNames(items){
+          var uniqueArray=[];
+          for(var i=0;i < items.length;i++){
+            if(!uniqueArray.includes(items[i].object_name)){
+              uniqueArray.push(items[i].object_name);
+            }
+          }
+          return uniqueArray;
+        }
+
+        function makeUniqueDates(items){
+          var uniqueArray=[];
+          for(var i=0;i < items.length;i++){
+            if(!uniqueArray.includes(items[i].dt)){
+              uniqueArray.push(items[i].dt);
+            }
+          }
+          return uniqueArray;
+        }
+
         function queryTableData(year, schema) {
         // Oracle expects a number
         if (year == 'ALL')
         year = 0;
-        //get the data
         var topTablesRS = TOP10TablesGet.query({db: db, schema: selectedSchema, year: year});
         topTablesRS.$promise.then(function (result) {
         //a) create array of Table-names and of the Chart-Dates
@@ -1026,7 +1044,6 @@ atlmonJSControllers.controller(
             if(keyA > keyB) return 1;
             return 0;
           });
-          // $scope.chartDates = chartDates;
 
         //b) Create all the needed arrays.
           var topTables = {};
@@ -1041,11 +1058,11 @@ atlmonJSControllers.controller(
             if(keyA > keyB) return 1;
             return 0;
           });
-
           orderedItems.forEach(function(item){
             eval("topTables." + item.object_name + ".data").push(item.table_size_gb);
           });
-          //d) Fill up missing data values
+
+        //d) Fill up missing data values with "0"
           for (item in topTables) {
             if (topTables[item].data.length != chartDates.length) {
               var diff = chartDates.length - topTables[item].data.length;
@@ -1054,8 +1071,7 @@ atlmonJSControllers.controller(
               };
             }
           };  
-          // $scope.topTables = Object.values(topTables);
-          // $scope.topTables = Object.values(topTables).sort(function(a, b){
+        // e) Change the order of the Arrays, so the biggest table is on top.
           topTables = Object.values(topTables).sort(function(a, b){
             var keyA = a.data[a.data.length - 1],
             keyB = b.data[a.data.length - 1];
@@ -1066,32 +1082,8 @@ atlmonJSControllers.controller(
           $scope.topTables= [topTables, chartDates];
         });
       }
-
-
-      function makeUniqueNames(items){
-        var uniqueArray=[];
-        for(var i=0;i < items.length;i++){
-          if(!uniqueArray.includes(items[i].object_name)){
-            uniqueArray.push(items[i].object_name);
-          }
-        }
-        return uniqueArray;
-      }
-
-      function makeUniqueDates(items){
-        var uniqueArray=[];
-        for(var i=0;i < items.length;i++){
-          if(!uniqueArray.includes(items[i].dt)){
-            uniqueArray.push(items[i].dt);
-          }
-        }
-        return uniqueArray;
-      }
      }
     ]);
-
-
-
 
 
 // BSCHEER DONE
