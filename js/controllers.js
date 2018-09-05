@@ -103,6 +103,8 @@ atlmonJSControllers.controller('MenuCtrl',
       return page === loc ? "active" : "";
     };
 
+    //Logo-resize:
+   
     //Message-functionality:
     var messages = AppMessageGet.query();
     messages.$promise.then(function(result){
@@ -274,7 +276,6 @@ atlmonJSControllers.controller(
           };
           return filtered;
         } 
-
 
         $scope.alert = function (value, row) {
             if (value > row.threshold ) { return { background: "#981A37", color: "#fff" }}

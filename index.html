@@ -45,13 +45,14 @@
 <body ng-controller="GlobalCtrl">
   <div ng-controller="MenuCtrl">
     <ul class="menubar">
-      <div class="menu-logo">
-        <a class="menu-logo-container" href="#/home">
+      <!-- <div class="menu-logo"> -->
+        <a class="menuClass('') menu-logo" href="#/home">
           <!-- <img src="atlas_schmal_50px.png"/> -->
           <!-- <img src="atlas_logo_white_50px.png"/> -->
-          <img src="atlas_square_50px.png"/>
+          <!-- <img src="atlas_square_50px.png" style="height: 100%; width: 100%; object-fit: contain"/> -->
+          <img src="atlas_logo_white_40px.png"/>
         </a>
-      </div>
+      <!-- </div> -->
       <a ng-class="menuClass('home')" href="#/home">HOME</a>
       <a ng-class="menuClass('db/ondb')" href="#/db/ondb">ONDB</a>
       <a ng-class="menuClass('db/offdb')" href="#/db/offdb">OFFDB</a>

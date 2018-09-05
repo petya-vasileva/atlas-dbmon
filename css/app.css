@@ -105,10 +105,12 @@ md-tabs.md-no-animation md-tab-content {
   margin-bottom: 0;
   padding: 0.25% 1.2%  0% 0;
   text-decoration:none !important;
+  height: 100%;
   /*margin-right: 20px;*/
 }
 
 .menu-logo {
+  padding: 0% 1.2%  0% 0.0%;
 }
 
 
