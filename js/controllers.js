@@ -995,20 +995,15 @@ atlmonJSControllers.controller(
 
         var db = RegisterChange.getDb();
         var selectedSchema = RegisterChange.getSchema().toUpperCase();
-        console.log(db);
-        console.log(selectedSchema);
-        var year = '2018';
 
         if (db == 'adcdb_adg' || db == 'ondb_adg')
           angular.element('.storage-container').css('display', 'none');
-
-
 
         years = DateTimeService.lastTwoYears();
         $scope.years_back = years;
         $scope.selected_year = years[years.length - 1];
 
-        queryTableData(year, selectedSchema);
+        queryTableData($scope.selected_year, selectedSchema);
 
         $scope.$watch("selected_year", function(newValue, oldValue) {
           queryTableData(newValue, selectedSchema);

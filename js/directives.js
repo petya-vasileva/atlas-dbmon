@@ -720,29 +720,15 @@ atlmonJSDirectives.directive('hcSessArea', function() {
 });
 
 
-
-
-
 atlmonJSDirectives.directive('hcStacked', function() {
   return {
     restrict: 'E',
     scope: {
       items: '='
     },
-    link: function(scope,$scope, element, attrs) {
-      // scope.getChartValues({chartType: scope.type});
+    link: function(scope, element, attrs) {
       scope.$watch('items', function (newval, oldval) {
         if(newval) {
-          // var catValues = [];
-          // var series1 = [];
-          // var series2 = [];
-
-          // for(var i=0;i<scope.items.length;i++){
-          //   catValues.push(Object.values(scope.items[i])[0])
-          //   series1.push(Object.values(scope.items[i])[1]);
-          //   series2.push(Object.values(scope.items[i])[2]);
-            
-          // };
 
     var chart = new Highcharts.chart({
 
@@ -761,13 +747,12 @@ atlmonJSDirectives.directive('hcStacked', function() {
                 '#614931', '#3399ff', '#594266', '#cb6828', '#aaaaab', '#a89375'
                 ],
     title: {
-        text: 'Top 10 Tables'
+        text: 'Top 10 Tables by storage size (Gb)'
     },
     subtitle: {
         text: ''
     },
     xAxis: {
-        // categories: ['Jan', 'Feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sept', 'okt', 'nov', 'dec'],
         categories: scope.items[1],
         tickmarkPlacement: 'on',
         title: {
@@ -797,9 +782,6 @@ atlmonJSDirectives.directive('hcStacked', function() {
     series: scope.items[0]
 });
 
-
-
-// Copied from other Charts - see if needed
         function resize() {
           height = chart.height;
           // width = $(".chart-wrapper").width();
