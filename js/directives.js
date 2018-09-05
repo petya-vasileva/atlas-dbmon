@@ -1,6 +1,6 @@
 var atlmonJSDirectives = angular.module('atlmonJSDirectives', []);
 
-/** BSCHEER
+/** 
  * The new directive to build the tables out of the new data structure.
  */
 atlmonJSDirectives.directive('ngDbTable', function() {
@@ -17,7 +17,7 @@ atlmonJSDirectives.directive('ngDbTable', function() {
         }
     });
 
-/** BSCHEER 
+/**  
  * The directive that builds the tables with database info. For each DB name it creates dedicated table.
  */
 atlmonJSDirectives.directive('ngSessTable', function() {
@@ -105,7 +105,6 @@ atlmonJSDirectives.directive('addHtml', function($compile){
 
 
 atlmonJSDirectives.directive('hcPie',['$location', '$timeout', function (location, $timeout) {
-  // return $timeout(function(){
   return {
     restrict: 'E',
     scope: {
@@ -238,7 +237,6 @@ atlmonJSDirectives.directive('hcPie',['$location', '$timeout', function (locatio
         });
 
         function resize() {
-            // console.log(chart);
             height = chart.height;
             width = $("#chartRow").width() / 2
             chart.setSize(width, height);
@@ -254,8 +252,7 @@ atlmonJSDirectives.directive('hcPie',['$location', '$timeout', function (locatio
 
       }); // beendet watch
     }
-  }; //semikolon evtl entfernen???
-// }, 3000);
+  };
 }]);
 
 atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (location, $timeout) {

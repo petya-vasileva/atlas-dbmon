@@ -48,7 +48,7 @@ atlmonJSControllers.run(function($rootScope, $location, DateTimeService, Registe
     });
 });
 
-/** NOTHING TO DO HERE
+/**
  * The controller that refreshes the page every 5 min
  */
 atlmonJSControllers.controller(
@@ -70,7 +70,7 @@ atlmonJSControllers.controller(
 }]);
 
 
-/** NOTHING TO DO HERE
+/** 
  * The controller for selecting an item from the menu
  */
 atlmonJSControllers.controller('MenuCtrl',
@@ -121,9 +121,8 @@ atlmonJSControllers.controller('MenuCtrl',
 });
 
 
-/** BSCHEER - DONE
+/**
  * The Controller for the Box around the Charts.
- * 
  */
 atlmonJSControllers.controller(
     'DbDetailsCtrl',
@@ -177,7 +176,7 @@ atlmonJSControllers.controller(
     ]);
 
 
-/** BSCHEER DONE
+/**
  * The controller for getting all database names.
  */
 atlmonJSControllers.controller(
@@ -211,7 +210,7 @@ atlmonJSControllers.controller(
     ]);
 
 
-/** BSCHEER DONE
+/** 
  * The controller for retrieving basic metrics for each of the databases.
  */
 atlmonJSControllers.controller(
@@ -260,8 +259,6 @@ atlmonJSControllers.controller(
 
         // Get infos about DB UP / DOWN
         var dbup = DbUpInfoGet.query({db: $scope.dbName});
-            // $scope.dbisup = {state: false, message: "DOWN"}; //default
-            console.log(dbup);
         dbup.$promise.then(function (result) {
           if (result.items[0].status == 1){
             $scope.dbisup = {state: true, message: "UP"};
@@ -331,7 +328,7 @@ atlmonJSControllers.controller(
     ]);
 
 
-/** BSCHEER - DONE
+/** 
  * The controller for retrieving performance history for the database
  */
 atlmonJSControllers.controller(
@@ -407,7 +404,7 @@ atlmonJSControllers.controller(
 
 
 
-/** BSCHEER DONE
+/**
  * The controller for getting the top SQLs
  */
 atlmonJSControllers.controller(
@@ -559,7 +556,7 @@ atlmonJSControllers.controller(
     ]);
 
 
-/** BSCHEER - DONE
+/**
  * The controller for getting the session distribution information
  */
 atlmonJSControllers.controller(
@@ -684,8 +681,7 @@ atlmonJSControllers.controller(
     ]);
 
 
-/** BSCHEER DONE
- * Shouldnt it be index -1 nstead of +1?
+/** 
  * The controller for getting the execution plan and the AWR statistics for a single sql_id
  */
 atlmonJSControllers.controller(
@@ -856,7 +852,7 @@ atlmonJSControllers.controller(
     }
     ]);
 
-/** BSCHEER DONE
+/**
  * The controller for getting the list of scheduler jobs for each database.
  */
 atlmonJSControllers.controller(
@@ -912,7 +908,7 @@ atlmonJSControllers.controller(
         }
       ]);
 
-/**BSCHEER - DONE
+/**
  * The controller for getting the storage volume
  */
 atlmonJSControllers.controller(
@@ -1086,7 +1082,6 @@ atlmonJSControllers.controller(
     ]);
 
 
-// BSCHEER DONE
 //Controller of the any-App
 atlmonJSControllers.controller(
     'AllSchemasCtrl',
@@ -1235,7 +1230,7 @@ atlmonJSControllers.controller(
       }
     ]);
 
-/** BSCHEER DONE
+/**
  * Controller for the Dropdown.List in "Application" and HistTree
  */
 atlmonJSControllers.controller(
@@ -1252,7 +1247,6 @@ atlmonJSControllers.controller(
 
         dbs = DbNamesGet.query();
         dbs.$promise.then(function(result){
-          // console.log(result.items);
           $scope.all_databases = result.items;
         });
         // On dropdown item change
@@ -1263,9 +1257,7 @@ atlmonJSControllers.controller(
       }
     ]);
 
-/**BSCHEER
-* DONE
-*/
+
 atlmonJSControllers.controller(
     'SchemaDetailsrCtrl',
     [
@@ -1365,7 +1357,7 @@ atlmonJSControllers.controller(
       }
     ]);
 
-/** This is not perfect but could be adapted quickly to use the new Top10 per schema data
+/**
  * The controller for getting the charts data for a schema name
  */
 atlmonJSControllers.controller(
@@ -1649,11 +1641,6 @@ atlmonJSControllers.controller(
 
             $scope.expandingProperty = "child_sess_id";
 
-            // $scope.colDefs = [
-            // {
-            //   field: "child_sess_id",
-            //   displayName: "Session ID"
-            // },
             $scope.colDefs = [
             {
               field: "waiting_sess_id",
@@ -1714,55 +1701,4 @@ atlmonJSControllers.controller(
 
           }
         ]);
-
-
-// Check if used and delete in later Version!
-
-// BSCHEER: Normal Storage Controller used now. 
-// TOFIX: Make StorageInfoCtrl generic. Don't use the following controller. 
-// The code is almost the same!
-// atlmonJSControllers.controller(
-//     'SchemaStorageInfoCtrl',
-//     [
-//       '$scope',
-//       '$location',
-//       'StorageInfoGet',
-//       'AllSchemasGet',
-//       'RegisterSchemas',
-//       'RegisterChange',
-//       function($scope, $location, StorageInfoGet, AllSchemasGet, RegisterSchemas, RegisterChange) {
-//           db = $location.search().db;
-
-//         // TOFIX: data is available later than requested
-//         var schemas = RegisterSchemas.getSchemas();
-
-//         var selectedSchema = 'ALL'
-//         // var selectedSchema = RegisterChange.getSchema();
-//         // $scope.item = RegisterChange.getSchema();
-
-//         // On dropdown item change
-//         $scope.update = function() {
-//           selectedSchema = $scope.item;
-//           queryStorageData();
-//         }
-
-//         // radio buttons
-//         $scope.radioModel = '2016';
-//         $scope.$watch("radioModel", function(newValue, oldValue) {
-//           queryStorageData();
-//         }, true);
-
-
-//         function queryStorageData() {
-//           var storageInfo = StorageInfoGet.query({db: $routeParams.currentDB,
-//                                               schema: selectedSchema,
-//                                                 year: $scope.radioModel});
-//           $scope.isDataLoaded = false;
-//           return storageInfo.$promise.then(function(result) {
-//             $scope.storageData = angular.fromJson(result);
-//             $scope.isDataLoaded = true;
-//           });
-//         }
-//       }
-//     ]);
 
