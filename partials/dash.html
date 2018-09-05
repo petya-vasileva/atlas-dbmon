@@ -13,12 +13,8 @@
 
   <div layout-xl="row" layout-gt-md="row" layout-align="center" class="group3">
     <div ng-db-table db-name="TEST1" reduced={{'yes'}} class="TEST1"></div>
-    <!-- When TEST1 is finally shut down, move INT8R to the group2 -->
+    <!-- When TEST1 is shut down, move INT8R to the group2 -->
     <div ng-db-table db-name="INT8R" reduced={{'yes'}} class="INT8R"></div>
   </div>
   
 </div>
-
-    <!-- <li ng-repeat="dbMerics.item in dbMerics.items"> {{dbMeric.item.metric}}</li> -->
-<!--     <div ng-repeat="dbMeric in dbMerics"> {{dbMeric.items["0"].instid}}</div>
-    <p ng-bind = "dbMerics.items"></p> -->
