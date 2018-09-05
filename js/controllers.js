@@ -260,12 +260,13 @@ atlmonJSControllers.controller(
 
         // Get infos about DB UP / DOWN
         var dbup = DbUpInfoGet.query({db: $scope.dbName});
-            $scope.dbisup = {state: false, message: "DOWN"}; //default
+            // $scope.dbisup = {state: false, message: "DOWN"}; //default
+            console.log(dbup);
         dbup.$promise.then(function (result) {
           if (result.items[0].status == 1){
             $scope.dbisup = {state: true, message: "UP"};
           } else {$scope.dbisup = {state: false, message: "DOWN"};}        
-        });
+        }).catch(function(e){$scope.dbisup = {state: false, message: "DOWN"};});
 
         function reduceMetrics (metrics) {
           var filtered = [];

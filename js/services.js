@@ -33,7 +33,8 @@ atlmonJSServices.factory(
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db_up/:db';
+          // var url = baseurl.url + 'db_up/:db';
+          var url ='url/to/apidb_up/:db';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
