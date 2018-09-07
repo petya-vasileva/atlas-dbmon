@@ -540,10 +540,20 @@ md-toolbar.dt-bar {
   overflow: auto; /*BSCHEER added*/
 }
 
+.datetimeplots {
+  margin: 0px;
+}
+
 .datetimepick-fields {
   float: right;
   height: 100%;
   width: 100%;
+}
+
+.datetimepick-fieldsplots {
+  float: left;
+  height: 100%;
+  width: auto;
 }
 
 form.chart-period {
