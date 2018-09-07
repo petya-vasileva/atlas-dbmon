@@ -790,14 +790,16 @@ atlmonJSDirectives.directive('hcStacked', function() {
 });
 
         function resize() {
+          console.log('resize function');
           height = chart.height;
           width = $(".tables-box").width();
           chart.setSize(width, height);
-        }
-
-        window.onresize = function(event) {
-          resize();
         };
+
+        // window.onresize = function(event) {
+        //   console.log('onresize event');
+        //   resize();
+        // };
 
         scope.$watch('isDataLoaded', function() {
           resize();

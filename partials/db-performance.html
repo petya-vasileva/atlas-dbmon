@@ -1,26 +1,35 @@
 <div ng-controller="StreamsInfoCtrl" class="history-plots">
 
-<!--     <div layout-xl="row" layout-gt-md="row" layout-align="center">
-      <div >
-          <div class="btn-group" ng-repeat="category in nodeNum track by $index">
-          <label>
-             <input name="options" id="option$index+1" type="radio" name="nodeNumber" ng-model="$parent.nodeNumber" ng-value="$index+1"/>
-             <span class="btn btn-primary">NODE {{$index+1}}</span>
-          </label>
-        </div>
-      </div> -->
+  <span>
+    <div class="storage-years-btns">
+      <div class="btn-group" >
+        <label ng-repeat="node in Nodes track by $index">
+          <input name="options"  type="radio"  ng-click="updateNode(node.nodeNr)" />
+          <span class="btn btn-primary">{{node.nodeName}}</span>
+        </label>
+      </div>
+    </div>
 
-      <!-- <md-input-container flex-gt-md="30">
-        <label>Timepicker Only</label>
-        <input mdc-datetime-picker date="false" time="true" type="text" id="time" short-time="true"
-               show-todays-date click-outside-to-close="true"
-               placeholder="Time" auto-ok="true"
-               min-date="minDate" minute-steps="1"
-               format="hh:mm a"
-               ng-change="vm.saveChange()"
-               ng-model="time">
-    </md-input-container> -->
-    <!-- </div> -->
+    <div ng-controller="DateTimePickerCtrl" class="container datetimepick" style="margin: 0px;">
+      <div class="layout-row datetimepick-fields">
+        <form class="chart-period">
+          <label>From:</label>
+          <input ng-model="dateTimeStart" ng-style="dpstyleFrom"/>
+
+          <label>To:</label>
+          <input ng-model="dateTimeEnd" ng-style="dpstyleTo"/>
+          <span>
+            <button type="button" class="btn btn-default" ng-click="updateDateTime()">
+              <i class="glyphicon glyphicon-play-circle"></i>
+            </button>
+          </span>
+          <button ng-click="reset()" type="button" class="btn btn-secondary">Reset to now</button>
+        </form>
+      </div>
+    </div>
+
+
+    </span>
 
     <div class="chart-row">
       <hc-area class="col-lg-6 chart" id="history-cpu" items="cpuData" container="history-cpu" type="Host CPU Utilization" unit="% Busy/(Idle+Busy)" i="9"></hc-area>

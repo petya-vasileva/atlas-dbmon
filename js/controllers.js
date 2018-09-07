@@ -339,17 +339,46 @@ atlmonJSControllers.controller(
       'StreamsInfoGet',
       'DbDetailsGet',
       'DateTimeService',
-      function( $scope, $location, StreamsInfoGet, DbDetailsGet, DateTimeService) {
+      'RegisterChange',
+      function( $scope, $location, StreamsInfoGet, DbDetailsGet, DateTimeService, RegisterChange) {
         var db, node, from, to;
         db = $location.search().db;
         node = $location.search().node;
         to = $location.search().to;
         from = $location.search().from;
 
-        $scope.nodeNumber = 1;
-
+        // Nr of Nodes for the Buttons
         var nodesRes = DbDetailsGet.query({db: db.toUpperCase()});
-        $scope.nodeNum = nodesRes.$promise.then(function(result){ return result.items[0].dbnodes;});
+        nodesRes.$promise.then(function(result){
+          var Nodes = [];
+          $scope.nodeNum = result.items[0].dbnodes;
+          for (i = 1; i <= result.items[0].dbnodes ; i++){
+            var nodeArray = {nodeNr: i, nodeName: "NODE" +i};
+            Nodes.push(nodeArray);
+          }
+          $scope.Nodes = Nodes;
+        });
+
+        // Load initial data
+        $scope.nodeNumber = 1;
+        loadPlots();
+        // 
+        $scope.updateNode = function(newNode) {
+          node = newNode;
+          RegisterChange.setNode(newNode);
+          $location.search('node', newNode);
+          loadPlots();
+        };
+
+        $scope.updateDateTime = function() {
+          // get the new dates from the service DateTimeRegisterChange
+          from = RegisterChange.getDate()[0];
+          to = RegisterChange.getDate()[1];
+          loadPlots();
+        };
+
+        // Wrap into function:
+        function loadPlots(){
         cpuPlot = StreamsInfoGet.query({db: db, node: node, metric: 2057, from: from, to: to});
         cpuPlot.$promise.then(function (result) {
           $scope.cpuData = result.items;
@@ -399,6 +428,7 @@ atlmonJSControllers.controller(
         physreadbytesPlot.$promise.then(function (result) {
           $scope.physreadbytesData = result.items;
         });
+          }
       }
     ]);
 
