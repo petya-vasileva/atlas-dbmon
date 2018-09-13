@@ -666,6 +666,9 @@ atlmonJSControllers.controller(
 
         var db = RegisterChange.getDb();
         var schema = RegisterChange.getSchema();
+        var from = RegisterChange.getDate()[0];
+        var to = RegisterChange.getDate()[1];
+        
 
         var nodesLoc = SchemaNodesGet.query({db: db, schema: schema});
         $scope.nodes = nodesLoc;
@@ -678,7 +681,7 @@ atlmonJSControllers.controller(
       },200)
 
         $scope.OnSelectedTab = function(tabId) {
-          RegisterChange.setNode(tabId);
+          RegisterChange.setNode(tabId.inst_id);
           getData();
         }
 
