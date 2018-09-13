@@ -269,7 +269,7 @@ atlmonJSControllers.controller(
           errormessage = "<font>Database is currently not available. Please contact the administrator for more details." + 
           " <br><br> <b>Error-details: </b><br> Code " + e.status + 
           ": " + e.statusText +  "<br> URL: " + e.config.url + " </font>";
-          console.log(e);
+          console.log("Error-details: ",e);
         });
 
         function reduceMetrics (metrics) {
@@ -656,7 +656,7 @@ atlmonJSControllers.controller(
 
 
 
-/** BSCHEER - WIP: Is the timeout really necessary???
+/**
  * The controller for getting the session distribution information
  */
 atlmonJSControllers.controller(
@@ -1140,7 +1140,7 @@ atlmonJSControllers.controller(
         var self = this;
         self.schemas = loadAll();
         loadedSchemas = loadAll();
-        self.simulateQuery = false; // added by BSCHEER
+        self.simulateQuery = false;
         self.querySearch = querySearch;
         self.selectedItemChange = selectedItemChange;
         self.searchTextChange  = searchTextChange;
@@ -1422,7 +1422,6 @@ atlmonJSControllers.controller(
             $scope.selectedIndex = node - 1;
             querySessTop10(from, to);
 
-            //returns only nodes 
             nodesResult = SchemaNodesGet.query({db: db, schema: "0".concat(schema)});
             nodesResult.$promise.then(function (result) {
               $scope.selectedIndex = 0;
@@ -1483,13 +1482,11 @@ atlmonJSControllers.controller(
             $scope.isDataLoaded = true;
             $scope.loadedNode = 1;
 
-            // Passing the results of the query to the scope variable we will be working with.
             $scope.chartValues =  stage1;
           });
         }
 
         $scope.updateDateTime = function() {
-          // get the new dates from the service DateTimeRegisterChange
           from = RegisterChange.getDate()[0];
           to = RegisterChange.getDate()[1];
         };
