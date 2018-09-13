@@ -790,7 +790,6 @@ atlmonJSDirectives.directive('hcStacked', function() {
 });
 
         function resize() {
-          console.log('resize function');
           height = chart.height;
           width = $(".tables-box").width();
           chart.setSize(width, height);

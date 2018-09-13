@@ -264,7 +264,7 @@ pre p {
 
 div.outer-container {
   position: relative;
-  border: 1px solid #ddd;
+  border: 0px solid #ddd; /*BSCHEER 1 -> 0px*/
   /*padding-top: 23px;*/
   background: #fff;
   display: table;
