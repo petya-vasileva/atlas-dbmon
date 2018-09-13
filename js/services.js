@@ -97,28 +97,6 @@ atlmonJSServices
         } ]);
 
 
-// NOT IN USE
-// atlmonJSServices
-// .factory(
-//     'MetricHistDataGet',
-//     [
-//         '$resource',
-//         'baseurl',
-//         'userurl',
-//         function($resource, baseurl, userurl) {
-//           var url = baseurl.url + userurl.user
-//               + 'basic/db/:db/:metricId';
-//           var res = $resource(url, {}, 
-//           {
-//             query : {
-//               method : 'GET',
-//               isArray : true
-//             }
-//           });
-//           return res;
-//         } ]);
-
-
 atlmonJSServices
 .factory(
     'Top10SessionsGet',
@@ -137,7 +115,7 @@ atlmonJSServices
           return res;
         } ]);
 
- // Service or the Controller of the Session_distr. table in the left half of the application
+
 atlmonJSServices
 .factory(
     'SessionDistrGet',
@@ -339,6 +317,7 @@ atlmonJSServices
          return res;  
         } ]);
 
+
 atlmonJSServices
 .factory(
     'SchemaSessionsDetailsGet',
@@ -357,7 +336,6 @@ atlmonJSServices
         } ]);
 
 
-// TODO: replace with Data from new table!
 atlmonJSServices
 .factory(
     'Top10SessionsPerSchemaGet',
@@ -392,6 +370,7 @@ atlmonJSServices
             }});
          return res;
         } ]);
+
 
 atlmonJSServices
 .factory(
@@ -428,6 +407,7 @@ atlmonJSServices
           return res;
         } ]);
 
+
 atlmonJSServices
 .factory(
     'ApplyLagGet',
@@ -444,6 +424,7 @@ atlmonJSServices
             }});
           return res;
         } ]);
+
 
 atlmonJSServices
 .factory(
@@ -462,7 +443,7 @@ atlmonJSServices
           return res;
         } ]);
 
-//BSCHEER
+
 atlmonJSServices
 .factory(
     'TOP10TablesGet',
@@ -481,7 +462,6 @@ atlmonJSServices
         } ]);
 
 
-//BSCHEER: Changed from wildcard % to "all" and added switch on this word in the ORDS
 atlmonJSServices
 .service(
     'RegisterChange',
@@ -607,8 +587,6 @@ atlmonJSServices
         return {
           buildTree: function(data) {
             var children, e, id, o, pid, temp, _i, _len, _ref;
-            // id = data.child_sess_id || "child_sess_id";
-            // pid = data.parent_sess_id || "parent_sess_id";
             id = data.waiting_sess_id || "waiting_sess_id";            
             pid = data.blocking_sess_id || "blocking_sess_id";
             children = data.children || "children";
@@ -671,7 +649,7 @@ atlmonJSServices
           },
           initialTimeBlockingTree: function() {
             var now = new Date();
-            // starting point is 20min ago
+            // starting point is 3h ago
             var start = new Date(now);
             start.setMinutes(now.getMinutes() - 180);
             var end = now;
@@ -680,7 +658,7 @@ atlmonJSServices
           },
           streamsPlotInitTime: function() {
             var now = new Date();
-            // starting point is 10min ago
+            // starting point is 12h ago
             var start = new Date(now);
             start.setMinutes(now.getHours() - 12*60);
             var end = now;
@@ -733,5 +711,3 @@ atlmonJSServices
     }
   }
 });
-
-
