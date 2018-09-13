@@ -267,7 +267,7 @@ atlmonJSControllers.controller(
         }).catch(function(e){
           $scope.dbisup = {state: false, message: "DOWN"};
           errormessage = "<font>Database is currently not available. Please contact the administrator for more details." + 
-          " <br><br> <b>Error-details: </b><br> Code " + e.status + 
+          " <br><br> <b>Error details: </b><br> Code " + e.status + 
           ": " + e.statusText +  "<br> URL: " + e.config.url + " </font>";
           console.log("Error-details: ",e);
         });
