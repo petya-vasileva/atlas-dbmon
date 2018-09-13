@@ -47,7 +47,7 @@ dbmonJSApp.config(function($mdThemingProvider) {
     .primaryPalette('monGreen');
 });
 
-//Needed to add this after accidently updating Angularfrom 1.5.8 to 1.7.3 o_O
+// restores URL-behaviour after updating Angular from 1.5.8 to 1.7.3
 dbmonJSApp.config(['$locationProvider', function($locationProvider) {
   $locationProvider.hashPrefix('');
 }]);
