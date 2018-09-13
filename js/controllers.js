@@ -259,11 +259,18 @@ atlmonJSControllers.controller(
 
         // Get infos about DB UP / DOWN
         var dbup = DbUpInfoGet.query({db: $scope.dbName});
+        var errormessage;
         dbup.$promise.then(function (result) {
           if (result.items[0].status == 1){
             $scope.dbisup = {state: true, message: "UP"};
           } else {$scope.dbisup = {state: false, message: "DOWN"};}        
-        }).catch(function(e){$scope.dbisup = {state: false, message: "DOWN"};});
+        }).catch(function(e){
+          $scope.dbisup = {state: false, message: "DOWN"};
+          errormessage = "<font>Database is currently not available. Please contact the administrator for more details." + 
+          " <br><br> <b>Error-details: </b><br> Code " + e.status + 
+          ": " + e.statusText +  "<br> URL: " + e.config.url + " </font>";
+          console.log(e);
+        });
 
         function reduceMetrics (metrics) {
           var filtered = [];
@@ -318,7 +325,7 @@ atlmonJSControllers.controller(
             .parent(angular.element(document.querySelector('#popupContainer')))
             .clickOutsideToClose(true)
             .title("Error-details:")
-            .textContent("Database is currently not available. Please contact the administrator for more details")
+            .htmlContent(errormessage)
             .ariaLabel('DB-Error Dialog')
             .ok('close')
             .targetEvent(ev)
