@@ -668,14 +668,14 @@ atlmonJSControllers.controller(
         var schema = RegisterChange.getSchema();
         var from = RegisterChange.getDate()[0];
         var to = RegisterChange.getDate()[1];
-        
+
 
         var nodesLoc = SchemaNodesGet.query({db: db, schema: schema});
         $scope.nodes = nodesLoc;
       $timeout(function(){
         nodesLoc.$promise.then(function (result) {
           RegisterChange.setNode(result.items[0].inst_id);
-          $scope.selectedIndex = result.items[0].inst_id;
+          $scope.selectedIndex = result.items[0].inst_id -1;
           getData();
         });        
       },200)
