@@ -1419,77 +1419,61 @@ atlmonJSControllers.controller(
             var from = DateTimeService.format(DateTimeService.streamsPlotInitTime()[0]);
             var to = DateTimeService.format(DateTimeService.streamsPlotInitTime()[1]);
 
-            $scope.selectedIndex = node - 1;
-            querySessTop10(from, to);
-
             nodesResult = SchemaNodesGet.query({db: db, schema: "0".concat(schema)});
             nodesResult.$promise.then(function (result) {
-              $scope.selectedIndex = 0;
               $scope.nodes = result.items;
+
+              var nodeNum = node ? node : result.items[0].inst_id;
+              var tabIdx = result.items.findIndex(function(item, i){
+                return item.inst_id == nodeNum
+              });
+              $scope.selectedIndex = tabIdx;
+              querySessTop10(db, schema, nodeNum, from, to);
             });
 
-
-        $scope.OnSelectedTab = function(tabId) {
-          $scope.tab = tabId;
-          RegisterChange.setNode(tabId);
-          $scope.isDataLoaded = false;
-          // $location.search({'node': tabId,
-          //                   'from': RegisterChange.getDate()[0],
-          //                     'to': RegisterChange.getDate()[1]});
-        
-         if         (tabId == 1 ) {
-            $scope.chValues = $scope.chartValues.node1;
-          } else if (tabId == 2) {
-            $scope.chValues = $scope.chartValues.node2;
-          } else if (tabId == 3 ) {
-            $scope.chValues = $scope.chartValues.node3;
-          } else if (tabId == 4 ) {
-            $scope.chValues = $scope.chartValues.node4;
-          }
-          $scope.isDataLoaded = true;
-        }
+            $scope.OnSelectedTab = function(tabId) {
+              RegisterChange.setNode(tabId);
+              $scope.isDataLoaded = true;
+              $location.search({  'db': RegisterChange.getDb(),
+                              'schema': RegisterChange.getSchema(),
+                                'node': tabId,
+                                'from': RegisterChange.getDate()[0],
+                                  'to': RegisterChange.getDate()[1]});
+              console.log(db, schema, tabId, from, to);
+              querySessTop10(db, schema, tabId, from, to);
+              $scope.isDataLoaded = true;
+            }
 
 
-        function querySessTop10(from, to) {
-          var top10sess = Top10SessionsPerSchemaGet.query({db: db, schema: schema, from: from, to: to });
+            function querySessTop10(db, schema, node, from, to) {
+              var top10sess = Top10SessionsPerSchemaGet.query({     db: db,
+                                                                schema: schema,
+                                                                  node: node,
+                                                                  from: from,
+                                                                    to: to
+                                                              });
 
-          $scope.isDataLoaded = false;
-          top10sess.$promise.then(function(result) {
+              $scope.isDataLoaded = false;
+              top10sess.$promise.then(function(result) {
+                $scope.chartValues = {};
 
-            $scope.chartValues = {};
-            $scope.loadedNode = 0;
+                var node = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+                            elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
 
-          // Shape data for further processing in the chValues
-          // Result of query is one big List, here seperated to Arrays, containing just the data for the charts.
-                // Declare Objects for the Data of each node
-            var node1 = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],  
-                        elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
-            var node2 = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],  
-                        elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
-            var node3 = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],  
-                        elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
-            var node4 = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],  
-                        elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
+                result.items.forEach(function(item){
+                // Every item gets pushed to the object/array according to its own values inst_id (node) and chart_type
+                  eval("node."+item.chart_type).push(item);
+                });
 
-            result.items.forEach(function(item){
-            // Every item gets pushed to the object/array according to its own values inst_id (node) and chart_type
-              eval("node" + item.inst_id + "."+item.chart_type).push(item);
-            });
-              
-            var stage1 = {node1:node1, node2:node2, node3:node3, node4:node4}
-            // Assigning a default-value and updating check-variables 
-            $scope.chValues = stage1[0];
-            $scope.isDataLoaded = true;
-            $scope.loadedNode = 1;
+                $scope.chValues = node;
+                $scope.isDataLoaded = true;
+              });
+            }
 
-            $scope.chartValues =  stage1;
-          });
-        }
-
-        $scope.updateDateTime = function() {
-          from = RegisterChange.getDate()[0];
-          to = RegisterChange.getDate()[1];
-        };
+            $scope.updateDateTime = function() {
+              from = RegisterChange.getDate()[0];
+              to = RegisterChange.getDate()[1];
+            };
 
           }
         ]);

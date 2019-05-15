@@ -127,19 +127,18 @@
               </form>
             </div>
           </div>
-        </div> -->
+        </div>
         <!-- End of datetime picker container -->
 
-     <!--    <md-progress-linear md-mode="indeterminate" class="loader" ng-if="isDataLoaded==false"></md-progress-linear>
+        <md-progress-linear md-mode="indeterminate" class="loader" ng-if="isDataLoaded==false"></md-progress-linear>
       </md-toolbar>
- -->
+
 
       <md-content ng-if="isDataLoaded==true">
-      <!-- <md-content>   -->
         <md-tabs md-no-ink md-no-bar md-stretch-tabs="auto" md-selected="selectedIndex" md-no-ink-bar md-dynamic-height md-border-bottom>
           <div ng-repeat="n in nodes track by $index">
-            <md-tab md-on-select="OnSelectedTab($index+1)">
-              <!-- <md-tab-label>Node{{$index+1}}</md-tab-label> -->
+            <md-tab md-on-select="OnSelectedTab(n.inst_id)">
+              <md-tab-label>Node{{n.inst_id}}</md-tab-label>
               <md-tab-body class="md-padding">
                 <md-content layout="row" id="chartRow">
                   <hc-pie id="buffer_gets{{$index+1}}" class="chart-box" items="chValues.buffer_gets" container="buffer_gets{{$index+1}}" title='buffer gets'></hc-pie>

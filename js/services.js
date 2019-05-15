@@ -344,7 +344,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'top10_sess_per_schema/:db/:schema/:from/:to';
+          var url = baseurl.url + 'top10_sess_per_schema/:db/:node/:schema/:from/:to';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
