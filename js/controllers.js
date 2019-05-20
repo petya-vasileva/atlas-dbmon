@@ -1418,11 +1418,12 @@ atlmonJSControllers.controller(
             var node = RegisterChange.getNode(); 
             var from = DateTimeService.format(DateTimeService.streamsPlotInitTime()[0]);
             var to = DateTimeService.format(DateTimeService.streamsPlotInitTime()[1]);
+            var initLoad;
 
             nodesResult = SchemaNodesGet.query({db: db, schema: "0".concat(schema)});
             nodesResult.$promise.then(function (result) {
+              initLoad = true;
               $scope.nodes = result.items;
-
               var nodeNum = node ? node : result.items[0].inst_id;
               var tabIdx = result.items.findIndex(function(item, i){
                 return item.inst_id == nodeNum
@@ -1431,19 +1432,23 @@ atlmonJSControllers.controller(
               querySessTop10(db, schema, nodeNum, from, to);
             });
 
-            $scope.OnSelectedTab = function(tabId) {
+            $scope.OnSelectedTab = function (tabId) {
               RegisterChange.setNode(tabId);
-              $scope.isDataLoaded = true;
               $location.search({  'db': RegisterChange.getDb(),
-                              'schema': RegisterChange.getSchema(),
-                                'node': tabId,
-                                'from': RegisterChange.getDate()[0],
-                                  'to': RegisterChange.getDate()[1]});
-              console.log(db, schema, tabId, from, to);
-              querySessTop10(db, schema, tabId, from, to);
-              $scope.isDataLoaded = true;
+                                'schema': RegisterChange.getSchema(),
+                                  'node': tabId,
+                                  'from': RegisterChange.getDate()[0],
+                                    'to': RegisterChange.getDate()[1]});
+              // we use initLoad variable to prevent the reload
+              // of the data on the first load of the page
+              if (initLoad == true) {
+                initLoad = false;
+              }
+              else {
+                querySessTop10(db, schema, tabId, from, to);
+                $scope.isDataLoaded = true;
+              }
             }
-
 
             function querySessTop10(db, schema, node, from, to) {
               var top10sess = Top10SessionsPerSchemaGet.query({     db: db,
