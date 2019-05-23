@@ -1457,12 +1457,10 @@ atlmonJSControllers.controller(
                                                                   from: from,
                                                                     to: to
                                                               });
-
               $scope.isDataLoaded = false;
               top10sess.$promise.then(function(result) {
                 $scope.chartValues = {};
-
-                var node = {activity: activity = [], cpu: cpu = [], rows_processed: rows_processed = [],  
+                var node = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],
                             elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
 
                 result.items.forEach(function(item){
