@@ -1462,11 +1462,12 @@ atlmonJSControllers.controller(
                 $scope.chartValues = {};
                 var node = {buffer_gets: buffer_gets = [], cpu: cpu = [], rows_processed: rows_processed = [],
                             elapsed_time: elapsed_time = [], executions: executions = [], disk_reads: disk_reads = [] };
-
-                result.items.forEach(function(item){
-                // Every item gets pushed to the object/array according to its own values inst_id (node) and chart_type
-                  eval("node."+item.chart_type).push(item);
-                });
+                if (result.items.length != null) {
+                  result.items.forEach(function(item){
+                  // Every item gets pushed to the object/array according to its own values inst_id (node) and chart_type
+                    eval("node."+item.chart_type).push(item);
+                  });
+                }
 
                 $scope.chValues = node;
                 $scope.isDataLoaded = true;
