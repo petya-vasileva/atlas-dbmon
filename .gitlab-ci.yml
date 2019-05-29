@@ -12,9 +12,12 @@ install_dependencies:
   stage: build
   script:
     - npm install
+    - docker build -t ords-dbmon .
   artifacts:
     paths:
       - node_modules/
+      
+
       
 redeploy:
   stage: redeploy
