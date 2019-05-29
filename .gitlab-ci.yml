@@ -1,0 +1,25 @@
+image: node:latest
+
+stages:
+  - build
+  - redeploy
+
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: build
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+      
+redeploy:
+  stage: redeploy
+  only:
+  - master
+  image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
+  script: "oc import-image $IMAGE_NAME  --server=$SERVER --namespace $NAMESPACE --all --token=$IMAGE_IMPORT_TOKEN"
+
