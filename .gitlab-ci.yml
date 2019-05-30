@@ -2,6 +2,7 @@ image: node:latest
 
 stages:
   - build
+  - build_application_docker_image
   - redeploy
 
 cache:
@@ -12,11 +13,18 @@ install_dependencies:
   stage: build
   script:
     - npm install
-    - docker build -t ords-dbmon .
   artifacts:
     paths:
       - node_modules/
       
+build_application_docker_image:
+  stage: build_application_docker_image
+  tags:
+   - docker-image-build
+  script: 
+   - "echo building $CI_REGISTRY_IMAGE:runner" 
+  variables:
+   TO: $CI_REGISTRY_IMAGE:runner 
 
       
 redeploy:
