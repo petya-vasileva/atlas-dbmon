@@ -1,5 +1,3 @@
-image: petya/dbmon-ords:latest
-
 stages:
   - build
   - build_application_docker_image
