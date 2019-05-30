@@ -1,4 +1,4 @@
-image: petya/ords-dbmon:latest
+image: petya/dbmon-ords:latest
 
 stages:
   - build
