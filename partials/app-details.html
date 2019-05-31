@@ -83,7 +83,7 @@
       <div class="storage-years-btns">
         <div class="btn-group" ng-repeat="year in years_back track by $index">
           <label>
-            <input name="options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
+            <input name="storage-options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
             />
             <span class="btn btn-primary">{{year}}</span>
           </label>
@@ -162,10 +162,10 @@
 
     <!-- Table Size Info Box -->
       <div ng-controller="Top10TablesCtrl" class="storage-container">
-      <div class="storage-years-btns">
+      <div class="tablesize-years-btns">
         <div class="btn-group" ng-repeat="year in years_back track by $index">
           <label>
-            <input name="options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
+            <input name="storage-options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
             />
             <span class="btn btn-primary">{{year}}</span>
           </label>
