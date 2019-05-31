@@ -20,5 +20,5 @@ redeploy:
   only:
   - master
   image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
-  script: "oc import-image $APP_NAME:runner --server=$SERVER --namespace $NAMESPACE --token=$IMAGE_IMPORT_TOKEN --confirm"
+  script: "oc import-image $APP_NAME --all --server=$SERVER --namespace $NAMESPACE --token=$IMAGE_IMPORT_TOKEN --confirm "
 
