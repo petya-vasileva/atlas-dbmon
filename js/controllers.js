@@ -474,7 +474,7 @@ atlmonJSControllers.controller(
                             'from': RegisterChange.getDate()[0],
                               'to': RegisterChange.getDate()[1]});
         
-         if         (tabId == 1 ) {
+         if (tabId == 1 ) {
             $scope.chValues = $scope.chartValues.node1;
           } else if (tabId == 2) {
             $scope.chValues = $scope.chartValues.node2;
@@ -490,10 +490,8 @@ atlmonJSControllers.controller(
         function queryTop10(from, to) {
           var top10sess = Top10SessionsGet.query({db: $routeParams.currentDB, from: from, to: to});
 
-
           $scope.isDataLoaded = false;
           top10sess.$promise.then(function(result) {
-
             $scope.chartValues = {};
             $scope.loadedNode = 0;
 
@@ -679,13 +677,13 @@ atlmonJSControllers.controller(
 
         var nodesLoc = SchemaNodesGet.query({db: db, schema: schema});
         $scope.nodes = nodesLoc;
-      $timeout(function(){
-        nodesLoc.$promise.then(function (result) {
-          RegisterChange.setNode(result.items[0].inst_id);
-          $scope.selectedIndex = result.items[0].inst_id -1;
-          getData();
-        });        
-      },200)
+        $timeout(function(){
+          nodesLoc.$promise.then(function (result) {
+            RegisterChange.setNode(result.items[0].inst_id);
+            $scope.selectedIndex = result.items[0].inst_id -1;
+            getData();
+          });
+        },200)
 
         $scope.OnSelectedTab = function(tabId) {
           RegisterChange.setNode(tabId.inst_id);
@@ -1614,7 +1612,6 @@ atlmonJSControllers.controller(
           'RegisterChange',
           'RegisterSearchAppChage',
           function($scope, $location, $window, BlockingSessGet, BlockingTree, RegisterChange, RegisterSearchAppChage) {
-
             $scope.noSessions, $scope.missingDb;
             $scope.lastPageDb = RegisterSearchAppChage.getDb();
             var db = RegisterChange.getDb();
