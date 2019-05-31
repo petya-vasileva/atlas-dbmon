@@ -13,7 +13,7 @@ build_application_docker_image:
   script: 
    - "echo building $CI_REGISTRY_IMAGE" 
   variables:
-   TO: $CI_REGISTRY_IMAGE 
+   TO: $CI_REGISTRY_IMAGE:runner 
       
 redeploy:
   stage: redeploy
