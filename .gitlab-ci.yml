@@ -1,25 +1,24 @@
-image: node:latest
-
 stages:
-  - build
+  - build_application_docker_image
   - redeploy
 
 cache:
   paths:
     - node_modules/
-
-install_dependencies:
-  stage: build
-  script:
-    - npm install
-  artifacts:
-    paths:
-      - node_modules/
+      
+build_application_docker_image:
+  stage: build_application_docker_image
+  tags:
+   - docker-image-build
+  script: 
+   - "echo building $CI_REGISTRY_IMAGE" 
+  variables:
+   TO: $CI_REGISTRY_IMAGE
       
 redeploy:
   stage: redeploy
   only:
   - master
   image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
-  script: "oc import-image $IMAGE_NAME  --server=$SERVER --namespace $NAMESPACE --all --token=$IMAGE_IMPORT_TOKEN"
+  script: "oc import-image $APP_NAME --all --server=$SERVER --namespace $NAMESPACE --token=$IMAGE_IMPORT_TOKEN"
 
