@@ -1,10 +1,10 @@
-<div ng-controller="SchemaDetailsrCtrl" layout-xl="row" layout-gt-md="row" layout-align="center">
+<div ng-controller="SchemaDetailsrCtrl" layout-xl="row" layout-gt-md="row" layout-align="center" ng-cloak>
   <div class="left-panel" layout-xl="column" layout-gt-md="column">
   <div class="schema-report">
       <div class="details">
         <div class="app-header" layout-xl="row" layout-gt-md="row">
           <h1 class="md-toolbar-tools title-text">
-            <span>{{currSchema | uppercase}} @ {{db | uppercase}}</span>
+            <span flex>{{currSchema | uppercase}} @ {{db | uppercase}}</span>
           </h1>
           <div ng-if="!noInfo" class='details-btn'>
             <button ng-click="changeText()" type="button" class="panel panel-default" data-toggle="collapse" data-target="#schema-info">{{text}} details &raquo;</button>
@@ -104,7 +104,7 @@
       <!-- <md-toolbar class="dt-bar" layout-align="center"> -->
         
       <!-- Start of datetime picker container - no function at the moment-->
-        <div class="layout-row dt-container">
+      <!--   <div class="layout-row dt-container">
           <div ng-controller="DateTimePickerCtrl" class="container datetimepick">
             <div class="layout-row datetimepick-fields">
               <h1 class="md-toolbar-tools title-text">
