@@ -13,12 +13,12 @@ build_application_docker_image:
   script: 
    - "echo building $CI_REGISTRY_IMAGE" 
   variables:
-   TO: $CI_REGISTRY_IMAGE:runner 
+   TO: $CI_REGISTRY_IMAGE:latest
       
 redeploy:
   stage: redeploy
   only:
   - master
   image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
-  script: "oc import-image $APP_NAME --all=true --server=$SERVER --namespace $NAMESPACE --token=$IMAGE_IMPORT_TOKEN "
+  script: "oc import-image $APP_NAME:latest --all --server=$SERVER --namespace $NAMESPACE --token=$IMAGE_IMPORT_TOKEN"
 
