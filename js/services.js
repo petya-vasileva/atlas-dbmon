@@ -199,7 +199,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'basic_jobs_info/:db/:schema';
+          var url = baseurl.url + 'jobs_info/stats/:db/:schema';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -218,7 +218,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'jobs_info/:db/:schema';
+          var url = baseurl.url + 'jobs_info/details/:db/:schema';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
