@@ -1367,11 +1367,10 @@ atlmonJSControllers.controller(
 
 
         SelSchema = RegisterChange.getSchema();
-        sessDetails(dbName, "0".concat(SelSchema));
+        sessDetails(dbName, SelSchema.concat('*'));
         function sessDetails(db, schema) {
           sessDetailsRes = SchemaSessionsDetailsGet.query({db: db, schema: schema});
           sessDetailsRes.$promise.then(function(result){
-
             $timeout(function(){
               $scope.$apply(function() {
                 $scope.sessDetails = result.items;
@@ -1418,7 +1417,7 @@ atlmonJSControllers.controller(
             var to = DateTimeService.format(DateTimeService.streamsPlotInitTime()[1]);
             var initLoad;
 
-            nodesResult = SchemaNodesGet.query({db: db, schema: "0".concat(schema)});
+            nodesResult = SchemaNodesGet.query({db: db, schema: schema.concat("*")});
             nodesResult.$promise.then(function (result) {
               initLoad = true;
               $scope.nodes = result.items;

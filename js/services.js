@@ -290,7 +290,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'schema_details/:db/:schema';
+          var url = baseurl.url + 'schema/account_info/:db/:schema';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -308,7 +308,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-        var url = baseurl.url + 'schema_sessions/:db/:schema';
+        var url = baseurl.url + 'schema/session_distribution/:db/:schema';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -326,7 +326,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'schema_session_details/:db/:schema';
+          var url = baseurl.url + 'schema/sessions/:db/:schema';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -362,7 +362,7 @@ atlmonJSServices
         'userurl',
         function($resource, baseurl, userurl) {
 
-          var url = baseurl.url + 'schema_sess_nodes/:db/:schema';
+          var url = baseurl.url + 'schema/nodes/:db/:schema';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
