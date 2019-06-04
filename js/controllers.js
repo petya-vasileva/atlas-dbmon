@@ -1020,10 +1020,10 @@ atlmonJSControllers.controller(
       '$routeParams',
       '$scope',
       '$location',
-      'TOP10TablesGet',
+      'Top10TablesGet',
       'DateTimeService',
       'RegisterChange',
-      function($routeParams, $scope, $location, TOP10TablesGet,
+      function($routeParams, $scope, $location, Top10TablesGet,
         DateTimeService, RegisterChange) {
 
         var db = RegisterChange.getDb();
@@ -1067,7 +1067,7 @@ atlmonJSControllers.controller(
         // Oracle expects a number
         if (year == 'ALL')
         year = 0;
-        var topTablesRS = TOP10TablesGet.query({db: db, schema: selectedSchema, year: year});
+        var topTablesRS = Top10TablesGet.query({db: db, schema: selectedSchema, year: year});
         topTablesRS.$promise.then(function (result) {
         //a) create array of Table-names and of the Chart-Dates
           var uniqueTablenames = makeUniqueNames(result.items);
