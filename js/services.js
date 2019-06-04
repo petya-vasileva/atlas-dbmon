@@ -15,7 +15,7 @@ atlmonJSServices.constant('baseurl', {
         'baseurl', 
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'basic_info/:db/5';
+          var url = baseurl.url + 'db/basic_metrics/:db/:mins';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -50,7 +50,7 @@ atlmonJSServices.factory(
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'streams_info/:db/:node/:metric/:from/:to';
+          var url = baseurl.url + 'db/streams/:db/:node/:metric/:from/:to';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -105,7 +105,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'top10_sessions/:db/:from/:to';
+          var url = baseurl.url + 'db/top10_sessions/:db/:from/:to';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -180,7 +180,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'awr_info/:db/:sqlId';
+          var url = baseurl.url + 'db/awr/:db/:sqlId';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -236,7 +236,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'storage_info/:db/:schema/:year';
+          var url = baseurl.url + 'storage_size/:db/:schema/:year';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -380,7 +380,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'select_blocking_sessions/:db/:from/:to'; 
+          var url = baseurl.url + 'db/blocking_tree/:db/:from/:to';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -398,7 +398,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'select_blocking_sessions/:db'; 
+          var url = baseurl.url + 'db/blocking_tree/:db';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -416,7 +416,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'apply_lag/:db'; 
+          var url = baseurl.url + 'db/apply_lag/:db';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -434,7 +434,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'app_message'; 
+          var url = baseurl.url + 'app_message';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',

@@ -225,13 +225,13 @@ atlmonJSControllers.controller(
       '$location',
       function( $scope, BasicInfoGet, JobsBasicInfoGet, ApplyLagGet, DbUpInfoGet, $mdDialog, $location) {
         //Get infos about the metrics and nodes of the database
-        BasicInfoGet.query({db: $scope.dbName}).$promise.then(function(result) {
+        BasicInfoGet.query({db: $scope.dbName, mins: 5}).$promise.then(function(result) {
           var curr_loc = $location.path().split("/");
           if (curr_loc[1] == 'home') {
             $scope.dbMerics = reduceMetrics(result.items)
           }
           else { $scope.dbMerics = result.items;}
-          $scope.NrOfNodes = result.items[0].nrofnodes;
+          $scope.NrOfNodes = result.items[0].cnt_nodes;
           $scope.isDataLoaded = true;
         });
 
