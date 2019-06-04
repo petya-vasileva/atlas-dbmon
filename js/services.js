@@ -344,7 +344,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'top10_sess_per_schema/:db/:node/:schema/:from/:to';
+          var url = baseurl.url + 'schema/top10_sessions/:db/:node/:schema/:from/:to';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -446,13 +446,13 @@ atlmonJSServices
 
 atlmonJSServices
 .factory(
-    'TOP10TablesGet',
+    'Top10TablesGet',
     [
         '$resource',
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'top10_tables/:db/:schema/:year'; 
+          var url = baseurl.url + 'schema/top10_tables/:db/:schema/:year';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
