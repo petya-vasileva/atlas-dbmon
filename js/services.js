@@ -33,7 +33,7 @@ atlmonJSServices.factory(
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db_up/:db';
+          var url = baseurl.url + 'db/state/:db';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -124,7 +124,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'session_info/:db';
+          var url = baseurl.url + 'db/session_distribution/:db';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -143,7 +143,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'session_chart_info/:db/:schema/:from/:to/:node';
+          var url = baseurl.url + 'schema/num_sessions_chart/:db/:schema/:from/:to/:node';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
@@ -162,7 +162,7 @@ atlmonJSServices
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'exp_plan/:db/:sqlId';
+          var url = baseurl.url + 'db/exp_plan/:db/:sqlId';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
