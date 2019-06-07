@@ -34,28 +34,28 @@
     </span>
 
     <div class="chart-row">
-      <hc-area class="col-lg-6 chart" id="history-cpu" items="cpuData" container="history-cpu" type="Host CPU Utilization" unit="% Busy/(Idle+Busy)" i="9"></hc-area>
-      <hc-area class="col-lg-6 chart" id="history-osload" items="osloadData" container="history-osload" type="Current OS Load" unit="# of processes" i="1" class="chart"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-cpu" items="cpuData" container="history-cpu" type="Host CPU Utilization" unit="% Busy/(Idle+Busy)" i="9" snode="{{node_id}}"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-osload" items="osloadData" container="history-osload" type="Current OS Load" unit="# of processes" i="1" snode="{{node_id}}"></hc-area>
     </div>
 
     <div class="chart-row">
-      <hc-area class="col-lg-6 chart" id="history-logreads" items="logreadsData" container="history-logreads" type="Logical Reads Per Sec" unit="Logical reads/sec" i="2" class="chart"></hc-area>
-      <hc-area class="col-lg-6 chart" id="history-physreads" items="physreadsData" container="history-physreads" type="Physical Reads Per Sec" unit="reads/sec" i="3"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-logreads" items="logreadsData" container="history-logreads" type="Logical Reads Per Sec" unit="Logical reads/sec" i="2" snode="{{node_id}}"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-physreads" items="physreadsData" container="history-physreads" type="Physical Reads Per Sec" unit="reads/sec" i="3" snode="{{node_id}}"></hc-area>
    </div>
 
     <div class="chart-row">
-      <hc-area class="col-lg-6 chart" id="history-resptime" items="resptimeData" container="history-resptime" type="SQL Service Response Time" unit="centiSeconds/call" i="4" class="chart"></hc-area>
-      <hc-area class="col-lg-6 chart" id="history-usertrans" items="usertransData" container="history-usertrans" type="User Transaction Per Sec" unit="transactions/sec" i="5"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-resptime" items="resptimeData" container="history-resptime" type="SQL Service Response Time" unit="centiSeconds/call" i="4" snode="{{node_id}}"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-usertrans" items="usertransData" container="history-usertrans" type="User Transaction Per Sec" unit="transactions/sec" i="5" snode="{{node_id}}"></hc-area>
     </div>
 
     <div class="chart-row">
-      <hc-area class="col-lg-6 chart" id="history-logons" items="logonsData" container="history-logons" type="Logons Per Sec" unit="logons/sec" i="6" class="chart"></hc-area>
-      <hc-area class="col-lg-6 chart" id="history-sessions" items="sessionsData" container="history-sessions" type="Session Count" unit="# of sessions" i="7" class="chart"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-logons" items="logonsData" container="history-logons" type="Logons Per Sec" unit="logons/sec" i="6" snode="{{node_id}}"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-sessions" items="sessionsData" container="history-sessions" type="Session Count" unit="# of sessions" i="7" snode="{{node_id}}"></hc-area>
     </div>
 
     <div class="chart-row">
-      <hc-area class="col-lg-6 chart" id="history-actsess" items="actsessData" container="history-actsess" type="Average Active Sessions" unit="Average # of active sessions" i="8" class="chart"></hc-area>
-      <hc-area class="col-lg-6 chart" id="history-physreadbytes" items="physreadbytesData" container="history-physreadbytes" type="Physical Read MB Per Sec" unit="MB/sec" i="0" class="chart"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-actsess" items="actsessData" container="history-actsess" type="Average Active Sessions" unit="Average # of active sessions" i="8" snode="{{node_id}}"></hc-area>
+      <hc-area class="col-lg-6 chart" id="history-physreadbytes" items="physreadbytesData" container="history-physreadbytes" type="Physical Read MB Per Sec" unit="MB/sec" i="0" snode="{{node_id}}"></hc-area>
     </div>
 
   </div>

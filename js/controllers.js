@@ -348,9 +348,8 @@ atlmonJSControllers.controller(
       'DateTimeService',
       'RegisterChange',
       function( $scope, $location, StreamsInfoGet, DbDetailsGet, DateTimeService, RegisterChange) {
-        var db, node, from, to;
+        var db, node, from, to, num_nodes;
         db = $location.search().db;
-        node = $location.search().node;
         to = $location.search().to;
         from = $location.search().from;
 
@@ -358,87 +357,124 @@ atlmonJSControllers.controller(
         var nodesRes = DbDetailsGet.query({db: db.toUpperCase()});
         nodesRes.$promise.then(function(result){
           var Nodes = [];
+          Nodes.push("ALL");
           $scope.nodeNum = result.items[0].dbnodes;
           for (i = 1; i <= result.items[0].dbnodes ; i++){
-            var nodeArray = {nodeNr: i, nodeName: "NODE" +i};
-            Nodes.push(nodeArray);
+            Nodes.push("NODE" +i);
           }
           $scope.Nodes = Nodes;
+          RegisterChange.setNode(0);
+          // num_nodes is shared with the directive which is building the area charts
+          num_nodes = result.items[0].dbnodes;
         });
 
         // Load initial data
-        $scope.nodeNumber = 1;
+        $scope.selected_node = 0;
         loadPlots();
-        // 
-        $scope.updateNode = function(newNode) {
-          node = newNode;
-          RegisterChange.setNode(newNode);
-          $location.search('node', newNode);
-          loadPlots();
-        };
+
+        $scope.$watch("selected_node", function(newValue, oldValue) {
+          RegisterChange.setNode(newValue);
+          $scope.node_id = newValue;
+        });
 
         $scope.updateDateTime = function() {
           // get the new dates from the service DateTimeRegisterChange
           from = RegisterChange.getDate()[0];
           to = RegisterChange.getDate()[1];
+          $location.search({'db': db,
+                          'from': from,
+                            'to': to});
           loadPlots();
         };
 
         // Wrap into function:
         function loadPlots(){
-        cpuPlot = StreamsInfoGet.query({db: db, node: node, metric: 2057, from: from, to: to});
-        cpuPlot.$promise.then(function (result) {
-          $scope.cpuData = result.items;
-        });
+          var q;
 
-        usertransPlot = StreamsInfoGet.query({db: db, node: node, metric: 2003, from: from, to: to});
-        usertransPlot.$promise.then(function (result) {
-          $scope.usertransData = result.items;
-        });
+          q = StreamsInfoGet.query({db: db, metric: 2057, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.cpuData = buildArrays(result.items);
+          });
 
-        physreadsPlot = StreamsInfoGet.query({db: db, node: node, metric: 2004, from: from, to: to});
-        physreadsPlot.$promise.then(function (result) {
-          $scope.physreadsData = result.items;
-        });
+          q = StreamsInfoGet.query({db: db, metric: 2003, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.usertransData = buildArrays(result.items);
+          });
 
-        logonsPlot = StreamsInfoGet.query({db: db, node: node, metric: 2018, from: from, to: to});
-        logonsPlot.$promise.then(function (result) {
-          $scope.logonsData = result.items;
-        });
+          q = StreamsInfoGet.query({db: db, metric: 2004, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.physreadsData = buildArrays(result.items);
+          });
 
-        logreadsPlot = StreamsInfoGet.query({db: db, node: node, metric: 2030, from: from, to: to});
-        logreadsPlot.$promise.then(function (result) {
-          $scope.logreadsData = result.items;
-        });
+          q = StreamsInfoGet.query({db: db, metric: 2018, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.logonsData = buildArrays(result.items);
+          });
 
-        resptimePlot = StreamsInfoGet.query({db: db, node: node, metric: 2106, from: from, to: to});
-        resptimePlot.$promise.then(function (result) {
-          $scope.resptimeData = result.items;
-        });
+          q = StreamsInfoGet.query({db: db, metric: 2030, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.logreadsData = buildArrays(result.items);
+          });
 
-        osloadPlot = StreamsInfoGet.query({db: db, node: node, metric: 2135, from: from, to: to});
-        osloadPlot.$promise.then(function (result) {
-          $scope.osloadData = result.items;
-        });
+          q = StreamsInfoGet.query({db: db, metric: 2106, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.resptimeData = buildArrays(result.items);
+          });
 
-        sessionsPlot = StreamsInfoGet.query({db: db, node: node, metric: 2143, from: from, to: to});
-        sessionsPlot.$promise.then(function (result) {
-          $scope.sessionsData = result.items;
-        });
+          q = StreamsInfoGet.query({db: db, metric: 2135, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.osloadData = buildArrays(result.items);
+          });
 
-        actsessPlot = StreamsInfoGet.query({db: db, node: node, metric: 2147, from: from, to: to});
-        actsessPlot.$promise.then(function (result) {
-          $scope.actsessData = result.items;
-        });
+          q = StreamsInfoGet.query({db: db, metric: 2143, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.sessionsData = buildArrays(result.items);
+          });
 
-        physreadbytesPlot = StreamsInfoGet.query({db: db, node: node, metric: 2126, from: from, to: to});
-        physreadbytesPlot.$promise.then(function (result) {
-          $scope.physreadbytesData = result.items;
-        });
-          }
+          q = StreamsInfoGet.query({db: db, metric: 2147, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.actsessData = buildArrays(result.items);
+          });
+
+          q = StreamsInfoGet.query({db: db, metric: 2126, from: from, to: to});
+          q.$promise.then(function (result) {
+            $scope.physreadbytesData = buildArrays(result.items);
+          });
+        }
+
+        function buildArrays(data) {
+            // the data is expected to be ordered by inst_id then by t_stamp
+          var node1 = [], node2 = [], node3 = [], node4 = [];
+          var year, month, hour, minute, second;
+          point= {};
+          data.forEach(function(item) {
+          // Every item gets pushed to the object/array according to its own values inst_id (node) and chart_type
+            t_stamp = new Date(item.t_stamp);
+            year = t_stamp.getFullYear();
+            month = t_stamp.getMonth();
+            day = t_stamp.getDate();
+            hour = t_stamp.getHours();
+            minute = t_stamp.getMinutes();
+            second = t_stamp.getSeconds();
+            epoch_time = Date.UTC(year, month, day, hour, minute, second);
+
+            value = item.metric_value;
+            point = [epoch_time, value];
+            eval("node" + item.inst_id).push(point);
+          });
+
+          var data = []
+          if (num_nodes == 4)
+            data = {node1, node2, node3, node4};
+          if (num_nodes == 3)
+            data = {node1, node2, node3};
+          if (num_nodes == 2)
+            data = {node1, node2};
+
+          return data;
+        }
       }
     ]);
-
 
 
 /**
