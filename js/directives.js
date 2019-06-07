@@ -242,9 +242,9 @@ atlmonJSDirectives.directive('hcPie',['$location', '$timeout', function (locatio
             chart.setSize(width, height);
           }
 
-        // $(window).resize(function() {
-        //   resize();
-        // });
+        $(window).resize(function() {
+          resize();
+        });
 
         window.onresize = function(event) {
           resize();
@@ -388,9 +388,9 @@ atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (locati
           chart.setSize(null, null);
         }
 
-        // $(window).resize(function() {
-        //   resize();
-        // });
+        $(window).resize(function() {
+          resize();
+        });
         window.onresize = function(event) {
           resize();
         };
