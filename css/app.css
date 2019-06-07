@@ -971,7 +971,8 @@ span.btn-primary:active:hover, .btn-primary:active, .btn-primary:hover,
 }
 
 .chart-row {
-  margin: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 
