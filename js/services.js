@@ -50,7 +50,7 @@ atlmonJSServices.factory(
         'baseurl',
         'userurl',
         function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db/streams/:db/:node/:metric/:from/:to';
+          var url = baseurl.url + 'db/compact_streams/:db/:metric/:from/:to';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',

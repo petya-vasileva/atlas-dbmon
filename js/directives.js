@@ -506,22 +506,22 @@ atlmonJSDirectives.directive('hcArea', function() {
       container: '@',
       unit: '@',
       i: '@',
+      snode: '@'
     },
     link: function(scope, element, attrs) {
       scope.$watch('items', function (newval, oldval) {
         if(newval) {
           // We need to set the Date.UTC in order to have the plots displayed in local time.
-          var data, seriesf = [];
-          var year, month, hour, minute, second;
-          for(var i=0;i<scope.items.length;i++){
-            t_stamp = new Date(scope.items[i].t_stamp);
-            year = t_stamp.getFullYear();
-            month = t_stamp.getMonth();
-            day = t_stamp.getDate();
-            hour = t_stamp.getHours();
-            minute = t_stamp.getMinutes();
-            second = t_stamp.getSeconds();
-            seriesf[i] = [Date.UTC(year, month, day, hour, minute, second), scope.items[i].metric_value];
+          var seriesData = [];
+          var num_nodes = Object.keys(scope.items).length;
+          // Dynamically build a JSON object for each node as required by Highcharts
+          for(var i=0; i<num_nodes; i++){
+            item = {
+                    animation: false,
+                    name: Object.keys(scope.items)[i].toUpperCase(),
+                    data: Object.values(scope.items)[i]
+                   };
+            seriesData.push(item);
           };
 
           var chart = new Highcharts.Chart({
@@ -529,7 +529,7 @@ atlmonJSDirectives.directive('hcArea', function() {
               renderTo: scope.container,
               type: 'area',
               zoomType: 'x',
-              height: 270,
+              height: 280,
               // width: 500
             },
             credits: {
@@ -561,22 +561,21 @@ atlmonJSDirectives.directive('hcArea', function() {
                     return Highcharts.dateFormat('%e-%b-%Y', new Date(this.x)) + '<br/>' + Highcharts.dateFormat('%H:%M:%S', new Date(this.x)) + ' <br/> Value:<b>' + this.y + '</b>';
                 }
             },
+            colors:[
+                  '#286090', '#981A37', '#FCB319', '#229369',
+                  '#614931', '#3399ff', '#594266'
+                  ],
             plotOptions: {
               area: {
-                fillColor: {
-                  linearGradient: {
-                    x1: 0,
-                    y1: 0,
-                    x2: 0,
-                    y2: 1
-                  },
-                  stops: [
-                    [0, Highcharts.getOptions().colors[scope.i]],
-                    [1, Highcharts.Color(Highcharts.getOptions().colors[scope.i]).setOpacity(0).get('rgba')]
-                  ]
-                },
                 marker: {
-                  radius: 2
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
                 },
                 lineWidth: 1,
                 states: {
@@ -587,12 +586,18 @@ atlmonJSDirectives.directive('hcArea', function() {
                 threshold: null
               }
             },
+            loading: {
+                style: {
+                    backgroundColor: 'white',
+                    "opacity": 0.8
+                }
+            },
             series: [{
                 color: Highcharts.getOptions().colors[scope.i],
                 showInLegend: false,
                 turboThreshold: 10000000,
-                data: seriesf,
-                pointStart: seriesf[0][0],
+                data: [],
+                // pointStart: seriesf[0][0],
                 tooltip: {
                     // yDecimals: 4,
                     formatter: function() {
@@ -601,6 +606,28 @@ atlmonJSDirectives.directive('hcArea', function() {
                     }
                 },
               }]
+          });
+
+        // Add all series to the chart
+        for(var j=0; j<num_nodes; j++){
+          chart.addSeries(seriesData[j]);
+        };
+
+        // Hide simultaneously a specific node for all charts on NodeN button click
+        scope.$watch('snode', function(newValue, oldValue) {
+          chart.showLoading();
+
+          setTimeout(() => {
+            for(var j=0; j<=num_nodes; j++){
+              if (newValue != j && newValue != 0){
+                chart.series[j].hide();
+              }
+              else {
+                chart.series[j].show();
+              }
+            };
+            chart.hideLoading();
+           }, 500)
         });
 
         function resize() {
