@@ -736,6 +736,7 @@ atlmonJSControllers.controller(
 
           $scope.isDataLoaded = false;
           sessData.$promise.then(function (result) {
+            $scope.selectedSchema = schema;
             $scope.sessChartData = {};
             $scope.sessChartData = result.items;
             $scope.isDataLoaded = true;

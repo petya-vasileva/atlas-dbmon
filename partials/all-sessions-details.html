@@ -38,7 +38,7 @@
             <!-- <input ng-model="dateTimeStart"/> -->
             <md-tab-body class="md-padding">
               <md-content id="chartRow">
-                <hc-sess-area id="sess-container{{$index+1}}" class="chart-box" items="sessChartData" container="sess-container{{$index+1}}" schema='{{sessChartData[0].user_name}}' i='{{$index+1}}'></hc-sess-area>
+                <hc-sess-area id="sess-container{{$index+1}}" class="chart-box" items="sessChartData" container="sess-container{{$index+1}}" schema='{{selectedSchema}}' i='{{$index+1}}'></hc-sess-area>
               </md-content>
             </md-tab-body>
           </md-tab>
