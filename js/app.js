@@ -11,7 +11,7 @@ dbmonJSApp.config([ '$routeProvider', function($routeProvider) {
       templateUrl: 'partials/db-details.html',
       reloadOnSearch: false
     }).
-    when('/history', {
+    when('/performance-history', {
       templateUrl: 'partials/db-performance.html',
     }).
     when('/db/:currentDB/sql_id=:sqlId', {

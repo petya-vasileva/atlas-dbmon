@@ -145,8 +145,8 @@ atlmonJSControllers.controller(
         $scope.nodeNumber = 2;
 
         $scope.showHistory = function (db) {
-          var path = '/history';
-          $location.url(path).search({'db': db, 'node': node, 'from': from, 'to': to});
+          var path = '/performance-history';
+          $location.url(path).search({'db': db, 'from': from, 'to': to});
         }
 
         $scope.goTo = function (target) {
