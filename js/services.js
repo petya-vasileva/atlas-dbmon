@@ -466,8 +466,9 @@ atlmonJSServices
 .service(
     'RegisterChange',
     ['$location',
+     '$routeParams',
      'DateTimeService',
-      function($location, DateTimeService) {
+      function($location, $routeParams, DateTimeService) {
         return {
           getNode: function() {
             if(typeof node !== "undefined") {
