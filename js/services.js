@@ -506,10 +506,16 @@ atlmonJSServices
               return db;
             } else if ($location.search().db) {
               return $location.search().db;
-            } else return null;
+            } else return $routeParams.currentDB;;
           },
           setDb: function(name) {
             db = name;
+          },
+          setJobsNewTab: function(val) {
+            visible = val;
+          },
+          getJobsNewTab: function() {
+            return visible;
           }
         };
       }]);
