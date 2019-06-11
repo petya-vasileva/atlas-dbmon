@@ -424,6 +424,17 @@ table.table-container {
 /******************* JOBS DETAILS ******************/
 /**************************************************/
 
+.jobs-container {
+  /*height: 200px;
+  position: relative;*/
+}
+
+.jobs-nt-btn {
+  font-size: 13px;
+  height: 30px;
+  border: none;
+}
+
 .jobs-table {
   /*display: inline-block;*/
   white-space: nowrap;
@@ -433,14 +444,35 @@ table.table-container {
   overflow: visible;
 }
 
-.jobs-tab {
-  /*height: 370px;*/
+.jobs-new-tab {
+  margin: 0.5%;
+  background: white;
+  border: 1px solid rgb(204, 204, 204);
+  font-size: 12px;
+  padding: 0.5% 0.5% 0 0.5%;
+}
+
+.jobs-legend {
+  text-align: right;
+  width: 30%;
+}
+
+.jobs-new-tab .jobs-legend span {
+  font-style: white;
+}
+
+.jobs-new-tab table {
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 .jobs-table-container {
-  overflow: visible;
   height: 390px;
-  width:99.3%;
+}
+
+.jobs-table-expand {
+  height: auto !important;
 }
 
 .jobs-directive {

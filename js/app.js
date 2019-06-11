@@ -11,6 +11,10 @@ dbmonJSApp.config([ '$routeProvider', function($routeProvider) {
       templateUrl: 'partials/db-details.html',
       reloadOnSearch: false
     }).
+    when('/db/:currentDB/jobs', {
+      templateUrl: 'partials/jobs-details.html',
+      reloadOnSearch: false
+    }).
     when('/performance-history', {
       templateUrl: 'partials/db-performance.html',
     }).

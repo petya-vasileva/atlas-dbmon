@@ -77,7 +77,7 @@ atlmonJSDirectives.directive('ngSessionsT2', function() {
 atlmonJSDirectives.directive('ngJobs', function() {
         return {
             templateUrl: 'partials/jobs-details.html',
-            // controller: 'SschemaDetailsrCtrl'
+            controller: 'JobsInfoCtrl'
         }
     });
 
