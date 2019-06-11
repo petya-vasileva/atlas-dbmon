@@ -1,11 +1,16 @@
 var atlmonJSControllers = angular.module('atlmonJSControllers', ['ngMaterial', 'ngMaterialDatePicker']);
 
 atlmonJSControllers.run(function($rootScope, $location, DateTimeService, RegisterChange) {
+
     $rootScope.$on("$locationChangeStart", function(event, next, current) {
 
-      if ($location.path().startsWith('/db/') && !$location.path().includes('sql_id=')) {
+      if ($location.path().startsWith('/db/') && $location.path().includes('jobs')) {
+        // hide "New tab" icon when displaying only information about the jobs
+        RegisterChange.setJobsNewTab(false);
+      } else if ($location.path().startsWith('/db/') && !$location.path().includes('sql_id=')) {
 
         RegisterChange.setDb($location.path().substr($location.path().lastIndexOf("/")+1));
+        RegisterChange.setJobsNewTab(true);
         if (angular.isUndefined($location.search().from) ||
             angular.isUndefined($location.search().to) ||
             angular.isUndefined($location.search().node)) {
@@ -936,26 +941,39 @@ atlmonJSControllers.controller(
         '$rootScope',
         '$routeParams',
         '$location',
+        '$window',
         '$scope',
         'JobsInfoGet',
         'RegisterChange',
-        function($rootScope, $routeParams, $location, $scope, JobsInfoGet, RegisterChange) {
+        function($rootScope, $routeParams, $location, $window, $scope, JobsInfoGet, RegisterChange) {
           var db = RegisterChange.getDb();
           var schema = RegisterChange.getSchema();
-          getData(schema);
+          $scope.isInNewTab = RegisterChange.getJobsNewTab();
+          getData();
 
-          function getData(schema) {
+          function getData() {
+            console.log('getData', schema, db);
             var data = JobsInfoGet.query({db: db, schema: schema});
               data.$promise.then(function (result) {
               $scope.data = result.items;
-              if (result.items.length == 0) {$scope.hasJobs = false;}
-              else {$scope.hasJobs = true;};
+              if (result.items.length == 0) {
+                $scope.hasJobs = false;
+              }
+              else {
+                $scope.hasJobs = true;
+              };
             });
           }
 
           // ADGs don't have jobs
           if (db == 'adcdb_adg' || db == 'ondb_adg') {
             angular.element('.jobs-table').css('display', 'none');
+          }
+
+          $scope.goToURL = function(db) {
+            var path ='#/db/'+db+'/jobs';
+            getData();
+            $window.open(path, '_blank');
           }
 
           $scope.idSelectedRow = null;
