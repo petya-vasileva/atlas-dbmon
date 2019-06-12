@@ -241,7 +241,7 @@ md-toolbar.title1 {
   height: 950px;
 }
 
-.sess, .jobs-container, .basic-info, .session-info, 
+.sess, .jobs-table, .basic-info, .session-info,
 .block-table, .app-sess-table1, .app-sess-table2, .sess-chart-container {
   background: white;
   border: 1px solid rgb(204, 204, 204);
@@ -270,6 +270,7 @@ div.outer-container {
   display: table;
   width: 100%;
 }
+
 .table-container {
   /*BSCHEER*/
   /*overflow-y: auto;*/
@@ -277,18 +278,22 @@ div.outer-container {
   height: 390px;
   width:99.3%;
 }
+
 table.table-container {
   border-spacing: 0 !important;
   width:100% !important;
 }
+
 .table-container td, .jobs-table th {
   border-bottom:1px solid #eee;
   color: #fff;
   padding: 5px;
 }
+
 .table-container tbody tr td:empty {
   padding: 0 20px;
 }
+
 .table-container thead tr th {
   height: 0;
   line-height: 0;
@@ -297,6 +302,7 @@ table.table-container {
   white-space: nowrap;
   padding: 0px;
 }
+
 .table-container th div {
   /*position: absolute;*/
   background: transparent;
@@ -308,6 +314,7 @@ table.table-container {
   line-height: normal;
   border-left: 1px solid #ddd;
 }
+
 .table-container th:first-child div{
   border: none;
 }
@@ -424,11 +431,6 @@ table.table-container {
 /******************* JOBS DETAILS ******************/
 /**************************************************/
 
-.jobs-container {
-  /*height: 200px;
-  position: relative;*/
-}
-
 .jobs-nt-btn {
   font-size: 13px;
   height: 30px;
@@ -436,12 +438,9 @@ table.table-container {
 }
 
 .jobs-table {
-  /*display: inline-block;*/
   white-space: nowrap;
-  /*width: 100%;*/
   height: 100%;
-  max-height: 450px; /*BSCHEER made height to max-height, new 100% height*/
-  overflow: visible;
+  max-height: 500px; /*BSCHEER made height to max-height, new 100% height*/
 }
 
 .jobs-new-tab {
@@ -457,7 +456,7 @@ table.table-container {
   width: 30%;
 }
 
-.jobs-new-tab .jobs-legend span {
+.jobs-legend span {
   font-style: white;
 }
 
@@ -467,25 +466,61 @@ table.table-container {
   word-wrap: break-word;
 }
 
-.jobs-table-container {
-  height: 390px;
+.jobs-table-container table tfoot tr td {
+  text-align: left;
+}
+
+.jobs-table-container .pagination{
+  margin: 0;
+}
+
+.jobs-table-container .pagination > li > a {
+  background-color: #f8f6f6;
+  color: #494949 !important;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.jobs-table-container .pagination > .active > a {
+  background-color: #585858;
+  border-color: #585858;
+  color: #fff !important;
+}
+
+.jobs-table-container table > tfoot {
+  padding: 0;
+}
+
+.jobs-table-container tfoot > tr {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 
 .jobs-table-expand {
   height: auto !important;
 }
 
-.jobs-directive {
-  height: 100%;
-}
-
 .jobs-table table {
   border: none;
+  border-top: 1px solid rgb(204, 204, 204);
+  margin-bottom: 0;
 }
 
 .jobs-table table td {
   clear: both;
   font-size: 11px;
+}
+
+.jobs-table-container input.form-control {
+  padding: 0;
+  padding-left: 5px;
+}
+
+.jobs-table table > thead > tr {
+  clear: both;
+  font-size: 11px;
+  border: 1px solid rgb(204, 204, 204);
 }
 
 .scroll-table .ng-hide {
@@ -495,14 +530,11 @@ table.table-container {
 }
 
 .jobs-container, .app-sess-table1, .app-sess-table2, .session-list {
-  overflow-x: visible;
-  overflow-y: auto; /*BSCHEER CHANGE from scroll*/
   height: 100%;
 }
 
 .app-sess-table1 {
   overflow-x: auto;
-  overflow-y: auto; /*BSCHEER CHANGE moved sess-table1 to standalone, both auto*/
   height: 100%;
 }
 
