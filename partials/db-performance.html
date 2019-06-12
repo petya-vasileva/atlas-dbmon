@@ -1,8 +1,7 @@
 <div ng-controller="StreamsInfoCtrl" class="history-plots">
 
-  <span>
-
-    <div class="fency-radio-btns">
+    <div class="container-head d-flex justify-content-center" >
+      <div class="fency-radio-btns">
         <div class="btn-group" ng-repeat="node in Nodes track by $index">
           <label>
             <input name="selected_node" id="option$index+1" type="radio" ng-model="$parent.selected_node" ng-value="$index" ng-change="updateNode({{$index}})"
