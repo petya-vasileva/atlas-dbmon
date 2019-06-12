@@ -1,4 +1,4 @@
-<div ng-controller="JobsInfoCtrl" class="jobs-container " ng-class="{'jobs-new-tab': {{!isInNewTab}}}">
+<div ng-controller="JobsInfoCtrl" class="jobs-container" ng-class="{'jobs-new-tab': {{isInNewTab}}}">
   <md-toolbar class="title1">
     <div class="layout-row">
       <h1 class="md-toolbar-tools title-text">
@@ -10,43 +10,59 @@
         <span class="badge" style='background:#981937;'>Failed</span>
         <span class="badge"  style='background:#8e8e8e;'>Disabled</span>
       </div>
-      <button ng-if="isInNewTab" ng-click="goToURL(currentDB)" type="button" class="jobs-nt-btn btn btn-secondary glyphicon glyphicon-new-window"></button>
+      <button ng-if="!isInNewTab" ng-click="goToURL(currentDB)" type="button" class="jobs-nt-btn btn btn-secondary glyphicon glyphicon-new-window"></button>
     </div>
   </md-toolbar>
 
 
   <div class="jobs-tab">
     <div class="outer-container">
-    <div class="jobs-table-container" ng-class="{'jobs-table-expand': {{!isInNewTab}}}">
+    <div class="jobs-table-container" ng-class="{'jobs-table-expand': {{isInNewTab}}}">
       <table st-table="displayedCollection" st-safe-src="data" class="table table-striped fixed_headers" show-filter="true">
         <thead>
+
           <tr>
             <th st-sort="owner"><div>Owner</div></th>
-            <th st-sort="job_name"><div>Job Name</div></th>
-            <th ng-if="!isInNewTab" st-sort="last_start_date"><div>Last Start</div></th>
-            <th ng-if="!isInNewTab" st-sort="last_run_duration"><div>Run Duration</div></th>
-            <th ng-if="!isInNewTab" st-sort="last_status"><div>Last Status</div></th>
+            <th st-sort="job_name" st-sort-default="true"><div>Job Name</div></th>
+            <th ng-if="isInNewTab" st-sort="last_start_date"><div>Last Start</div></th>
+            <th ng-if="isInNewTab" st-sort="last_run_duration"><div>Run Duration</div></th>
+            <th ng-if="isInNewTab" st-sort="last_status"><div>Last Status</div></th>
             <th st-sort="current_state"><div>Current State</div></th>
-            <th ng-if="!isInNewTab" st-sort="next_run_time"><div>Next Run</div></th>
-            <th ng-if="!isInNewTab" st-sort="repeat_interval"><div>Repeat Interval</div></th>
-            <th ng-if="!isInNewTab" st-sort="job_class"><div>Job Class</div></th>
-            <th st-sort="additional_info"><div>Error</div></th>
+            <th ng-if="isInNewTab" st-sort="next_run_time"><div>Next Run</div></th>
+            <th ng-if="isInNewTab" st-sort="repeat_interval"><div>Repeat Interval</div></th>
+            <th ng-if="isInNewTab" st-sort="job_class"><div>Job Class</div></th>
+            <th ng-if="!isInNewTab" st-sort="additional_info"><div>Error</div></th>
+            <th ng-if="isInNewTab" st-sort="additional_info"><div>Error</div></th>
+          </tr>
+          <tr ng-if="isInNewTab">
+            <th colspan="10">
+              <input st-search placeholder="global search" class="form-control" type="search"/>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="row in displayedCollection| orderBy:'owner'" ng-click="setSelected($index)" ng-style="highlight(row)" ng-class="{selected: $index === idSelectedRow}">
             <td data-title="'owner'">{{row.owner}}</td>
             <td data-title="'job_name'">{{row.job_name}}</td>
-            <td ng-if="!isInNewTab" data-title="'last_start_date'">{{row.last_start_date}}</td>
-            <td ng-if="!isInNewTab" data-title="'last_run_duration'">{{row.last_run_duration}}</td>
-            <td ng-if="!isInNewTab" data-title="'last_status'" >{{row.last_status}}</td>
+            <td ng-if="isInNewTab" data-title="'last_start_date'">{{row.last_start_date}}</td>
+            <td ng-if="isInNewTab" data-title="'last_run_duration'">{{row.last_run_duration}}</td>
+            <td ng-if="isInNewTab" data-title="'last_status'" >{{row.last_status}}</td>
             <td data-title="'current_state'" >{{row.current_state}}</td>
-            <td ng-if="!isInNewTab" data-title="'next_run_time'">{{row.next_run_time}}</td>
-            <td ng-if="!isInNewTab" data-title="'repeat_interval'">{{row.repeat_interval}}</td>
-            <td ng-if="!isInNewTab" data-title="'job_class'">{{row.job_class}}</td>
-            <td data-title="'info'">{{row.info}}</td>
+            <td ng-if="isInNewTab" data-title="'next_run_time'">{{row.next_run_time}}</td>
+            <td ng-if="isInNewTab" data-title="'repeat_interval'">{{row.repeat_interval}}</td>
+            <td ng-if="isInNewTab" data-title="'job_class'">{{row.job_class}}</td>
+            <!-- limit the error message in the short table-->
+            <td ng-if="!isInNewTab" data-title="'info'" >{{row.info | limitTo: 90}}</td>
+            <td ng-if="isInNewTab" data-title="'info1'" >{{row.info}}</td>
           </tr>
         </tbody>
+        <tfoot ng-if="!isInNewTab">
+          <tr>
+          <td colspan="5" class="text-center">
+          <div st-pagination="" st-items-by-page="itemsByPage"></div>
+          </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
     </div>

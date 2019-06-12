@@ -6,11 +6,11 @@ atlmonJSControllers.run(function($rootScope, $location, DateTimeService, Registe
 
       if ($location.path().startsWith('/db/') && $location.path().includes('jobs')) {
         // hide "New tab" icon when displaying only information about the jobs
-        RegisterChange.setJobsNewTab(false);
+        RegisterChange.setJobsNewTab(true);
       } else if ($location.path().startsWith('/db/') && !$location.path().includes('sql_id=')) {
 
         RegisterChange.setDb($location.path().substr($location.path().lastIndexOf("/")+1));
-        RegisterChange.setJobsNewTab(true);
+        RegisterChange.setJobsNewTab(false);
         if (angular.isUndefined($location.search().from) ||
             angular.isUndefined($location.search().to) ||
             angular.isUndefined($location.search().node)) {
@@ -969,6 +969,8 @@ atlmonJSControllers.controller(
           if (db == 'adcdb_adg' || db == 'ondb_adg') {
             angular.element('.jobs-table').css('display', 'none');
           }
+
+          $scope.itemsByPage =10;
 
           $scope.goToURL = function(db) {
             var path ='#/db/'+db+'/jobs';
