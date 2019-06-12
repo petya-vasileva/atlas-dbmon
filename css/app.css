@@ -973,6 +973,10 @@ tr.tree-grid-row.level-6 td:nth-child(2) {
   background: white;
 }
 
+.container-head {
+  margin-bottom: 10px;
+}
+
 
 /**************************************************/
 /**************** SESSION DETAILS PAGE ******************/
