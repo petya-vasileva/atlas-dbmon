@@ -529,12 +529,7 @@ table.table-container {
   padding: 0 10px;
 }
 
-.jobs-container, .app-sess-table1, .app-sess-table2, .session-list {
-  height: 100%;
-}
-
-.app-sess-table1 {
-  overflow-x: auto;
+.jobs-container, .session-list {
   height: 100%;
 }
 
@@ -872,18 +867,23 @@ mdc-datetime-picker-calendar table td {
 
 .app-sess-cotainer .app-dropdown, .app-header .details-btn {
   margin: auto;
-/*  padding-right: 1.5%;*/
 }
 
 .app-header .details-btn button {
   margin: auto;
   width: 150px;
-/*  padding-right: 20px;*/
 }
 
 .app-sess-title h5 {
-  text-align: center;
-  font-size: 1.3em;
+  padding: 0 5px;
+  width: 80%;
+  float: left;
+}
+
+.app-sess-table1, .app-sess-table2 {
+  overflow-x: visible;
+  overflow-y: auto; /*BSCHEER CHANGE from scroll*/
+  height: 100%;
 }
 
 /**************************************************/
