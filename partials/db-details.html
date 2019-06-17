@@ -35,24 +35,25 @@
     </div>
 
     <div ng-controller="StorageInfoCtrl" class="storage-container">
+<div>
+<div class="row chart-head">
+  <div class="storage-dropdown">
+    <select class="btn-schema btn btn-primary dropdown-toggle" name="type" ng-model="item" ng-dropdown required ng-change="update()"
+      ng-options="s as s.schema_name for s in allSchemas">
+    </select>
+  </div>
 
-<span> <!-- span is experimental to avoid the chart sqeezing in between dropdown and buttons in some occasions -->
-      <div class="storage-dropdown">
-        <select class="btn-schema btn btn-primary dropdown-toggle" name="type" ng-model="item" ng-dropdown required ng-change="update()"
-          ng-options="s as s.schema_name for s in allSchemas">
-        </select>
-      </div>
-
-      <div class="fency-radio-btns">
-        <div class="btn-group" ng-repeat="year in years_back track by $index">
-          <label>
-            <input name="options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
-            />
-            <span class="btn btn-primary">{{year}}</span>
-          </label>
-        </div>
-      </div>
-</span>
+  <div class="fency-radio-btns">
+    <div class="btn-group" ng-repeat="year in years_back track by $index">
+      <label>
+        <input name="options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
+        />
+        <span class="btn btn-primary">{{year}}</span>
+      </label>
+    </div>
+  </div>
+</div>
+</div>
 
       <div class="chart-wrapper">
         <hc-line id="storage-container" items="storageData" class="storage-box"></hc-line>
