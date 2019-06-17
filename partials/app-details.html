@@ -161,19 +161,23 @@
     <!-- End of top 10 sessions charts container -->
 
     <!-- Table Size Info Box -->
-      <div ng-controller="Top10TablesCtrl" class="storage-container">
-      <div class="fency-radio-btns">
-        <div class="btn-group" ng-repeat="year in years_back track by $index">
-          <label>
-            <input name="tablesize-options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
-            />
-            <span class="btn btn-primary">{{year}}</span>
-          </label>
+    <div ng-controller="Top10TablesCtrl" class="toptables-container">
+      <div class="row chart-head">
+        <div class="fency-radio-btns">
+          <div class="btn-group" ng-repeat="year in years_back track by $index">
+            <label>
+              <input name="tablesize-options" id="option$index+1" type="radio" name="selected_year" ng-model="$parent.selected_year" ng-value="year"
+              />
+              <span class="btn btn-primary">{{year}}</span>
+            </label>
+          </div>
         </div>
       </div>
-
-      <div class="chart-wrapper">
-          <hc-stacked id="Table-container" items="topTables" class="tables-box"></hc-stacked>
+      <div class="row">
+        <div ng-if="isDataLoaded" class="chart-wrapper" id="chart-wrap">
+            <hc-stacked id="tt-container" items="topTables" class="tables-box"></hc-stacked>
+        </div>
+        <div ng-if="!isDataLoaded" class="loader">Loading...</div>
       </div>
    </div> 
    <!-- end of Top10TablesCtrl -->
