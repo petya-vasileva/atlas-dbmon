@@ -358,8 +358,7 @@ atlmonJSDirectives.directive('hcBar', ['$location', '$timeout', function (locati
         function resize() {
           height = chart.height
           width = $("#chartRow").width() / 2
-          // chart.setSize(width, height);
-          chart.setSize(null, null);
+          chart.setSize(width, height);
         }
 
         $(window).resize(function() {
@@ -415,9 +414,9 @@ atlmonJSDirectives.directive('hcLine', function() {
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false,
-                spacingRight: 5,
-                height: 370,
-                width: 500
+                spacingRight: 15,
+                height: 325,
+                // width: 500
               },
               title: {
                 text: 'Database volume'
@@ -601,7 +600,7 @@ atlmonJSDirectives.directive('hcArea', function() {
               }
             };
             chart.hideLoading();
-           }, 500)
+           }, 500);
         });
 
         function resize() {
@@ -655,8 +654,8 @@ atlmonJSDirectives.directive('hcSessArea', function() {
               renderTo: scope.container,
               type: 'line',
               zoomType: 'x',
-              // height: 270,
-              width: 1000
+              height: 270,
+              // width: 1000
             },
             credits: {
               enabled: false
