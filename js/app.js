@@ -55,3 +55,9 @@ dbmonJSApp.config(function($mdThemingProvider) {
 dbmonJSApp.config(['$locationProvider', function($locationProvider) {
   $locationProvider.hashPrefix('');
 }]);
+
+// prevent angulajs add "unsafe:javascript:void(0)" to links.
+// This was detected when using  Smart Tables (st-pagination)
+dbmonJSApp.config(['$compileProvider', function ($compileProvider) {
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|javascript):/);
+}]);
