@@ -648,6 +648,7 @@ atlmonJSControllers.controller(
       'RegisterChange',
       function($routeParams, $scope, $location, $window, SessionDistrGet, DbDetailsGet, ResizeSessContainer, RegisterChange) {
         $scope.username = '%';
+        $scope.itemsByPage = 9;
 
         $scope.show = function(row) {
           $scope.username = row.username;
@@ -1099,80 +1100,64 @@ atlmonJSControllers.controller(
           queryTableData(newValue, selectedSchema);
         }, true);
 
-    // Functions collection:
-        function makeUniqueNames(items){
-          var uniqueArray=[];
-          for(var i=0;i < items.length;i++){
-            if(!uniqueArray.includes(items[i].object_name)){
-              uniqueArray.push(items[i].object_name);
-            }
-          }
-          return uniqueArray;
-        }
-
-        function makeUniqueDates(items){
-          var uniqueArray=[];
-          for(var i=0;i < items.length;i++){
-            if(!uniqueArray.includes(items[i].dt)){
-              uniqueArray.push(items[i].dt);
-            }
-          }
-          return uniqueArray;
+        function distinct(value, index, self) {
+          return self.indexOf(value) === index;
         }
 
         function queryTableData(year, schema) {
-        // Oracle expects a number
-        if (year == 'ALL')
-        year = 0;
-        var topTablesRS = Top10TablesGet.query({db: db, schema: selectedSchema, year: year});
-        topTablesRS.$promise.then(function (result) {
-        //a) create array of Table-names and of the Chart-Dates
-          var uniqueTablenames = makeUniqueNames(result.items);
-          chartDates = makeUniqueDates(result.items).sort(function(a, b){
-            var keyA = new Date(a),
-            keyB = new Date(b);
-            if(keyA < keyB) return -1;
-            if(keyA > keyB) return 1;
-            return 0;
-          });
+          // Oracle expects a number
+          if (year == 'ALL')
+            year = 0;
 
-        //b) Create all the needed arrays.
-          var topTables = {};
-          for (i in uniqueTablenames) {
-            topTables[uniqueTablenames[i]] = {name:uniqueTablenames[i], data:[]};
-          }
-        //c) order & push data to the arrays
-          orderedItems = result.items.sort(function(a, b){
-            var keyA = new Date(a.dt),
-            keyB = new Date(b.dt);
-            if(keyA < keyB) return -1;
-            if(keyA > keyB) return 1;
-            return 0;
-          });
-          orderedItems.forEach(function(item){
-            eval("topTables." + item.object_name + ".data").push(item.table_size_gb);
-          });
+          $scope.isDataLoaded = false;
+          var topTablesRS = Top10TablesGet.query({db: db, schema: selectedSchema, year: year});
+          topTablesRS.$promise.then(function (result) {
 
-        //d) Fill up missing data values with "0"
-          for (item in topTables) {
-            if (topTables[item].data.length != chartDates.length) {
-              var diff = chartDates.length - topTables[item].data.length;
-              for (var i = 0; i<diff; i++) {
-                topTables[item].data.unshift(0);
-              };
+            var dt = [],  tables= [];
+
+            for(var i=0;i < result.items.length;i++){
+              dt[i] = result.items[i].dt;
+              tables[i] = result.items[i].object_name;
             }
-          };  
-        // e) Change the order of the Arrays, so the biggest table is on top.
-          topTables = Object.values(topTables).sort(function(a, b){
-            var keyA = a.data[a.data.length - 1],
-            keyB = b.data[a.data.length - 1];
-            if(keyA < keyB) return 1;
-            if(keyA > keyB) return -1;
-            return 0;
+
+          // a) create array of Table-names and of the Chart-Dates
+            var uniqueTablenames = tables.filter(distinct);
+            var chartDates = dt.filter(distinct);
+
+          // b) Create all the needed arrays.
+            var topTables = {};
+            for (i in uniqueTablenames) {
+              topTables[uniqueTablenames[i]] = {name:uniqueTablenames[i], data:[]};
+            }
+
+          // c) push data to the arrays
+            result.items.forEach(function(item){
+              eval("topTables." + item.object_name + ".data").push(item.table_size_gb);
+            });
+
+          // d) Fill up missing data values with "0"
+            for (item in topTables) {
+              if (topTables[item].data.length != chartDates.length) {
+                var diff = chartDates.length - topTables[item].data.length;
+                for (var i = 0; i<diff; i++) {
+                  topTables[item].data.unshift(0);
+                };
+              }
+            };
+
+          // e) Change the order of the Arrays, so the biggest table is on top.
+            topTables = Object.values(topTables).sort(function(a, b){
+              var keyA = a.data[a.data.length - 1],
+              keyB = b.data[a.data.length - 1];
+              if(keyA < keyB) return 1;
+              if(keyA > keyB) return -1;
+              return 0;
+            });
+
+            $scope.topTables= [topTables, chartDates];
+            $scope.isDataLoaded = true;
           });
-          $scope.topTables= [topTables, chartDates];
-        });
-      }
+        }
      }
     ]);
 

@@ -761,75 +761,84 @@ atlmonJSDirectives.directive('hcStacked', function() {
     },
     link: function(scope, element, attrs) {
       scope.$watch('items', function (newval, oldval) {
+
         if(newval) {
 
-    var chart = new Highcharts.chart({
+          var chart = new Highcharts.chart({
 
-    chart: {
-      renderTo: 'Table-container',
-        type: 'area',
-        plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                spacingRight: 5,
-                height: 370,
-                width: 600,
-                reflow: true
-    },
-    colors:[
-                '#5485BC', '#AA8C30', '#229369', '#981A37', '#FCB319', '#86A033',
-                '#614931', '#3399ff', '#594266', '#cb6828', '#aaaaab', '#a89375'
-                ],
-    title: {
-        text: 'Top 10 Tables by storage size (Gb)'
-    },
-    subtitle: {
-        text: ''
-    },
-    xAxis: {
-        categories: scope.items[1],
-        tickmarkPlacement: 'on',
-        title: {
-            enabled: false
-        }
-    },
-    yAxis: {
-        title: {
-            text: 'Gigabytes'
-        }
-    },
-    tooltip: {
-        split: true,
-        valueSuffix: ' GB'
-    },
-    plotOptions: {
-        area: {
-            stacking: 'normal',
-            lineColor: '#666666',
-            lineWidth: 1,
-            marker: {
+            chart: {
+              renderTo: 'tt-container',
+              type: 'area',
+              plotBackgroundColor: null,
+              plotBorderWidth: null,
+              plotShadow: false,
+              spacingRight: 5,
+              height: 335,
+              // reflow: true
+            },
+            colors: [
+              '#5485BC', '#AA8C30', '#229369', '#981A37', '#FCB319', '#86A033',
+              '#614931', '#3399ff', '#594266', '#cb6828', '#aaaaab', '#a89375'
+            ],
+            title: {
+              text: 'Top 10 Tables by storage size (Gb)'
+            },
+            subtitle: {
+              text: ''
+            },
+            xAxis: {
+              categories: scope.items[1],
+              tickmarkPlacement: 'on',
+              title: {
+                enabled: false
+              }
+            },
+            yAxis: {
+              title: {
+                text: 'Gigabytes'
+              }
+            },
+            tooltip: {
+              split: true,
+              valueSuffix: ' GB'
+            },
+            plotOptions: {
+              area: {
+                stacking: 'normal',
+                lineColor: '#666666',
                 lineWidth: 1,
-                lineColor: '#666666'
-            }
-        }
-    },
-    series: scope.items[0]
-});
-
-        function resize() {
-          height = chart.height;
-          width = $(".tables-box").width();
-          chart.setSize(width, height);
-        };
-
-        // window.onresize = function(event) {
-        //   console.log('onresize event');
-        //   resize();
-        // };
+                marker: {
+                  lineWidth: 1,
+                  lineColor: '#666666'
+                }
+              }
+            },
+            loading: {
+              style: {
+                backgroundColor: 'black',
+                "opacity": 0.8
+              }
+            },
+            series: scope.items[0]
+        });
 
         scope.$watch('isDataLoaded', function() {
           resize();
         });
+
+        function resize() {
+            height = chart.height;
+            width = $("#chart-wrap").width()
+            chart.setSize(width, height);
+          }
+
+        $(window).resize(function() {
+          resize();
+        });
+
+        window.onresize = function(event) {
+          resize();
+        };
 
       }});
     }
