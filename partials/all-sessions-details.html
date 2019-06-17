@@ -1,37 +1,32 @@
 <div class="col-xl-1">
-
-<div class="sess-chart-container" layout-align="center" ng-controller='SessChartCtrl'>
-
-      <md-toolbar class="dt-bar" layout-align="center">
-        <div class="layout-row dt-container" > <!-- Start of datetime picker container -->
-          <div ng-controller="DateTimePickerCtrl" class="container datetimepick">
-            <div class="layout-row datetimepick-fields">
-              <h1 class="md-toolbar-tools title-text">
-                <span flex>Session statistics</span>
-              </h1>
-              <button ng-click="reset()" type="button" class="btn btn-secondary">Reset</button>
-
-              <form class="chart-period">
-                <label>From:</label>
-                <input ng-model="dateTimeStart"/>
-
-                <label>To:</label>
-                <input ng-model="dateTimeEnd"/>
-                <span>
-                <button type="button" class="btn btn-default" ng-click="updateDateTime()"><i class="glyphicon glyphicon-play-circle"></i></button>
-                </span>
-              </form>
+  <div class="sess-chart-container" layout-align="center" ng-controller='SessChartCtrl'>
+    <md-toolbar class="dt-bar" layout-align="center">
+      <div class="layout-row dt-container" >
+        <!-- Start of datetime picker container -->
+        <div ng-controller="DateTimePickerCtrl" class="container datetimepick">
+          <div class="layout-row datetimepick-fields">
+            <h1 class="md-toolbar-tools title-text">
+              <span flex>Session statistics</span>
+            </h1>
+            <form class="chart-period">
+              <label>From:</label>
+              <input ng-model="dateTimeStart"/>
+              <label>To:</label>
+              <input ng-model="dateTimeEnd"/>
+              <span>
+              <button type="button" class="btn btn-default" ng-click="updateDateTime()"><i class="glyphicon glyphicon-play-circle"></i></button>
+              </span>
+              <button ng-click="reset()" type="button" class="btn btn-secondary">Reset to now</button>
+            </form>
+          </div>
         </div>
-        </div>
-      </div> <!-- End of datetime picker container -->
-
+      </div>
+      <!-- End of datetime picker container -->
       <md-progress-linear md-mode="indeterminate" class="loader" ng-if="isDataLoaded==false"></md-progress-linear>
     </md-toolbar>
-
-      <md-content>
-      
+    <md-content>
       <md-tabs md-stretch-tabs="auto" md-selected="selectedIndex" md-no-ink-bar md-dynamic-height md-border-bottom md-no-pagination="true">
-        <div ng-repeat="n in nodes.items track by $index"> 
+        <div ng-repeat="n in nodes.items track by $index">
           <!-- nodeNum comes from DbDetailsCtrl -->
           <md-tab ng-click="OnSelectedTab(n)">
             <md-tab-label>Node{{n.inst_id}}</md-tab-label>
@@ -42,58 +37,52 @@
               </md-content>
             </md-tab-body>
           </md-tab>
-          </div>
-
-        </md-tabs>
-      </md-content>
+        </div>
+      </md-tabs>
+    </md-content>
     <!-- </div> -->
   </div>
-
-<div  ng-if="!noInfo" class="session-container-wide" ng-controller='SchemaDetailsrCtrl'>
-      
-  <div class="app-sess-title">
-    <h5>Current sessions</h5>
-  </dic>
-        
-  <table ng-if="!noSessions" flex st-safe-src="data" class="table details-table">
-    <thead>
-      <tr>
-        <th>Node</th>
-        <th>SID</th>
-        <th>Status</th>
-        <th>OS user</th>
-        <th>Process</th>
-        <th>Machine</th>
-        <th>Program</th>
-        <th>SQL ID</th>
-        <th>Event</th>
-        <th>Wait Class</th>
-        <th>Seconds in wait</th>
-        <th>Service name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="row in sessDetails" ng-class="{selected: $index === idSelectedRow}">
-        <td>{{row.inst_id}}</td>
-        <td>{{row.sid}}</td>
-        <td>{{row.status}}</td>
-        <td>{{row.osuser}}</td>
-        <td>{{row.process}}</td>
-        <td>{{row.machine}}</td>
-        <td>{{row.program}}</td>
-        <td ng-click="show(row.sql_id)"><a>{{row.sql_id}}</a></td>
-        <td>{{row.event}}</td>
-        <td>{{row.wait_class}}</td>
-        <td>{{row.seconds_in_wait}}</td>
-        <td>{{row.service_name}}</td>
-      </tr>
-    </tbody>
-  </table>
-
-<!--   <div class="no-info" ng-if="noSessions == true">
-    <p>No sessions for that schema.</p>
-  </div> -->
-
-</div>
-
+  <div  ng-if="!noInfo" class="session-container-wide" ng-controller='SchemaDetailsrCtrl'>
+    <div class="app-sess-title">
+      <h5>Current sessions</h5>
+      </dic>
+      <table ng-if="!noSessions" flex st-safe-src="data" class="table details-table">
+        <thead>
+          <tr>
+            <th>Node</th>
+            <th>SID</th>
+            <th>Status</th>
+            <th>OS user</th>
+            <th>Process</th>
+            <th>Machine</th>
+            <th>Program</th>
+            <th>SQL ID</th>
+            <th>Event</th>
+            <th>Wait Class</th>
+            <th>Seconds in wait</th>
+            <th>Service name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="row in sessDetails" ng-class="{selected: $index === idSelectedRow}">
+            <td>{{row.inst_id}}</td>
+            <td>{{row.sid}}</td>
+            <td>{{row.status}}</td>
+            <td>{{row.osuser}}</td>
+            <td>{{row.process}}</td>
+            <td>{{row.machine}}</td>
+            <td>{{row.program}}</td>
+            <td ng-click="show(row.sql_id)"><a>{{row.sql_id}}</a></td>
+            <td>{{row.event}}</td>
+            <td>{{row.wait_class}}</td>
+            <td>{{row.seconds_in_wait}}</td>
+            <td>{{row.service_name}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!--   <div class="no-info" ng-if="noSessions == true">
+        <p>No sessions for that schema.</p>
+        </div> -->
+    </div>
+  </div>
 </div>

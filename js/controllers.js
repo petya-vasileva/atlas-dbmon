@@ -340,7 +340,7 @@ atlmonJSControllers.controller(
     ]);
 
 
-/** 
+/**
  * The controller for retrieving performance history for the database
  */
 atlmonJSControllers.controller(
@@ -717,7 +717,6 @@ atlmonJSControllers.controller(
         var schema = RegisterChange.getSchema();
         var from = RegisterChange.getDate()[0];
         var to = RegisterChange.getDate()[1];
-
 
         var nodesLoc = SchemaNodesGet.query({db: db, schema: schema});
         $scope.nodes = nodesLoc;
@@ -1357,7 +1356,6 @@ atlmonJSControllers.controller(
         var dbName = RegisterChange.getDb();
         $scope.currSchema = RegisterChange.getSchema();
         $scope.db = dbName;
-
 
         var toggleHide = true;
         $scope.text = 'See';

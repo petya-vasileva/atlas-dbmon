@@ -2,7 +2,7 @@
   <md-toolbar class="title1">
     <div class="layout-row">
       <h1 class="md-toolbar-tools title-text">
-        <span flex>DB Jobs</span>
+        <span flex>DB jobs</span>
       </h1>
       <div class="jobs-legend">
         <span class="badge" style='background:#585858;'>Succeeded</span>
@@ -16,11 +16,9 @@
 
 
   <div class="jobs-tab">
-    <div class="outer-container">
     <div class="jobs-table-container" ng-class="{'jobs-table-expand': {{isInNewTab}}}">
       <table st-table="displayedCollection" st-safe-src="data" class="table table-striped fixed_headers" show-filter="true">
         <thead>
-
           <tr>
             <th st-sort="owner"><div>Owner</div></th>
             <th st-sort="job_name" st-sort-default="true"><div>Job Name</div></th>
@@ -58,13 +56,12 @@
         </tbody>
         <tfoot ng-if="!isInNewTab">
           <tr>
-          <td colspan="5" class="text-center">
-          <div st-pagination="" st-items-by-page="itemsByPage"></div>
+          <td colspan="5" class="text-right">
+            <div st-pagination="" st-items-by-page="itemsByPage"></div>
           </td>
           </tr>
         </tfoot>
       </table>
-    </div>
     </div>
   </div>
 </div>
