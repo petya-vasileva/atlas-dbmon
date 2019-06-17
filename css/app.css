@@ -1,6 +1,6 @@
 /* app css stylesheet */
 body {
-
+  margin-bottom: 30px;
 }
 
  @media (min-width: 1200px) {
@@ -38,6 +38,14 @@ ul a{
 
 md-tabs.md-no-animation md-tab-content {
     transition: none;
+}
+
+.row {
+  margin: 0;
+}
+
+.chart-head {
+  height: 60px;
 }
 
 /**************************************************/
@@ -197,11 +205,16 @@ md-tabs.md-no-animation md-tab-content {
   width: 40%;
 }
 
-.basic-info table, .session-info table  {
+.basic-info {
+  height: 480px;
+}
+
+
+.basic-info table, .session-info table > thead, .session-info table > tbody  {
   border: 1px solid #dddddd;
 }
 
-.basic-info table td, .session-info table td{
+.basic-info table td {
   background: #585858;
 }
 
@@ -223,15 +236,6 @@ md-toolbar.title1 {
   width: 75%;
   float: left;
 }
-/*
-.basic-info-btn {
-  width: 20%;
-  float: right;
-  height: 50px;
-  background: none;
-  border: solid rgb(204, 204, 204) .5px;
-  font-size: 90%;
-}*/
 
 .md-toolbar-tools {
   height: 54px;
@@ -262,18 +266,7 @@ pre p {
   max-width: 300px !important;
 }
 
-div.outer-container {
-  position: relative;
-  border: 0px solid #ddd; /*BSCHEER 1 -> 0px*/
-  /*padding-top: 23px;*/
-  background: #fff;
-  display: table;
-  width: 100%;
-}
-
 .table-container {
-  /*BSCHEER*/
-  /*overflow-y: auto;*/
   overflow-y: none;
   height: 390px;
   width:99.3%;
@@ -356,11 +349,6 @@ table.table-container {
   overflow-x: scroll;  /* Scrollbar is always visible on x-axis */
   border: 1px solid rgb(204, 204, 204);
 }
-/*
-.awractive {
-  background: red!important;
-}
-*/
 
 .sql-history-header {
   width: 100%;
@@ -428,19 +416,19 @@ table.table-container {
 }
 
 /**************************************************/
-/******************* JOBS DETAILS ******************/
+/********************** JOBS **********************/
 /**************************************************/
-
-.jobs-nt-btn {
-  font-size: 13px;
-  height: 30px;
-  border: none;
-}
 
 .jobs-table {
   white-space: nowrap;
-  height: 100%;
-  max-height: 500px; /*BSCHEER made height to max-height, new 100% height*/
+  margin-bottom: 0;
+  height: 480px;
+}
+
+.jobs-nt-btn {
+  font-size: 13px;
+  height: 25px;
+  border: none;
 }
 
 .jobs-new-tab {
@@ -466,35 +454,8 @@ table.table-container {
   word-wrap: break-word;
 }
 
-.jobs-table-container table tfoot tr td {
-  text-align: left;
-}
-
-.jobs-table-container .pagination{
-  margin: 0;
-}
-
-.jobs-table-container .pagination > li > a {
-  background-color: #f8f6f6;
-  color: #494949 !important;
-  font-size: 14px;
-  font-weight: normal;
-}
-
-.jobs-table-container .pagination > .active > a {
-  background-color: #585858;
-  border-color: #585858;
-  color: #fff !important;
-}
-
 .jobs-table-container table > tfoot {
   padding: 0;
-}
-
-.jobs-table-container tfoot > tr {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
 }
 
 .jobs-table-expand {
@@ -533,10 +494,17 @@ table.table-container {
   height: 100%;
 }
 
-.session-list {
-  overflow-x: auto; /*took session-list from above, changed scroll to auto*/
-  overflow-y: auto;
-  height: 100%;
+.jobs-table .selected {
+  background-color: #3c3b3b !important;
+  color: #fff;
+}
+
+/**************************************************/
+/******************* DB SESSIONS ******************/
+/**************************************************/
+
+.session-info {
+  height: 490px;
 }
 
 .session-list {
@@ -549,11 +517,6 @@ table.table-container {
   float: left;
 }
 
-.jobs-table .selected {
-  background-color: #3c3b3b !important;
-  color: #fff;
-}
-
 .session-container-wide, .awr-container {
   margin: 0.5%;
   background: white;
@@ -562,9 +525,38 @@ table.table-container {
   margin-bottom: 10px;
 }
 
-.session-container table td, .session-container-wide table td, .awr-container table td  {
+.session-container table tbody td, .session-container-wide table td, .awr-container table td  {
   background: #585858;
   color: #fff;
+}
+
+.session-container table tbody tr td {
+  border-right: 1px solid #ddd;
+}
+
+.session-container table > tfoot {
+  padding: 0;
+}
+
+/**************************************************/
+/******************* SMART TABLES *****************/
+/**************************************************/
+
+.pagination {
+  margin: 0;
+}
+
+.pagination > li > a {
+  background-color: #f8f6f6;
+  color: #494949 !important;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover {
+  background-color: #585858;
+  border-color: #585858;
+  color: #fff !important;
 }
 
 /**************************************************/
@@ -600,7 +592,7 @@ md-toolbar.dt-bar {
 }
 
 .datetimeplots {
-  margin: 0px;
+  margin: 10px 20px 0 20px;
 }
 
 .datetimepick-fields {
@@ -678,14 +670,26 @@ mdc-datetime-picker-calendar table td {
 /***************** STORAGE CHART ******************/
 /**************************************************/
 
-.storage-container, .Table-container {
+.storage-container {
   background: #ffffff;
   border: 1px solid rgb(204, 204, 204);
-  padding: 10px 5px 0 5px;
-  margin-bottom: 2%;
+  height: 390px;
   width: 100%;
-  height: 435px;
-  overflow: hidden; /*BSCHEER - quickfix for chart*/
+}
+
+.toptables-container {
+  background: #ffffff;
+  border: 1px solid rgb(204, 204, 204);
+  height: 400px;
+  width: 100%;
+}
+
+.toptables-container .loader {
+  height: 300px;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+  padding: 100px;
 }
 
 .highcharts-credits {
@@ -694,12 +698,12 @@ mdc-datetime-picker-calendar table td {
 
 .storage-dropdown {
   float: left;
-  padding-left: 1.5%;
+  margin: 10px 10px 0 10px;
 }
 
 .fency-radio-btns {
   float: right;
-  margin-right: 10px;
+  margin: 10px 10px 0 10px;
 }
 
 .caret ul a {
@@ -719,10 +723,6 @@ mdc-datetime-picker-calendar table td {
   appearance: none;
 }
 
-.chart-wrapper {
-  width: 99%;
-}
-
 .highcharts-contextmenu {
     bottom: auto !important;
     top: 5px;
@@ -738,7 +738,9 @@ mdc-datetime-picker-calendar table td {
 /*BSCHEER - quickfix for chart*/
 .storage-box {
   height: 100%;
+  width: 100% !important;
 }
+
 .tables-box {
   height: 99%;
 }
@@ -796,8 +798,8 @@ mdc-datetime-picker-calendar table td {
 
 .report-btn span button {
   color: #fff;
-  background-color: #286090;
-  border-color: #2e6da4;
+  background-color: #585858;
+  border-color: #585858;
   height: 41px;
 }
 
@@ -822,7 +824,6 @@ mdc-datetime-picker-calendar table td {
 
 .details-table td a {
   color: yellow;
-  /*margin: 0 10px 10px 10px;*/
 }
 
 .no-info {
@@ -833,16 +834,7 @@ mdc-datetime-picker-calendar table td {
 }
 
 .schema-sessions {
-  /*width: 45050500%;*/
-  /*display: block;*/
   float: left;
-}
-
-.schema-sessions table {
-  /*display: block;*/
-  /*height: 500px;*/
-  /*overflow: auto;  */
-  /*width: 50%;*/
 }
 
 .radio-btns {
@@ -965,7 +957,7 @@ tr.tree-grid-row.level-6 td:nth-child(2) {
 }
 
 /**************************************************/
-/**************** HISTORY CHARTS ******************/
+/************** PERFORMANCE CHARTS ****************/
 /**************************************************/
 
 .chart {
@@ -979,7 +971,7 @@ tr.tree-grid-row.level-6 td:nth-child(2) {
 
 
 /**************************************************/
-/**************** SESSION DETAILS PAGE ******************/
+/************ SESSION DETAILS PAGE ****************/
 /**************************************************/
 
 
