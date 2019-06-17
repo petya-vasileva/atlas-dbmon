@@ -663,34 +663,36 @@ atlmonJSControllers.controller(
           $scope.rowNumber = row;
         }
 
+        $scope.isDataLoaded = false;
         // Main Query for the Session-Info-table. Can not cover Total & NrOfNodes.
-        ThisSessInfo = SessionDistrGet.query({db: $routeParams.currentDB});
-         ThisSessInfo.$promise.then(function (result) {
-               $scope.sessInfo = result.items;
-            });
+        var thisSessInfo = SessionDistrGet.query({db: $routeParams.currentDB});
+        thisSessInfo.$promise.then(function (result) {
+          $scope.sessInfo = result.items;
+          $scope.isDataLoaded = true;
+        });
 
         //added 2nd Query for Information about the NrOfNodes in theDatabase.
-        ThisDbInfo = DbDetailsGet.query({db: $routeParams.currentDB});
-        ThisDbInfo.$promise.then(function (result) { 
+        var thisDbInfo = DbDetailsGet.query({db: $routeParams.currentDB});
+        thisDbInfo.$promise.then(function (result) {
               $scope.NrOfNodes = result.items[0].dbnodes; // used for dynamic nr of columns in the basicInfo and DB metrics overview
         });
 
-          ThisSessInfo.$promise.then(function (result) { 
-              var noSessions = result.items.length == 0; //working
-              var nrOfSessions = result.items.length;
-              ResizeSessContainer.setSize(noSessions, '.session-list', nrOfSessions);
+        thisSessInfo.$promise.then(function (result) {
+          var noSessions = result.items.length == 0; //working
+          var nrOfSessions = result.items.length;
+          ResizeSessContainer.setSize(noSessions, '.session-list', nrOfSessions);
 
-              $scope.alert = function (value, row) {
-                if (row.workload >= 0.95 ) {
-                  return { background: "#981A37"}}
+          $scope.alert = function (value, row) {
+            if (row.workload >= 0.95 ) {
+              return { background: "#981A37"}}
 
-                else if (row.workload >= 0.85 && row.workload < 0.95){
-                  return { background: "#cb6828"}}
+            else if (row.workload >= 0.85 && row.workload < 0.95){
+              return { background: "#cb6828"}}
 
-                else{
-                  return { background: "#229369"}}
-            };
-           });
+            else{
+              return { background: "#229369"}}
+        };
+       });
       }
     ]);
 

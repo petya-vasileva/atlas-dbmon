@@ -26,33 +26,7 @@ atlmonJSDirectives.directive('ngSessTable', function() {
             scope: {
               dbName: '@'
             },
-            template: '\
-                  <div class="outer-container"><div class="table-container"><table class="table table-bordered fixed_headers">\
-                    <thead>\
-                      <tr>\
-                        <tr ng-switch on="NrOfNodes">\
-                          <th><div>Schema</div></th>\
-                          <th><div>Node1</div></th>\
-                          <th><div>Node2</div></th>\
-                          <th ng-switch-when="3"><div>Node3</div></th>\
-                          <th ng-switch-when="4"><div>Node3</div></th>\
-                          <th ng-switch-when="4"><div>Node4</div></th>\
-                          <th><div>Total</div></th>\
-                        </tr>\
-                      </tr>\
-                    </thead>\
-                    <tbody>\
-                      <tr ng-repeat="row in sessInfo" | toArray:false | orderBy:\'+username\' ng-click="show(row)" \
-                      ng-mouseover="rowselected($index)" ng-mouseleave="rowselected()" ng-class="{over : $index == rowNumber}">\
-                        <td >{{row.username}}</td>\
-                        <td ng-style="alert(value, row)">{{row.node1}}</td>\
-                        <td ng-style="alert(value, row)">{{row.node2}}</td>\
-                        <td ng-if="NrOfNodes > 2" ng-style="alert(value, row)">{{row.node3}}</td>\
-                        <td ng-if="NrOfNodes > 3" ng-style="alert(value, row)">{{row.node4}}</td>\
-                        <td >{{row.to_display}}</td>\
-                      </tr>\
-                    </tbody>\
-                  </table></div></div>',
+            templateUrl: 'partials/session-distribution-table.html',
             controller: 'SessDistrCtrl'
         }
     });
