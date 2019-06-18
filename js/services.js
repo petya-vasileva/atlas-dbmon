@@ -1,14 +1,14 @@
 var atlmonJSServices = angular.module('atlmonJSServices', [ 'ngResource' ]);
 
 atlmonJSServices.constant('baseurl', {
-  'url' : 'url/to/api'       // For the testbed
-  // 'url' : 'https://oraweb.cern.ch/ords/offdb/dbmon_schema/'         // For production 
+  // 'url' : 'url/to/api'       // For the testbed
+  'url' : 'url/to/api'         // For production 
 
 }).constant('userurl', {
   'user' : 'databases/'
-})
+});
 
-.factory(
+atlmonJSServices.factory(
     'BasicInfoGet', 
     [
         '$resource', 
