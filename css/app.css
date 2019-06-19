@@ -40,12 +40,22 @@ md-tabs.md-no-animation md-tab-content {
     transition: none;
 }
 
+.chart-head {
+  height: 60px;
+}
+
+/**************************************************/
+/******************* BOOTSTRAP ********************/
+/**************************************************/
+
 .row {
   margin: 0;
 }
 
-.chart-head {
-  height: 60px;
+.align-items-center {
+  display: flex;
+  align-items: center;  /*Aligns vertically center */
+  justify-content: center; /*Aligns horizontally center */
 }
 
 /**************************************************/
