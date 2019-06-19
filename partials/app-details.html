@@ -2,15 +2,19 @@
   <div class="left-panel" layout-xl="column" layout-gt-md="column">
   <div class="schema-report">
       <div class="details">
-        <div class="app-header" layout-xl="row" layout-gt-md="row">
-          <h1 class="md-toolbar-tools title-text">
-            <span flex>{{currSchema | uppercase}} @ {{db | uppercase}}</span>
-          </h1>
-          <div ng-if="!noInfo" class='details-btn'>
-            <button ng-click="changeText()" type="button" class="panel panel-default" data-toggle="collapse" data-target="#schema-info">{{text}} details &raquo;</button>
+        <div class="row align-items-center">
+          <div class='col-lg-6'>
+            <h1 class="md-toolbar-tools title-text">
+              <span flex>{{currSchema | uppercase}} @ {{db | uppercase}}</span>
+            </h1>
+          </div>
+          <div ng-if="!noInfo" class='col-lg-6'>
+            <div class='row'>
+              <button ng-click="changeText()" type="button" class="col-lg-6 btn btn-secondary" data-toggle="collapse" data-target="#schema-info">{{text}} account info</button>
+              <button class="col-lg-6 btn btn-secondary" onclick="window.location.href = 'http://cern.ch/session-manager';">Session manager</button>
+            </div>
           </div>
         </div>
-
 
         <div ng-if="!noInfo" class="details-cont">
           <div id="schema-info" class="collapse">

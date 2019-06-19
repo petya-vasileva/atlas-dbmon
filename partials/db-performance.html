@@ -11,26 +11,26 @@
         </div>
       </div>
 
-    <div ng-controller="DateTimePickerCtrl" class="container datetimepick datetimeplots">
-      <div class="layout-row datetimepick-fieldsplots">
-        <form class="chart-period">
-          <label>From:</label>
-          <input ng-model="dateTimeStart" ng-style="dpstyleFrom"/>
+      <div ng-controller="DateTimePickerCtrl" class="container datetimepick datetimeplots" >
+        <div class="datetimepick-fieldsplots">
+          <form class="chart-period justify-content-sm-center">
+            <label>From:</label>
+            <input ng-model="dateTimeStart" ng-style="dpstyleFrom"/>
 
-          <label>To:</label>
-          <input ng-model="dateTimeEnd" ng-style="dpstyleTo"/>
-          <span>
-            <button type="button" class="btn btn-default" ng-click="updateDateTime()">
-              <i class="glyphicon glyphicon-play-circle"></i>
-            </button>
-          </span>
-          <!-- <button ng-click="reset()" type="button" class="btn btn-secondary">Reset to now</button> -->
-        </form>
+            <label>To:</label>
+            <input ng-model="dateTimeEnd" ng-style="dpstyleTo"/>
+            <div class="justify-content-sm-center">
+              <span class="chart-period justify-content-sm-center">
+                <button type="button" class="btn btn-default" ng-click="updateDateTime()">
+                  <i class="glyphicon glyphicon-play-circle"></i>
+                </button>
+              </span>
+            </div>
+            <!-- <button ng-click="reset()" type="button" class="btn btn-secondary">Reset to now</button> -->
+          </form>
+        </div>
       </div>
     </div>
-
-
-    </span>
 
     <div class="chart-row">
       <hc-area class="col-lg-6 chart" id="history-cpu" items="cpuData" container="history-cpu" type="Host CPU Utilization" unit="% Busy/(Idle+Busy)" i="9" snode="{{node_id}}"></hc-area>
