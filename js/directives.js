@@ -415,7 +415,7 @@ atlmonJSDirectives.directive('hcLine', function() {
                 plotBorderWidth: null,
                 plotShadow: false,
                 spacingRight: 15,
-                height: 315,
+                height: 325,
                 // width: 500
               },
               title: {
