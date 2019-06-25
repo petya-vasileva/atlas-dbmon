@@ -215,11 +215,6 @@ md-tabs.md-no-animation md-tab-content {
   width: 40%;
 }
 
-.basic-info {
-  height: 480px;
-}
-
-
 .basic-info table, .session-info table > thead, .session-info table > tbody  {
   border: 1px solid #dddddd;
 }
@@ -513,10 +508,6 @@ table.table-container {
 /******************* DB SESSIONS ******************/
 /**************************************************/
 
-.session-info {
-  height: 490px;
-}
-
 .session-list {
   width: 100%;
 }
@@ -683,7 +674,7 @@ mdc-datetime-picker-calendar table td {
 .storage-container {
   background: #ffffff;
   border: 1px solid rgb(204, 204, 204);
-  height: 390px;
+  height: 380px;
   width: 100%;
 }
 
