@@ -320,10 +320,6 @@ atlmonJSControllers.controller(
                      lineHeight: "25px", minHeight: "25px", minWidth: "70px" }};
         };
 
-        $scope.noBottomMargin = function() {
-          if ($scope.isOFFDB == true) {return {marginBottom: "0px"};}
-        };
-
         $scope.showError = function(ev) {
           $mdDialog.show(
             $mdDialog.alert()
@@ -648,7 +644,11 @@ atlmonJSControllers.controller(
       'RegisterChange',
       function($routeParams, $scope, $location, $window, SessionDistrGet, DbDetailsGet, ResizeSessContainer, RegisterChange) {
         $scope.username = '%';
-        $scope.itemsByPage = 9;
+        const db = $routeParams.currentDB;
+
+        if (db == 'offdb')
+          $scope.itemsByPage = 5;
+        else $scope.itemsByPage = 9;
 
         $scope.show = function(row) {
           $scope.username = row.username;
@@ -665,14 +665,14 @@ atlmonJSControllers.controller(
 
         $scope.isDataLoaded = false;
         // Main Query for the Session-Info-table. Can not cover Total & NrOfNodes.
-        var thisSessInfo = SessionDistrGet.query({db: $routeParams.currentDB});
+        var thisSessInfo = SessionDistrGet.query({db: db});
         thisSessInfo.$promise.then(function (result) {
           $scope.sessInfo = result.items;
           $scope.isDataLoaded = true;
         });
 
         //added 2nd Query for Information about the NrOfNodes in theDatabase.
-        var thisDbInfo = DbDetailsGet.query({db: $routeParams.currentDB});
+        var thisDbInfo = DbDetailsGet.query({db: db});
         thisDbInfo.$promise.then(function (result) {
               $scope.NrOfNodes = result.items[0].dbnodes; // used for dynamic nr of columns in the basicInfo and DB metrics overview
         });
@@ -954,7 +954,6 @@ atlmonJSControllers.controller(
           getData();
 
           function getData() {
-            console.log('getData', schema, db);
             var data = JobsInfoGet.query({db: db, schema: schema});
               data.$promise.then(function (result) {
               $scope.data = result.items;
