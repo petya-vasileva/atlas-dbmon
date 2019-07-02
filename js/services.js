@@ -3,25 +3,20 @@ var atlmonJSServices = angular.module('atlmonJSServices', [ 'ngResource' ]);
 atlmonJSServices.constant('baseurl', {
   // 'url' : 'url/to/api'       // For the testbed
   'url' : 'url/to/api'         // For production 
-
-}).constant('userurl', {
-  'user' : 'databases/'
 });
 
 atlmonJSServices.factory(
-    'BasicInfoGet', 
+    'BasicInfoGet',
     [
-        '$resource', 
-        'baseurl', 
-        'userurl',
-        function($resource, baseurl, userurl) {
+        '$resource',
+        'baseurl',
+        function($resource, baseurl) {
           var url = baseurl.url + 'db/basic_metrics/:db/:mins';
           var res = $resource(url, {}, {
             query: {
               method: 'GET',
               isArray: false
             }});
-    
        return res;
         } ]);
 
@@ -31,8 +26,7 @@ atlmonJSServices.factory(
     [
         '$resource',
         'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
+        function($resource, baseurl) {
           var url = baseurl.url + 'db/state/:db';
           var res = $resource(url, {}, {
             query: {
@@ -46,18 +40,18 @@ atlmonJSServices.factory(
 atlmonJSServices.factory(
     'StreamsInfoGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db/compact_streams/:db/:metric/:from/:to';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'db/compact_streams/:db/:metric/:from/:to';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 // Service to get an Array of all DB-names        
@@ -65,129 +59,126 @@ atlmonJSServices
 .factory(
     'DbNamesGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'all_databases/';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'all_databases/';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'DbDetailsGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'all_databases/:db';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'all_databases/:db';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'Top10SessionsGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db/top10_sessions/:db/:from/:to';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-    
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'db/top10_sessions/:db/:from/:to';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'SessionDistrGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db/session_distribution/:db';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-    
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'db/session_distribution/:db';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'SessionsChartGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'schema/num_sessions_chart/:db/:schema/:from/:to/:node';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-    
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'schema/num_sessions_chart/:db/:schema/:from/:to/:node';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'ExpPlanGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db/exp_plan/:db/:sqlId';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-         return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'db/exp_plan/:db/:sqlId';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+       return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'AWRInfoGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db/awr/:db/:sqlId';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-         return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'db/awr/:db/:sqlId';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+       return res;
+      }
+    ]);
 
 
  // Used from DB-Page with Wildcard and from Application with specific schema
@@ -195,18 +186,18 @@ atlmonJSServices
 .factory(
     'JobsBasicInfoGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'jobs_info/stats/:db/:schema';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'jobs_info/stats/:db/:schema';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 // Used from DB-Page with Wildcard and from Application with specific schema
@@ -214,36 +205,36 @@ atlmonJSServices
 .factory(
     'JobsInfoGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'jobs_info/details/:db/:schema';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'jobs_info/details/:db/:schema';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'StorageInfoGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'storage_size/:db/:schema/:year';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'storage_size/:db/:schema/:year';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
@@ -252,8 +243,7 @@ atlmonJSServices
     [
         '$resource',
         'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
+        function($resource, baseurl) {
           var url = baseurl.url + 'all_schemas/:db';
           var res = $resource(url, {}, {
             query: {
@@ -261,205 +251,207 @@ atlmonJSServices
               isArray: false
             }});
          return res;
-        } ]);
+        }
+      ]);
 
 
 atlmonJSServices
 .factory(
     'AllSchemasGetNoAll',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'all_schemas/no_all/:db';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-         return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'all_schemas/no_all/:db';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+       return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'SchemasDetailsGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'schema/account_info/:db/:schema';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-         return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'schema/account_info/:db/:schema';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+       return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'SchemaSessionsGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-        var url = baseurl.url + 'schema/session_distribution/:db/:schema';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-         return res;  
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+      var url = baseurl.url + 'schema/session_distribution/:db/:schema';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+       return res
+      } 
+    ]);
 
 
 atlmonJSServices
 .factory(
     'SchemaSessionsDetailsGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'schema/sessions/:db/:schema';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-         return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'schema/sessions/:db/:schema';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+       return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'Top10SessionsPerSchemaGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'schema/top10_sessions/:db/:node/:schema/:from/:to';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-         return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'schema/top10_sessions/:db/:node/:schema/:from/:to';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+       return res;
+      }
+    ]);
+
 
 atlmonJSServices
 .factory(
     'SchemaNodesGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
 
-          var url = baseurl.url + 'schema/nodes/:db/:schema';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-         return res;
-        } ]);
+        var url = baseurl.url + 'schema/nodes/:db/:schema';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+       return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'BlockingSessGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db/blocking_tree/:db/:from/:to';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'db/blocking_tree/:db/:from/:to';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      } 
+    ]);
 
 //Necessary to get the data without the data-variables (NULL for to and from)
 atlmonJSServices
 .factory(
     'BlockingSessGetDefault',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db/blocking_tree/:db';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'db/blocking_tree/:db';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      } 
+    ]);
 
 
 atlmonJSServices
 .factory(
     'ApplyLagGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'db/apply_lag/:db';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'db/apply_lag/:db';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'AppMessageGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'app_message';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'app_message';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
 .factory(
     'Top10TablesGet',
     [
-        '$resource',
-        'baseurl',
-        'userurl',
-        function($resource, baseurl, userurl) {
-          var url = baseurl.url + 'schema/top10_tables/:db/:schema/:year';
-          var res = $resource(url, {}, {
-            query: {
-              method: 'GET',
-              isArray: false
-            }});
-          return res;
-        } ]);
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'schema/top10_tables/:db/:schema/:year';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
 
 
 atlmonJSServices
@@ -616,8 +608,7 @@ atlmonJSServices
       }]);
 
 
-atlmonJSServices
-.service(
+atlmonJSServices.service(
     'ResizeSessContainer',
     [
       function () {
@@ -639,8 +630,7 @@ atlmonJSServices
 
 
 
-atlmonJSServices
-.factory(
+atlmonJSServices.service(
     'DateTimeService',
     [
       function () {
