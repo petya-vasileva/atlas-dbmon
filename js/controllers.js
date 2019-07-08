@@ -66,9 +66,9 @@ atlmonJSControllers.controller(
     'DateTimeService',
   function($interval, $route, $location, RegisterChange, DateTimeService) {
     // there is no point to auto refresh the historical page on the blocking sessions
-    if (!$location.path().startsWith('/blocking-tree')) {
+    if (!$location.path().startsWith('/blocking-tree') && !$location.path().startsWith('/pvss-plots')) {
       $interval(function(){
-        console.log('reload');
+        // console.log('reload');
         location.reload();
       }.bind(this), 300000);
     }
