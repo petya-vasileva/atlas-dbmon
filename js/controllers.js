@@ -479,6 +479,48 @@ atlmonJSControllers.controller(
 
 
 /**
+ * The controller for PVSS/WinCC insertion rate presented in plots
+ */
+atlmonJSControllers.controller(
+    'PVSSCtrl',
+    [
+      '$scope',
+      'PVSSInsRateGet',
+      function( $scope, PVSSInsRateGet) {
+        var q;
+        var pvssData = {};
+
+        var intArr = {'24h': 1, '7d': 7, '14d': 14, '30d': 30};
+        $scope.intervalDays = intArr;
+        $scope.intDays = '24h';
+        $scope.$watch("intDays", function(newValue, oldValue) {
+          queryPVSSData(intArr[newValue]);
+        }, true);
+
+        $scope.pvssSchemas = ["ATLAS_PVSSAFP", "ATLAS_PVSSCSC", "ATLAS_PVSSDCS", "ATLAS_PVSSDSS",
+                              "ATLAS_PVSSIDE", "ATLAS_PVSSIS", "ATLAS_PVSSLAR", "ATLAS_PVSSLUC",
+                              "ATLAS_PVSSMDT", "ATLAS_PVSSMMG", "ATLAS_PVSSMUO", "ATLAS_PVSSPIX",
+                              "ATLAS_PVSSRPC", "ATLAS_PVSSRPO", "ATLAS_PVSSSCT", "ATLAS_PVSSTDQ",
+                              "ATLAS_PVSSTGC", "ATLAS_PVSSTIL", "ATLAS_PVSSTRT", "ATLAS_PVSSZDC"];
+
+        function queryPVSSData(days) {
+          $scope.isDataLoaded = false;
+          $scope.pvssSchemas.forEach(function(item){
+            q = PVSSInsRateGet.query({schema: item, days: days});
+            q.$promise.then(function (result) {
+              pvssData[item] = result.items;
+              $scope.pvssData = pvssData;
+              $scope.isDataLoaded = true;
+            });
+
+          });
+        }
+      }
+    ]);
+
+
+
+/**
  * The controller for getting the top SQLs
  */
 atlmonJSControllers.controller(
@@ -954,7 +996,6 @@ atlmonJSControllers.controller(
           getData();
 
           function getData() {
-            console.log('getData', schema, db);
             var data = JobsInfoGet.query({db: db, schema: schema});
               data.$promise.then(function (result) {
               $scope.data = result.items;
