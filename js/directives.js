@@ -623,6 +623,130 @@ atlmonJSDirectives.directive('hcArea', function() {
 });
 
 
+atlmonJSDirectives.directive('hcAreaPvss', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      items: '=',
+      type: '@',
+      container: '@',
+      unit: '@',
+      i: '@',
+    },
+    link: function(scope, element, attrs) {
+      scope.$watch('items', function (newval, oldval) {
+
+        if(newval) {
+          var seriesData = [];
+          var item;
+
+          colors = [
+              '#5485BC', '#AA8C30', '#229369', '#981A37', '#FCB319', '#86A033',
+              '#614931', '#3399ff', '#594266', '#cb6828', '#aaaaab', '#a89375',
+              '#5485BC', '#AA8C30', '#229369', '#981A37', '#FCB319', '#86A033',
+              '#614931', '#3399ff', '#594266', '#cb6828', '#aaaaab', '#a89375'
+            ];
+          // Date.UTC: An integer between 0 (January) and 11 (December) representing the month.
+          for(var i=0;i<newval.length;i++){
+            item = newval[i];
+            seriesData[i] = [Date.UTC(item.snap_year, item.snap_month-1, item.snap_day, item.snap_hour, item.snap_min), 
+                              item.t];
+          };
+
+          var chart = new Highcharts.Chart({
+           chart: {
+              renderTo: scope.container,
+              type: 'area',
+              zoomType: 'x',
+              height: 280,
+            },
+            credits: {
+              enabled: false
+            },
+            title: {
+              text: scope.type
+            },
+            xAxis: {
+              type: 'datetime',
+              ordinal: true
+            },
+            yAxis: {
+              min: 0,
+              labels: {
+                formatter: function() {
+                  return this.value;
+                }
+              },
+              title: {
+                text: scope.unit
+              }
+            },
+            global: {
+                useUTC: false
+            },
+            tooltip: {
+                formatter: function () {
+                    return Highcharts.dateFormat('%e-%b-%Y', new Date(this.x)) + '<br/>' + Highcharts.dateFormat('%H:%M:%S', new Date(this.x)) + ' <br/> Value:<b>' + this.y + '</b>';
+                }
+            },
+            plotOptions: {
+              area: {
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                },
+                lineWidth: 1,
+                states: {
+                  hover: {
+                    lineWidth: 1
+                  }
+                },
+                threshold: null
+              }
+            },
+            loading: {
+                style: {
+                    backgroundColor: 'white',
+                    "opacity": 0.8
+                }
+            },
+            series: [{
+                color: colors[scope.i],
+                showInLegend: false,
+                data: seriesData,
+                tooltip: {
+                    formatter: function() {
+                        var d = new Date(parseInt(this.x));
+                        return d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+                    }
+                },
+              }]
+          });
+
+        function resize() {
+          height = chart.height;
+          width = $(".chart").width();
+          chart.setSize(width, height);
+        }
+
+        $(window).resize(function() {
+          resize();
+        });
+      }});
+    }
+  }
+});
+
+
+
+
+
 atlmonJSDirectives.directive('hcSessArea', function() {
   return {
     restrict: 'E',

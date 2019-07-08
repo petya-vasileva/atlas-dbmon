@@ -18,6 +18,9 @@ dbmonJSApp.config([ '$routeProvider', function($routeProvider) {
     when('/performance-history', {
       templateUrl: 'partials/db-performance.html',
     }).
+     when('/pvss-plots', {
+      templateUrl: 'partials/pvss-plots.html',
+    }).
     when('/db/:currentDB/sql_id=:sqlId', {
       templateUrl: 'partials/sql-details.html',
     }).

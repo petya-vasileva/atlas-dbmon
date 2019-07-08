@@ -54,6 +54,22 @@ atlmonJSServices.factory(
     ]);
 
 
+atlmonJSServices.factory(
+    'PVSSInsRateGet',
+    [
+      '$resource',
+      'baseurl',
+      function($resource, baseurl) {
+        var url = baseurl.url + 'pvss/plot/:schema/:days';
+        var res = $resource(url, {}, {
+          query: {
+            method: 'GET',
+            isArray: false
+          }});
+        return res;
+      }
+    ]);
+
 // Service to get an Array of all DB-names        
 atlmonJSServices
 .factory(

@@ -1038,9 +1038,23 @@ span.btn-primary:active:hover, .btn-primary:active, .btn-primary:hover,
 
 
 
+/**************************************************/
+/***************** PVSS CHARTS ********************/
+/**************************************************/
 
+.pvss-container {
+  margin-bottom: 20px;
+}
 
+.pvss-container .fency-radio-btns {
+  text-align: right;
+}
 
+.pvss-container .chart.loader {
+  height: 280px;
+  text-align: center;
+  padding: 120px;
+}
 
 
 /*.dtp table.dtp-picker-days tr > td > a.selected,
