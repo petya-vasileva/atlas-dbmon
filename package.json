@@ -5,7 +5,6 @@
   "main": "js\\app.js",
   "dependencies": {
     "angular-bootstrap-grid-tree": "^0.4.0",
-    "angular-bootstrap-datetimepicker": "latest",
     "angular-resource": "latest",
     "angular-strap": "latest",
     "angular-bootstrap": "latest",
@@ -20,6 +19,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "bscheer",
+  "author": "petya",
   "license": "ISC"
 }
