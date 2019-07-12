@@ -641,10 +641,10 @@ atlmonJSDirectives.directive('hcAreaPvss', function() {
           var item;
 
           colors = [
-              '#5485BC', '#AA8C30', '#229369', '#981A37', '#FCB319', '#86A033',
-              '#614931', '#3399ff', '#594266', '#cb6828', '#aaaaab', '#a89375',
-              '#5485BC', '#AA8C30', '#229369', '#981A37', '#FCB319', '#86A033',
-              '#614931', '#3399ff', '#594266', '#cb6828', '#aaaaab', '#a89375'
+              '#5485BC', '#AA8C30',  '#aaaaab', '#229369', '#981A37', '#FCB319', 
+              '#86A033', '#614931', '#3399ff', '#594266', '#cb6828', '#a89375',
+              '#54b9bc', '#a78d8a', '#ed5565', '#566782', '#e18a7a', '#1c84c6',
+              '#479f78', '#981A37'
             ];
           // Date.UTC: An integer between 0 (January) and 11 (December) representing the month.
           for(var i=0;i<newval.length;i++){
