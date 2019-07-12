@@ -2,9 +2,6 @@ stages:
   - build_application_docker_image
   - redeploy
 
-cache:
-  paths:
-    - node_modules/
       
 build_application_docker_image:
   stage: build_application_docker_image
