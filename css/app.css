@@ -72,10 +72,10 @@ md-tabs.md-no-animation md-tab-content {
   color: #fff;
   background-color: #ed943b;
   border-color: #000000;
-  height:22px;
-  margin-top:-10px;
-  /*text-align: center;*/
-  visibility: hidden;
+  height: 20px;
+  margin-top: -10px;
+  text-align : center;
+  /*visibility: hidden;*/
 }
 
 .menubar .btn-primary {
@@ -1055,25 +1055,3 @@ span.btn-primary:active:hover, .btn-primary:active, .btn-primary:hover,
   text-align: center;
   padding: 120px;
 }
-
-
-/*.dtp table.dtp-picker-days tr > td > a.selected,
-.dtp table.dtp-picker-days tr > td > a.selected.hilite,
-.dtp div.dtp-date, .dtp div.dtp-time, .dtp .dtp-hand.on,
-.dtp .dtp-actual-meridien a.selected,
-.dtp .dtp-picker-time > a.dtp-select-hour.selected {
-  background: #2abab9;
-}
- 
-.dtp table.dtp-picker-days tr > td > a.hilite:not(.selected),
-.dtp div.dtp-actual-time.p60 span.selected {
-  color: #2abab9;
-}
- 
-.dtp div.dtp-year-btn, .dtp div.dtp-actual-year, .dtp div.dtp-actual-maxtime {
-  color: #d0f0f0;
-}
- 
-.dtp > .dtp-content > .dtp-date-view > header.dtp-header {
-  background: #009796;
-}*/
