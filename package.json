@@ -4,16 +4,22 @@
   "description": "dbmon_schema with ORDS",
   "main": "js\\app.js",
   "dependencies": {
-    "angular-bootstrap-grid-tree": "^0.4.0",
-    "angular-resource": "latest",
-    "angular-strap": "latest",
     "angular-bootstrap": "latest",
-    "angular-material": "latest",
+    "angular-bootstrap-grid-tree": "^0.4.0",
+    "angular-filter": "^0.5.17",
+    "angular-material": "1.1.0-rc.5",
+    "angular-material-datetimepicker": "^1.4.0",
     "angular-motion": "latest",
+    "angular-resource": "latest",
     "angular-route": "latest",
-    "bootstrap": "latest",
+    "angular-sanitize": "^1.7.8",
+    "angular-smart-table": "^2.1.11",
+    "angular-strap": "latest",
+    "bootstrap": "3.3.7",
+    "highcharts": "^7.1.2",
     "jquery": "~1.9.1",
-    "jquery-ui": "~1.10.3"
+    "jquery-ui": "~1.10.3",
+    "moment": "^2.24.0"
   },
   "devDependencies": {},
   "scripts": {
