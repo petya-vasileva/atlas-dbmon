@@ -489,11 +489,13 @@ atlmonJSControllers.controller(
       function( $scope, PVSSInsRateGet) {
         var q;
         var pvssData = {};
+        $scope.pvssData = [];
 
         var intArr = {'24h': 1, '7d': 7, '14d': 14, '30d': 30};
         $scope.intervalDays = intArr;
         $scope.intDays = '24h';
         $scope.$watch("intDays", function(newValue, oldValue) {
+          $scope.isDataLoaded = false;
           queryPVSSData(intArr[newValue]);
         }, true);
 
@@ -504,7 +506,6 @@ atlmonJSControllers.controller(
                               "ATLAS_PVSSTGC", "ATLAS_PVSSTIL", "ATLAS_PVSSTRT", "ATLAS_PVSSZDC"];
 
         function queryPVSSData(days) {
-          $scope.isDataLoaded = false;
           $scope.pvssSchemas.forEach(function(item){
             q = PVSSInsRateGet.query({schema: item, days: days});
             q.$promise.then(function (result) {

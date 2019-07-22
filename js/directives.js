@@ -628,7 +628,7 @@ atlmonJSDirectives.directive('hcAreaPvss', function() {
     restrict: 'E',
     scope: {
       items: '=',
-      type: '@',
+      title: '@',
       container: '@',
       unit: '@',
       i: '@',
@@ -653,7 +653,7 @@ atlmonJSDirectives.directive('hcAreaPvss', function() {
                               item.t];
           };
 
-          var chart = new Highcharts.Chart({
+          chartOptions = {
            chart: {
               renderTo: scope.container,
               type: 'area',
@@ -664,7 +664,7 @@ atlmonJSDirectives.directive('hcAreaPvss', function() {
               enabled: false
             },
             title: {
-              text: scope.type
+              text: scope.title
             },
             xAxis: {
               type: 'datetime',
@@ -713,7 +713,7 @@ atlmonJSDirectives.directive('hcAreaPvss', function() {
             loading: {
                 style: {
                     backgroundColor: 'white',
-                    "opacity": 0.8
+                    "opacity": 1
                 }
             },
             series: [{
@@ -727,16 +727,31 @@ atlmonJSDirectives.directive('hcAreaPvss', function() {
                     }
                 },
               }]
-          });
+          };
+
+        var chart = new Highcharts.Chart(chartOptions);
+        if (typeof chart.series !== "undefined" ) {
+          resize();
+          chart.showLoading();
+          chart.series[0].hide();
+        }
+
+        setTimeout(() => {
+          if (typeof chart.series !== "undefined" )
+            chart.series[0].show();
+          chart.hideLoading();
+        }, 2500);
 
         function resize() {
           height = chart.height;
-          width = $(".chart").width();
+          width = $("#chart-wrap").width();
           chart.setSize(width, height);
+          chart.redraw();
         }
 
         $(window).resize(function() {
           resize();
+          chart.reflow();
         });
       }});
     }
