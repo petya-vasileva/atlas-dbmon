@@ -961,9 +961,14 @@ tr.tree-grid-row.level-6 td:nth-child(2) {
 /************** PERFORMANCE CHARTS ****************/
 /**************************************************/
 
-.chart {
+
+#chart-wrap {
   border: 1px solid rgb(204, 204, 204);
   background: white;
+}
+
+.chart-wrapper {
+  padding: 0;
 }
 
 .container-head {

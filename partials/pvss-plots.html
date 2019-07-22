@@ -1,29 +1,31 @@
  <div ng-controller="PVSSCtrl" class="pvss-container">
   <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-7 col-md-7 col-xs-7 col-sm-7">
       <md-toolbar class="title1">
-          <h1 class="md-toolbar-tools title-text">
-            <span flex>WinCC @ ONDB Insertion Rate</span>
-          </h1>
+        <h1 class="md-toolbar-tools title-text">
+          <span flex>WinCC @ ONDB Insertion Rate</span>
+        </h1>
       </md-toolbar>
     </div>
-    <div class="col-lg-6 fency-radio-btns">
-      <div class="btn-group" ng-repeat="(interval, val) in intervalDays track by $index">
-        <label>
-          <input name="options" id="option$index+1" type="radio" name="intDays" ng-model="$parent.intDays" ng-value="interval"
-          />
-          <span class="btn btn-primary">{{interval}}</span>
-        </label>
+    <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+      <div class="fency-radio-btns">
+        <div class="btn-group" ng-repeat="(interval, val) in intervalDays track by $index">
+          <label>
+            <input name="options" id="option$index+1" type="radio" name="intDays" ng-model="$parent.intDays" ng-value="interval"
+            />
+            <span class="btn btn-primary">{{interval}}</span>
+          </label>
+        </div>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="chart-row" ng-repeat="(schema, data) in pvssData track by $index">
-      <div ng-if="isDataLoaded" class="chart-wrapper" id="chart-wrap">
-        <hc-area-pvss class="col-lg-3 chart" id="{{schema}}" items="pvssData[schema]" type="{{schema}}" container="{{schema}}" unit="rows/sec" i="{{$index}}"></hc-area>
+    <div class="chart-row" ng-repeat="schema in pvssSchemas">
+      <div class="chart-wrapper col-lg-3 col-md-4 col-sm-6 ">
+        <div id="chart-wrap">
+        <hc-area-pvss ng-if="isDataLoaded" class="chart" id="{{schema}}" items="pvssData[schema]" title="{{schema}}" container="{{schema}}" unit="rows/sec" i="{{$index}}"></hc-area-pvss>
       </div>
-      <div ng-if="!isDataLoaded" class="chart loader col-lg-3">Loading...</div>
+      </div>
     </div>
-  </div>
   </div>
 </div>
