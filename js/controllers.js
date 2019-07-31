@@ -499,7 +499,7 @@ atlmonJSControllers.controller(
           queryPVSSData(intArr[newValue]);
         }, true);
 
-        $scope.pvssSchemas = ["ATLAS_PVSSAFP", "ATLAS_PVSSCSC", "ATLAS_PVSSDCS", "ATLAS_PVSSDSS",
+        $scope.pvssSchemas = ["OVERALL", "ATLAS_PVSSAFP", "ATLAS_PVSSCSC", "ATLAS_PVSSDCS",
                               "ATLAS_PVSSIDE", "ATLAS_PVSSIS", "ATLAS_PVSSLAR", "ATLAS_PVSSLUC",
                               "ATLAS_PVSSMDT", "ATLAS_PVSSMMG", "ATLAS_PVSSMUO", "ATLAS_PVSSPIX",
                               "ATLAS_PVSSRPC", "ATLAS_PVSSRPO", "ATLAS_PVSSSCT", "ATLAS_PVSSTDQ",
