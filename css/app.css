@@ -1041,6 +1041,10 @@ span.btn-primary:active:hover, .btn-primary:active, .btn-primary:hover,
   margin-right: 10px;
 }
 
+.chart-row .chart {
+  border: 1px solid rgb(204, 204, 204);
+}
+
 
 
 /**************************************************/
