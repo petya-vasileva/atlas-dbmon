@@ -130,7 +130,7 @@ END dbmon_pkg;
         sql_text      VARCHAR2(4000);
         wrapper       VARCHAR2(4000);
     BEGIN
-        IF(upper(db_name)= 'OFFDB')THEN
+        IF(upper(db_name)= 'ATLR')THEN
             cool_clause := 'UNION 
                        SELECT ''ATLAS_COOL'' 
                          FROM DUAL';
@@ -181,9 +181,9 @@ END dbmon_pkg;
         sql_tab    applylag_tab := applylag_tab();
         sql_text   VARCHAR2(4000);
     BEGIN
-        IF(upper(db_name)= 'OFFDB')THEN
+        IF(upper(db_name)= 'ATLR')THEN
             sql_text := 'select a.apply_name as source, TO_CHAR((APPLY_TIME - APPLIED_MESSAGE_CREATE_TIME)*86400) as apply_lag, TO_CHAR(SYSDATE, ''YYYY-MM-DD HH24:MI:SS'') as snapshot_time, status 
-            from DBA_APPLY_PROGRESS@offdb p, dba_apply@offdb a where p.apply_name = a.apply_name and a.apply_name !=''OGG$C_COOLOF'' '
+            from DBA_APPLY_PROGRESS@atlr p, dba_apply@atlr a where p.apply_name = a.apply_name and a.apply_name !=''OGG$C_COOLOF'' '
             ;
                 --DBMS_OUTPUT.put_line(sql_text);
         ELSE

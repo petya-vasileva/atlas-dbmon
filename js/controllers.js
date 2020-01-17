@@ -90,7 +90,7 @@ atlmonJSControllers.controller('MenuCtrl',
       if (curr_loc[1] == 'home') {$scope.relevantDb = 'all';}
       else { $scope.relevantDb = curr_loc[2]; }
 
-      // we need to take always the first 2 attributes form the URL, e.g.:"db/adcdb"
+      // we need to take always the first 2 attributes form the URL, e.g.:"db/adcr"
       var attr = $location.path().split("/");
       var loc = "";
       if (attr.length>3) {
@@ -249,15 +249,15 @@ atlmonJSControllers.controller(
           } else {$scope.hasJobs =  true;}
         });
 
-        //Get Infos about the APPLY-LAG only for the ADGs and OFFDB
-        if($scope.dbName.toUpperCase() == "OFFDB" || $scope.dbName.toUpperCase() == "ONDB_ADG" 
-            || $scope.dbName.toUpperCase() == "ADCDB_ADG" ){
+        //Get Infos about the APPLY-LAG only for the ADGs and ATLR
+        if($scope.dbName.toUpperCase() == "ATLR" || $scope.dbName.toUpperCase() == "ATONR_ADG" 
+            || $scope.dbName.toUpperCase() == "ADCR_ADG" ){
           var lag = ApplyLagGet.query({db: $scope.dbName});
           lag.$promise.then(function (result) {
             $scope.applyLag = result.items;
-            $scope.isOFFDB = false;
+            $scope.isATLR = false;
             if (result.items.length >0) {
-              if (result.items[0].dbname.toUpperCase() == 'OFFDB') {$scope.isOFFDB = true}
+              if (result.items[0].dbname.toUpperCase() == 'ATLR') {$scope.isATLR = true}
             } 
           });
         }
@@ -301,10 +301,10 @@ atlmonJSControllers.controller(
           } else                  { return { background: "#DAA520", color: "#fff" }
         }};
 
-        // TEST1 & INT8R have different color for failed jobs, because there are always non-critical, failed jobs.
+        // INTR & INT8R have different color for failed jobs, because there are always non-critical, failed jobs.
         $scope.jobAlert = function (job) {
           if (job.failed_jobs > 0 ) { 
-            if ($scope.dbName.toUpperCase() == "TEST1" || $scope.dbName.toUpperCase() == "INT8R") {
+            if ($scope.dbName.toUpperCase() == "INTR" || $scope.dbName.toUpperCase() == "INT8R") {
               return { background: "#DAA520", color: "#fff" };
             } else {return { background: "#981A37", color: "#fff" };}
           } else {
@@ -689,7 +689,7 @@ atlmonJSControllers.controller(
         $scope.username = '%';
         const db = $routeParams.currentDB;
 
-        if (db == 'offdb')
+        if (db == 'atlr')
           $scope.itemsByPage = 5;
         else $scope.itemsByPage = 9;
 
@@ -1010,7 +1010,7 @@ atlmonJSControllers.controller(
           }
 
           // ADGs don't have jobs
-          if (db == 'adcdb_adg' || db == 'ondb_adg') {
+          if (db == 'adcr_adg' || db == 'atonr_adg') {
             angular.element('.jobs-table').css('display', 'none');
           }
 
@@ -1064,7 +1064,7 @@ atlmonJSControllers.controller(
         DateTimeService, RegisterChange) {
 
         var db = RegisterChange.getDb();
-        if (db == 'adcdb_adg' || db == 'ondb_adg')
+        if (db == 'adcr_adg' || db == 'atonr_adg')
           angular.element('.storage-container').css('display', 'none');
 
         // Get all unique schema names for a specific database
@@ -1130,7 +1130,7 @@ atlmonJSControllers.controller(
         var db = RegisterChange.getDb();
         var selectedSchema = RegisterChange.getSchema().toUpperCase();
 
-        if (db == 'adcdb_adg' || db == 'ondb_adg')
+        if (db == 'adcr_adg' || db == 'atonr_adg')
           angular.element('.storage-container').css('display', 'none');
 
         years = DateTimeService.lastTwoYears();
@@ -1607,7 +1607,7 @@ atlmonJSControllers.controller(
             $scope.myTreeControl = {};
             $scope.type = 0;
             $scope.setPath = function(sql_id) {
-              // TOFIX: Fix the links. Remove /db/adcdb/... replace with
+              // TOFIX: Fix the links. Remove /db/adcr/... replace with
               // query params then one of the check will be unneccessary
               $location.search({}); // clean up all query parameters
               var path = $location.url() + '/sql_id=' + sql_id;
