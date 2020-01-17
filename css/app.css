@@ -141,7 +141,7 @@ md-tabs.md-no-animation md-tab-content {
   background: #585858;
 }
 
- .ADCR, .ATLR, .ATONR, .ADCR_ADG, .ATONR_ADG, .INTR, .INT8R { 
+ .ADCDB, .OFFDB, .ONDB, .ADCDB_ADG, .ONDB_ADG, .TEST1, .INT8R { 
   width: 450px;
   margin: 0px 5px;
  }
