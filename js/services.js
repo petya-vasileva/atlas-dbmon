@@ -1,8 +1,8 @@
 var atlmonJSServices = angular.module('atlmonJSServices', [ 'ngResource' ]);
 
 atlmonJSServices.constant('baseurl', {
-  // 'url' : 'https://oraweb.cern.ch/ords/intr/atlas_dbmon_r/'       // For the testbed
-  'url' : 'https://oraweb.cern.ch/ords/atlr/atlas_dbmon_r/'         // For production 
+  // 'url' : 'url/to/api'       // For the testbed
+  'url' : 'url/to/api'         // For production 
 });
 
 atlmonJSServices.factory(

@@ -15,7 +15,7 @@ spool DBMON_functions.sql
 
 SELECT 
    REPLACE (DBMS_METADATA.GET_DDL( object_type, object_name, 'ATLAS_DBMON'), 'CREATE OR REPLACE TYPE "ATLAS_DBMON"', 'CREATE OR REPLACE TYPE "ATLAS_DBMON_DEV"') as definition
---	 REPLACE(DBMS_METADATA.GET_DDL( object_type, object_name, 'ATLAS_DBMON'),'" AS' , '@ATLR" AS' ) as definition
+--	 REPLACE(DBMS_METADATA.GET_DDL( object_type, object_name, 'ATLAS_DBMON'),'" AS' , '@OFFDB" AS' ) as definition
 FROM 
    user_objects 
 WHERE 
@@ -29,7 +29,7 @@ ORDER BY substr(object_name, -3);
 
 SELECT 
    REPLACE (DBMS_METADATA.GET_DDL( object_type, object_name, 'ATLAS_DBMON'), 'CREATE OR REPLACE TYPE "ATLAS_DBMON"', 'CREATE OR REPLACE TYPE "ATLAS_DBMON_DEV"') as definition
---	 REPLACE(DBMS_METADATA.GET_DDL( object_type, object_name, 'ATLAS_DBMON'),'" AS' , '@ATLR" AS' ) as definition
+--	 REPLACE(DBMS_METADATA.GET_DDL( object_type, object_name, 'ATLAS_DBMON'),'" AS' , '@OFFDB" AS' ) as definition
 FROM 
    user_objects 
 WHERE 
