@@ -28,7 +28,7 @@
         <td colspan="{{NrOfNodes}}" ng-repeat="job in ::dbJobs" ng-style="jobAlert(job)"><center>
           Running: {{job.running_jobs}} &nbsp Failed: {{job.failed_jobs}} &nbsp Total: {{job.total_jobs}}</center></td>
       </tr>
-      <tr ng-if="(dbName=='ondb_adg' || dbName=='ONDB_ADG' || dbName=='adcdb_adg' || dbName=='ADCDB_ADG') && isDataLoaded == true">
+      <tr ng-if="(dbName=='ondbadg' || dbName=='ONDB_ADG' || dbName=='adcdbadg' || dbName=='ADCDB_ADG') && isDataLoaded == true">
         <td>Apply lag</td>
         <td colspan="{{NrOfNodes}}" ng-model="applyLag" ng-style="lagAlert(applyLag[0].apply_lag)">
         <center>{{applyLag[0].apply_lag | number : 0}} sec.</center></td>

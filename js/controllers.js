@@ -301,10 +301,10 @@ atlmonJSControllers.controller(
           } else                  { return { background: "#DAA520", color: "#fff" }
         }};
 
-        // TEST1 & TEST2  have different color for failed jobs, because there are always non-critical, failed jobs.
+        // TEST1 & TEST2 have different color for failed jobs, because there are always non-critical, failed jobs.
         $scope.jobAlert = function (job) {
           if (job.failed_jobs > 0 ) { 
-            if ($scope.dbName.toUpperCase() == "TEST1" || $scope.dbName.toUpperCase() == "TEST2 ") {
+            if ($scope.dbName.toUpperCase() == "TEST1" || $scope.dbName.toUpperCase() == "TEST2") {
               return { background: "#DAA520", color: "#fff" };
             } else {return { background: "#981A37", color: "#fff" };}
           } else {
@@ -1010,7 +1010,7 @@ atlmonJSControllers.controller(
           }
 
           // ADGs don't have jobs
-          if (db == 'adcdb_adg' || db == 'ondb_adg') {
+          if (db == 'adcdbadg' || db == 'ondbadg') {
             angular.element('.jobs-table').css('display', 'none');
           }
 
@@ -1064,7 +1064,7 @@ atlmonJSControllers.controller(
         DateTimeService, RegisterChange) {
 
         var db = RegisterChange.getDb();
-        if (db == 'adcdb_adg' || db == 'ondb_adg')
+        if (db == 'adcdbadg' || db == 'ondbadg')
           angular.element('.storage-container').css('display', 'none');
 
         // Get all unique schema names for a specific database
@@ -1130,7 +1130,7 @@ atlmonJSControllers.controller(
         var db = RegisterChange.getDb();
         var selectedSchema = RegisterChange.getSchema().toUpperCase();
 
-        if (db == 'adcdb_adg' || db == 'ondb_adg')
+        if (db == 'adcdbadg' || db == 'ondbadg')
           angular.element('.storage-container').css('display', 'none');
 
         years = DateTimeService.lastTwoYears();

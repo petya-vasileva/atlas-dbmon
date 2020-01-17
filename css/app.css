@@ -141,7 +141,7 @@ md-tabs.md-no-animation md-tab-content {
   background: #585858;
 }
 
- .ADCDB, .OFFDB, .ONDB, .ADCDB_ADG, .ONDB_ADG, .TEST1, .TEST2  { 
+ .ADCDB, .OFFDB, .ONDB, .ADCDB_ADG, .ONDB_ADG, .TEST1, .TEST2 { 
   width: 450px;
   margin: 0px 5px;
  }
