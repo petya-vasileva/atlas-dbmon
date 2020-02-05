@@ -12,22 +12,14 @@ https://gitlab.cern.ch/petya/dbmon-ords
 There is one main Oracle DB schema (see fig. 1). Mostly all monitoring data is collected via database links from all other databases, then stored in tables in DBMON_SCHEMA (see fig 2). 
 The API is using Oracle REST Data Servises(ORDS). It calls various PL/SQL functions to provide the data. The front-end is implemented with AngularJs (see fig 3). There is a GitLab CI configured which deploys automatically new versions of the application in OpenShift.
 
-<div align="center">
-<figure>
+<p align="center">
   <img src="images/backend_architecture.png" width="600"/>
-  <figcaption text-align="center">Fig. 1</figcaption>
-</figure>
+</p>
 
-<figure>
-  <img src="images/data_collection.png" width="600"/>
-  <figcaption align="center">Fig. 2</figcaption>
-</figure>
-
-<figure>
-  <img src="images/data_access.png" width="600"/>
-  <figcaption align="center">Fig. 3</figcaption>
-</figure>
-</div>
+<p align="center">
+  <img src="images/data_collection.png" width="420"/>
+  <img src="images/data_access.png" width="420"/>
+</p>
 
 
 
@@ -37,3 +29,30 @@ The API is using Oracle REST Data Servises(ORDS). It calls various PL/SQL functi
 * **Andrea Formica** - *Author of the 1st version of the API* 
 * **Benjamin Scheer** - *Migrated the old API to Oracle REST Data Servises(ORDS)* 
 * **Petya Vasileva** - *Primary developer* 
+
+
+## Screenshots
+
+<p align="center">
+  <img src="images/dashboard.png" width="420"/>
+  <img src="images/db_oveview.png" width="420"/>
+</p>
+
+<p align="center">
+  <img src="images/application_sessions.png" width="420"/>
+  <img src="images/sql_details.png" width="420"/>
+</p>
+
+<p align="center">
+  <img src="images/db_performance.png" width="420"/>
+  <img src="images/jobs.png" width="420"/>
+</p>
+
+<p align="center">
+  <img src="images/insertion_rate.png" width="420"/>
+  <img src="images/sql_details.png" width="420"/>
+</p>
+
+<p align="center">
+  <img src="images/blocking_tree.png" width="500"/>
+</p>
